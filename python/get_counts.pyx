@@ -1,12 +1,12 @@
 ###############################################################################
-# bulge_pscounts.pyx
+# get_counts.pyx
 ###############################################################################
 #
 # Return the predicted bulge counts in a bin (i,j,k), following the definition
 # in 1705.00009
 #
 # Written: Nick Rodd, MIT, 5 August 2017
-# Moddified by Ben Safdi, UM August 15 2017
+# Modified by Ben Safdi, UM August 15 2017
 # 
 ###############################################################################
 
