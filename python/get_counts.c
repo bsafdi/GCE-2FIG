@@ -1038,13 +1038,14 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 struct __pyx_opt_args_10get_counts_Nbulge_full_ijk;
 struct __pyx_opt_args_10get_counts_Nbulge_full_ang_ijk;
+struct __pyx_opt_args_10get_counts_Ndisk_full_ang_ijk;
 
-/* "get_counts.pyx":60
+/* "get_counts.pyx":64
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 struct __pyx_opt_args_10get_counts_Nbulge_full_ijk {
   int __pyx_n;
@@ -1054,12 +1055,12 @@ struct __pyx_opt_args_10get_counts_Nbulge_full_ijk {
   int Ns;
 };
 
-/* "get_counts.pyx":116
+/* "get_counts.pyx":120
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 struct __pyx_opt_args_10get_counts_Nbulge_full_ang_ijk {
   int __pyx_n;
@@ -1068,6 +1069,22 @@ struct __pyx_opt_args_10get_counts_Nbulge_full_ang_ijk {
   double Lmax;
   int Ns;
   int Nang;
+};
+
+/* "get_counts.pyx":207
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cpdef double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double omega_ijk, double n, double sigma,double z0, double beta, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10,double smax=40) nogil:             # <<<<<<<<<<<<<<
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
+ */
+struct __pyx_opt_args_10get_counts_Ndisk_full_ang_ijk {
+  int __pyx_n;
+  double Lmin;
+  double Lmax;
+  int Ns;
+  int Nang;
+  double smax;
 };
 
 /* "View.MemoryView":103
@@ -1880,9 +1897,13 @@ static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static double __pyx_f_10get_counts_Nbulge_full_ijk(int, int, int, double, double, double, double, int __pyx_skip_dispatch, struct __pyx_opt_args_10get_counts_Nbulge_full_ijk *__pyx_optional_args); /*proto*/
 static double __pyx_f_10get_counts_Nbulge_full_ang_ijk(int, int, int, double, double, double, double, int __pyx_skip_dispatch, struct __pyx_opt_args_10get_counts_Nbulge_full_ang_ijk *__pyx_optional_args); /*proto*/
+static double __pyx_f_10get_counts_Ndisk_full_ang_ijk(int, int, int, double, double, double, double, double, double, int __pyx_skip_dispatch, struct __pyx_opt_args_10get_counts_Ndisk_full_ang_ijk *__pyx_optional_args); /*proto*/
 static double __pyx_f_10get_counts_Nbulge_ijk(int, int, int, double, double, double, double, int __pyx_skip_dispatch); /*proto*/
+static double __pyx_f_10get_counts_Ndisk_ijk(int, int, int, double, double, double, double, double, double, int __pyx_skip_dispatch); /*proto*/
 static double __pyx_f_10get_counts_bulge_int(double, double, double, double, double, double); /*proto*/
 static double __pyx_f_10get_counts_integrand(double, double, double, double, double); /*proto*/
+static double __pyx_f_10get_counts_disk_int(double, double, double, double, double, double, double); /*proto*/
+static double __pyx_f_10get_counts_integrand_disk(double, double, double, double, double, double, double, double); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -1935,10 +1956,12 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_j[] = "j";
 static const char __pyx_k_k[] = "k";
+static const char __pyx_k_n[] = "n";
 static const char __pyx_k_Ns[] = "Ns";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_pi[] = "pi";
+static const char __pyx_k_z0[] = "z0";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_Lmax[] = "Lmax";
 static const char __pyx_k_Lmin[] = "Lmin";
@@ -1952,11 +1975,13 @@ static const char __pyx_k_ndim[] = "ndim";
 static const char __pyx_k_pack[] = "pack";
 static const char __pyx_k_rcut[] = "rcut";
 static const char __pyx_k_size[] = "size";
+static const char __pyx_k_smax[] = "smax";
 static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_DTYPE[] = "DTYPE";
+static const char __pyx_k_Ndisk[] = "Ndisk";
 static const char __pyx_k_alpha[] = "alpha";
 static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_dtype[] = "dtype";
@@ -1966,6 +1991,7 @@ static const char __pyx_k_float[] = "float";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_shape[] = "shape";
+static const char __pyx_k_sigma[] = "sigma";
 static const char __pyx_k_start[] = "start";
 static const char __pyx_k_Nbulge[] = "Nbulge";
 static const char __pyx_k_encode[] = "encode";
@@ -2040,6 +2066,7 @@ static PyObject *__pyx_kp_s_MemoryView_of_r_at_0x_x;
 static PyObject *__pyx_kp_s_MemoryView_of_r_object;
 static PyObject *__pyx_n_s_Nang;
 static PyObject *__pyx_n_s_Nbulge;
+static PyObject *__pyx_n_s_Ndisk;
 static PyObject *__pyx_kp_u_Non_native_byte_order_not_suppor;
 static PyObject *__pyx_n_s_Ns;
 static PyObject *__pyx_n_b_O;
@@ -2079,6 +2106,7 @@ static PyObject *__pyx_n_s_linspace;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
+static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_name_2;
 static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
@@ -2097,7 +2125,9 @@ static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_rcut;
 static PyObject *__pyx_n_s_shape;
+static PyObject *__pyx_n_s_sigma;
 static PyObject *__pyx_n_s_size;
+static PyObject *__pyx_n_s_smax;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_step;
 static PyObject *__pyx_n_s_stop;
@@ -2110,9 +2140,12 @@ static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_unpack;
+static PyObject *__pyx_n_s_z0;
 static PyObject *__pyx_pf_10get_counts_Nbulge_full_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta, double __pyx_v_rcut, double __pyx_v_Lmin, double __pyx_v_Lmax, int __pyx_v_Ns); /* proto */
 static PyObject *__pyx_pf_10get_counts_2Nbulge_full_ang_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta, double __pyx_v_rcut, double __pyx_v_Lmin, double __pyx_v_Lmax, int __pyx_v_Ns, int __pyx_v_Nang); /* proto */
-static PyObject *__pyx_pf_10get_counts_4Nbulge_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta); /* proto */
+static PyObject *__pyx_pf_10get_counts_4Ndisk_full_ang_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, double __pyx_v_Lmin, double __pyx_v_Lmax, int __pyx_v_Ns, int __pyx_v_Nang, double __pyx_v_smax); /* proto */
+static PyObject *__pyx_pf_10get_counts_6Nbulge_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta); /* proto */
+static PyObject *__pyx_pf_10get_counts_8Ndisk_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -2186,12 +2219,12 @@ static PyObject *__pyx_tuple__26;
 static PyObject *__pyx_tuple__27;
 static PyObject *__pyx_tuple__28;
 
-/* "get_counts.pyx":60
+/* "get_counts.pyx":64
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 
 static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
@@ -2235,225 +2268,225 @@ static double __pyx_f_10get_counts_Nbulge_full_ijk(int __pyx_v_i, int __pyx_v_j,
     }
   }
 
-  /* "get_counts.pyx":70
- * 	"""
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
+  /* "get_counts.pyx":74
+ *     """
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
  */
   __pyx_v_coslval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_i]) * __pyx_v_10get_counts_degtorad));
 
-  /* "get_counts.pyx":71
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
+  /* "get_counts.pyx":75
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
  */
   __pyx_v_cosbval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_j]) * __pyx_v_10get_counts_degtorad));
 
-  /* "get_counts.pyx":72
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
+  /* "get_counts.pyx":76
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
  * 
  */
   __pyx_v_fluxmin = ((__pyx_v_10get_counts_fluxvals[__pyx_v_k]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":73
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
+  /* "get_counts.pyx":77
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
  * 
- * 	# Setup output and if variables
+ *     # Setup output and if variables
  */
   __pyx_v_fluxmax = ((__pyx_v_10get_counts_fluxvals[(__pyx_v_k + 1)]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":76
+  /* "get_counts.pyx":80
  * 
- * 	# Setup output and if variables
- * 	cdef double Nijk = 0.             # <<<<<<<<<<<<<<
- * 	cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral, smin, smax,s,ds
+ *     # Setup output and if variables
+ *     cdef double Nijk = 0.             # <<<<<<<<<<<<<<
+ *     cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral, smin, smax,s,ds
  * 
  */
   __pyx_v_Nijk = 0.;
 
-  /* "get_counts.pyx":81
- * 	cdef int l
+  /* "get_counts.pyx":85
+ *     cdef int l
  * 
- * 	cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)             # <<<<<<<<<<<<<<
+ *     cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)             # <<<<<<<<<<<<<<
  * 
- * 	if incl > 0:
+ *     if incl > 0:
  */
   __pyx_v_incl = (1. - ((1. - pow((__pyx_v_rcut / __pyx_v_10get_counts_rodot), 2.0)) * pow((__pyx_v_coslval * __pyx_v_cosbval), 2.0)));
 
-  /* "get_counts.pyx":83
- * 	cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+  /* "get_counts.pyx":87
+ *     cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
  * 
- * 	if incl > 0:             # <<<<<<<<<<<<<<
- * 		pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 		pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+ *     if incl > 0:             # <<<<<<<<<<<<<<
+ *         pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *         pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  */
   __pyx_t_1 = ((__pyx_v_incl > 0.0) != 0);
   if (__pyx_t_1) {
 
-    /* "get_counts.pyx":84
+    /* "get_counts.pyx":88
  * 
- * 	if incl > 0:
- * 		pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)             # <<<<<<<<<<<<<<
- * 		pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+ *     if incl > 0:
+ *         pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)             # <<<<<<<<<<<<<<
+ *         pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  * 
  */
     __pyx_v_pref_rho = (((((__pyx_v_omega_ijk * __pyx_v_Nbulge) * (3. - __pyx_v_alpha)) / 4.) / __pyx_v_10get_counts_pi) / pow(__pyx_v_rcut, (3.0 - __pyx_v_alpha)));
 
-    /* "get_counts.pyx":85
- * 	if incl > 0:
- * 		pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 		pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)             # <<<<<<<<<<<<<<
+    /* "get_counts.pyx":89
+ *     if incl > 0:
+ *         pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *         pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)             # <<<<<<<<<<<<<<
  * 
- * 		smin = rodot - rcut
+ *         smin = rodot - rcut
  */
     __pyx_v_pref_L = ((pow((4. * __pyx_v_10get_counts_pi), (1. - __pyx_v_beta)) * (pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)))) / (pow(__pyx_v_Lmin, (1.0 - __pyx_v_beta)) - pow(__pyx_v_Lmax, (1.0 - __pyx_v_beta))));
 
-    /* "get_counts.pyx":87
- * 		pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+    /* "get_counts.pyx":91
+ *         pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  * 
- * 		smin = rodot - rcut             # <<<<<<<<<<<<<<
- * 		smax = rodot + rcut
- * 		ds = (smax - smin)/float(Ns)
+ *         smin = rodot - rcut             # <<<<<<<<<<<<<<
+ *         smax = rodot + rcut
+ *         ds = (smax - smin)/float(Ns)
  */
     __pyx_v_smin = (__pyx_v_10get_counts_rodot - __pyx_v_rcut);
 
-    /* "get_counts.pyx":88
+    /* "get_counts.pyx":92
  * 
- * 		smin = rodot - rcut
- * 		smax = rodot + rcut             # <<<<<<<<<<<<<<
- * 		ds = (smax - smin)/float(Ns)
- * 		integral = 0.0
+ *         smin = rodot - rcut
+ *         smax = rodot + rcut             # <<<<<<<<<<<<<<
+ *         ds = (smax - smin)/float(Ns)
+ *         integral = 0.0
  */
     __pyx_v_smax = (__pyx_v_10get_counts_rodot + __pyx_v_rcut);
 
-    /* "get_counts.pyx":89
- * 		smin = rodot - rcut
- * 		smax = rodot + rcut
- * 		ds = (smax - smin)/float(Ns)             # <<<<<<<<<<<<<<
- * 		integral = 0.0
- * 		s = smin
+    /* "get_counts.pyx":93
+ *         smin = rodot - rcut
+ *         smax = rodot + rcut
+ *         ds = (smax - smin)/float(Ns)             # <<<<<<<<<<<<<<
+ *         integral = 0.0
+ *         s = smin
  */
     __pyx_v_ds = ((__pyx_v_smax - __pyx_v_smin) / ((double)__pyx_v_Ns));
 
-    /* "get_counts.pyx":90
- * 		smax = rodot + rcut
- * 		ds = (smax - smin)/float(Ns)
- * 		integral = 0.0             # <<<<<<<<<<<<<<
- * 		s = smin
- * 		for l in range(Ns):
+    /* "get_counts.pyx":94
+ *         smax = rodot + rcut
+ *         ds = (smax - smin)/float(Ns)
+ *         integral = 0.0             # <<<<<<<<<<<<<<
+ *         s = smin
+ *         for l in range(Ns):
  */
     __pyx_v_integral = 0.0;
 
-    /* "get_counts.pyx":91
- * 		ds = (smax - smin)/float(Ns)
- * 		integral = 0.0
- * 		s = smin             # <<<<<<<<<<<<<<
- * 		for l in range(Ns):
- * 			r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+    /* "get_counts.pyx":95
+ *         ds = (smax - smin)/float(Ns)
+ *         integral = 0.0
+ *         s = smin             # <<<<<<<<<<<<<<
+ *         for l in range(Ns):
+ *             r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
  */
     __pyx_v_s = __pyx_v_smin;
 
-    /* "get_counts.pyx":92
- * 		integral = 0.0
- * 		s = smin
- * 		for l in range(Ns):             # <<<<<<<<<<<<<<
- * 			r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 			#print r_squared
+    /* "get_counts.pyx":96
+ *         integral = 0.0
+ *         s = smin
+ *         for l in range(Ns):             # <<<<<<<<<<<<<<
+ *             r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *             #print r_squared
  */
     __pyx_t_2 = __pyx_v_Ns;
     for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
       __pyx_v_l = __pyx_t_3;
 
-      /* "get_counts.pyx":93
- * 		s = smin
- * 		for l in range(Ns):
- * 			r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )             # <<<<<<<<<<<<<<
- * 			#print r_squared
- * 			if r_squared < rcut**2:
+      /* "get_counts.pyx":97
+ *         s = smin
+ *         for l in range(Ns):
+ *             r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )             # <<<<<<<<<<<<<<
+ *             #print r_squared
+ *             if r_squared < rcut**2:
  */
       __pyx_v_r_squared = (pow((((__pyx_v_s * __pyx_v_cosbval) * __pyx_v_coslval) - __pyx_v_10get_counts_rodot), 2.0) + (pow(__pyx_v_s, 2.0) * (1. - pow((__pyx_v_cosbval * __pyx_v_coslval), 2.0))));
 
-      /* "get_counts.pyx":95
- * 			r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 			#print r_squared
- * 			if r_squared < rcut**2:             # <<<<<<<<<<<<<<
- * 				integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 			s += ds
+      /* "get_counts.pyx":99
+ *             r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *             #print r_squared
+ *             if r_squared < rcut**2:             # <<<<<<<<<<<<<<
+ *                 integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *             s += ds
  */
       __pyx_t_1 = ((__pyx_v_r_squared < pow(__pyx_v_rcut, 2.0)) != 0);
       if (__pyx_t_1) {
 
-        /* "get_counts.pyx":96
- * 			#print r_squared
- * 			if r_squared < rcut**2:
- * 				integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)             # <<<<<<<<<<<<<<
- * 			s += ds
+        /* "get_counts.pyx":100
+ *             #print r_squared
+ *             if r_squared < rcut**2:
+ *                 integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)             # <<<<<<<<<<<<<<
+ *             s += ds
  * 
  */
         __pyx_v_integral = (__pyx_v_integral + (pow(__pyx_v_s, (4. - (2. * __pyx_v_beta))) * pow(__pyx_v_r_squared, ((-__pyx_v_alpha) / 2.))));
 
-        /* "get_counts.pyx":95
- * 			r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 			#print r_squared
- * 			if r_squared < rcut**2:             # <<<<<<<<<<<<<<
- * 				integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 			s += ds
+        /* "get_counts.pyx":99
+ *             r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *             #print r_squared
+ *             if r_squared < rcut**2:             # <<<<<<<<<<<<<<
+ *                 integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *             s += ds
  */
       }
 
-      /* "get_counts.pyx":97
- * 			if r_squared < rcut**2:
- * 				integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 			s += ds             # <<<<<<<<<<<<<<
+      /* "get_counts.pyx":101
+ *             if r_squared < rcut**2:
+ *                 integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *             s += ds             # <<<<<<<<<<<<<<
  * 
- * 		res = area * cosbval * integral * ds * pref_L * pref_rho
+ *         res = area * cosbval * integral * ds * pref_L * pref_rho
  */
       __pyx_v_s = (__pyx_v_s + __pyx_v_ds);
     }
 
-    /* "get_counts.pyx":99
- * 			s += ds
+    /* "get_counts.pyx":103
+ *             s += ds
  * 
- * 		res = area * cosbval * integral * ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
- * 		#print integral, ds, pref_L, pref_rho
+ *         res = area * cosbval * integral * ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
+ *         #print integral, ds, pref_L, pref_rho
  * 
  */
     __pyx_v_res = (((((__pyx_v_10get_counts_area * __pyx_v_cosbval) * __pyx_v_integral) * __pyx_v_ds) * __pyx_v_pref_L) * __pyx_v_pref_rho);
 
-    /* "get_counts.pyx":83
- * 	cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+    /* "get_counts.pyx":87
+ *     cdef double incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
  * 
- * 	if incl > 0:             # <<<<<<<<<<<<<<
- * 		pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 		pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+ *     if incl > 0:             # <<<<<<<<<<<<<<
+ *         pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *         pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  */
   }
 
-  /* "get_counts.pyx":103
+  /* "get_counts.pyx":107
  * 
- * 	#print area, cosbval, integral, ds, pref_L, pref_rho
- * 	return res             # <<<<<<<<<<<<<<
+ *     #print area, cosbval, integral, ds, pref_L, pref_rho
+ *     return res             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "get_counts.pyx":60
+  /* "get_counts.pyx":64
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 
   /* function exit code */
@@ -2463,7 +2496,7 @@ static double __pyx_f_10get_counts_Nbulge_full_ijk(int __pyx_v_i, int __pyx_v_j,
 
 /* Python wrapper */
 static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_10get_counts_Nbulge_full_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n\t---arguments---\n\tNs : number of points in s integration\n\t----units---\n\trcut : in kpc\n\tLmin : erg s^{-1}\n\tLmax : erg s^{-1}\n\t";
+static char __pyx_doc_10get_counts_Nbulge_full_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n    ---arguments---\n    Ns : number of points in s integration\n    ----units---\n    rcut : in kpc\n    Lmin : erg s^{-1}\n    Lmax : erg s^{-1}\n    ";
 static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_i;
   int __pyx_v_j;
@@ -2508,32 +2541,32 @@ static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, Py
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_j)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 1); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 1); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 2); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 2); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nbulge)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 3); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 3); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega_ijk)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 4); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 4); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 5); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 5); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 6); __PYX_ERR(0, 60, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, 6); __PYX_ERR(0, 64, __pyx_L3_error)
         }
         case  7:
         if (kw_args > 0) {
@@ -2557,7 +2590,7 @@ static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, Py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_full_ijk") < 0)) __PYX_ERR(0, 60, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_full_ijk") < 0)) __PYX_ERR(0, 64, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2576,37 +2609,37 @@ static PyObject *__pyx_pw_10get_counts_1Nbulge_full_ijk(PyObject *__pyx_self, Py
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
-    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
+    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     if (values[7]) {
-      __pyx_v_rcut = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rcut == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
+      __pyx_v_rcut = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rcut == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     } else {
       __pyx_v_rcut = ((double)3.0);
     }
     if (values[8]) {
-      __pyx_v_Lmin = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_Lmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
+      __pyx_v_Lmin = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_Lmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     } else {
       __pyx_v_Lmin = ((double)1.0e31);
     }
     if (values[9]) {
-      __pyx_v_Lmax = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_Lmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
+      __pyx_v_Lmax = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_Lmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     } else {
       __pyx_v_Lmax = ((double)1.0e36);
     }
     if (values[10]) {
-      __pyx_v_Ns = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_Ns == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L3_error)
+      __pyx_v_Ns = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_Ns == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     } else {
       __pyx_v_Ns = ((int)0x3E8);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 60, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("Nbulge_full_ijk", 0, 7, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 64, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("get_counts.Nbulge_full_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2633,7 +2666,7 @@ static PyObject *__pyx_pf_10get_counts_Nbulge_full_ijk(CYTHON_UNUSED PyObject *_
   __pyx_t_2.Lmax = __pyx_v_Lmax;
   __pyx_t_2.Ns = __pyx_v_Ns;
   __pyx_t_1 = __pyx_f_10get_counts_Nbulge_full_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta, 0, &__pyx_t_2); 
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -2650,12 +2683,12 @@ static PyObject *__pyx_pf_10get_counts_Nbulge_full_ijk(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "get_counts.pyx":116
+/* "get_counts.pyx":120
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 
 static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
@@ -2665,8 +2698,6 @@ static double __pyx_f_10get_counts_Nbulge_full_ang_ijk(int __pyx_v_i, int __pyx_
   double __pyx_v_Lmax = ((double)1.0e36);
   int __pyx_v_Ns = ((int)0x3E8);
   int __pyx_v_Nang = ((int)10);
-  double __pyx_v_coslval;
-  double __pyx_v_cosbval;
   double __pyx_v_fluxmin;
   double __pyx_v_fluxmax;
   CYTHON_UNUSED double __pyx_v_Nijk;
@@ -2679,15 +2710,17 @@ static double __pyx_f_10get_counts_Nbulge_full_ang_ijk(int __pyx_v_i, int __pyx_
   double __pyx_v_ds;
   CYTHON_UNUSED int __pyx_v_l;
   double __pyx_v_incl;
-  double __pyx_v_res;
+  CYTHON_UNUSED double __pyx_v_res;
   int __pyx_v_i_b;
   int __pyx_v_i_ell;
   double __pyx_v_ell;
   double __pyx_v_b;
-  double __pyx_v_b_start;
   double __pyx_v_ell_start;
+  double __pyx_v_b_start;
   double __pyx_v_d_ang;
   double __pyx_v_total_res;
+  double __pyx_v_coslval;
+  double __pyx_v_cosbval;
   double __pyx_v_r_squared;
   double __pyx_r;
   Py_ssize_t __pyx_t_1;
@@ -2719,352 +2752,316 @@ static double __pyx_f_10get_counts_Nbulge_full_ang_ijk(int __pyx_v_i, int __pyx_
     }
   }
 
-  /* "get_counts.pyx":126
- * 	"""
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- */
-  __pyx_v_coslval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_i]) * __pyx_v_10get_counts_degtorad));
-
-  /* "get_counts.pyx":127
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
- */
-  __pyx_v_cosbval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_j]) * __pyx_v_10get_counts_degtorad));
-
-  /* "get_counts.pyx":128
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
+  /* "get_counts.pyx":130
+ *     """
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
  * 
  */
   __pyx_v_fluxmin = ((__pyx_v_10get_counts_fluxvals[__pyx_v_k]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":129
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
+  /* "get_counts.pyx":131
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
  * 
- * 	# Setup output and if variables
+ *     # Setup output and if variables
  */
   __pyx_v_fluxmax = ((__pyx_v_10get_counts_fluxvals[(__pyx_v_k + 1)]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":132
+  /* "get_counts.pyx":134
  * 
- * 	# Setup output and if variables
- * 	cdef double Nijk = 0.             # <<<<<<<<<<<<<<
- * 	cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral, smin, smax,s,ds
+ *     # Setup output and if variables
+ *     cdef double Nijk = 0.             # <<<<<<<<<<<<<<
+ *     cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral, smin, smax,s,ds
  * 
  */
   __pyx_v_Nijk = 0.;
 
-  /* "get_counts.pyx":139
- * 	cdef double incl
+  /* "get_counts.pyx":141
+ *     cdef double incl
  * 
- * 	cdef double res = 0.0             # <<<<<<<<<<<<<<
+ *     cdef double res = 0.0             # <<<<<<<<<<<<<<
  * 
- * 	cdef int i_b, i_ell
+ *     cdef int i_b, i_ell
  */
   __pyx_v_res = 0.0;
 
-  /* "get_counts.pyx":143
- * 	cdef int i_b, i_ell
- * 	cdef double ell,b
- * 	cdef double b_start = ang_boundaries[i]             # <<<<<<<<<<<<<<
- * 	cdef double ell_start = ang_boundaries[j]
- * 	cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+  /* "get_counts.pyx":145
+ *     cdef int i_b, i_ell
+ *     cdef double ell,b
+ *     cdef double ell_start = ang_boundaries[i]             # <<<<<<<<<<<<<<
+ *     cdef double b_start = ang_boundaries[j]
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
  */
   __pyx_t_1 = __pyx_v_i;
-  __pyx_v_b_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_1)) )));
+  __pyx_v_ell_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_1)) )));
 
-  /* "get_counts.pyx":144
- * 	cdef double ell,b
- * 	cdef double b_start = ang_boundaries[i]
- * 	cdef double ell_start = ang_boundaries[j]             # <<<<<<<<<<<<<<
- * 	cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+  /* "get_counts.pyx":146
+ *     cdef double ell,b
+ *     cdef double ell_start = ang_boundaries[i]
+ *     cdef double b_start = ang_boundaries[j]             # <<<<<<<<<<<<<<
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
  * 
  */
   __pyx_t_2 = __pyx_v_j;
-  __pyx_v_ell_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_2)) )));
+  __pyx_v_b_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_2)) )));
 
-  /* "get_counts.pyx":145
- * 	cdef double b_start = ang_boundaries[i]
- * 	cdef double ell_start = ang_boundaries[j]
- * 	cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)             # <<<<<<<<<<<<<<
+  /* "get_counts.pyx":147
+ *     cdef double ell_start = ang_boundaries[i]
+ *     cdef double b_start = ang_boundaries[j]
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)             # <<<<<<<<<<<<<<
  * 
- * 	cdef double total_res = 0.0
+ *     cdef double total_res = 0.0
  */
   __pyx_t_3 = 1;
   __pyx_t_4 = 0;
   __pyx_v_d_ang = (((*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_3)) ))) - (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_4)) )))) / ((double)__pyx_v_Nang));
 
-  /* "get_counts.pyx":147
- * 	cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+  /* "get_counts.pyx":149
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
  * 
- * 	cdef double total_res = 0.0             # <<<<<<<<<<<<<<
+ *     cdef double total_res = 0.0             # <<<<<<<<<<<<<<
  * 
- * 	for i_b in range(Nang):
+ *     cdef double coslval, cosbval
  */
   __pyx_v_total_res = 0.0;
 
-  /* "get_counts.pyx":149
- * 	cdef double total_res = 0.0
+  /* "get_counts.pyx":155
  * 
- * 	for i_b in range(Nang):             # <<<<<<<<<<<<<<
- * 		b = b_start + i_b*d_ang
- * 		for i_ell in range(Nang):
+ *     # Common prefactors
+ *     pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)             # <<<<<<<<<<<<<<
+ *     pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+ * 
+ */
+  __pyx_v_pref_rho = (((((__pyx_v_omega_ijk * __pyx_v_Nbulge) * (3. - __pyx_v_alpha)) / 4.) / __pyx_v_10get_counts_pi) / pow(__pyx_v_rcut, (3.0 - __pyx_v_alpha)));
+
+  /* "get_counts.pyx":156
+ *     # Common prefactors
+ *     pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *     pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)             # <<<<<<<<<<<<<<
+ * 
+ *     # for s integration
+ */
+  __pyx_v_pref_L = ((pow((4. * __pyx_v_10get_counts_pi), (1. - __pyx_v_beta)) * (pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)))) / (pow(__pyx_v_Lmin, (1.0 - __pyx_v_beta)) - pow(__pyx_v_Lmax, (1.0 - __pyx_v_beta))));
+
+  /* "get_counts.pyx":159
+ * 
+ *     # for s integration
+ *     smin = rodot - rcut             # <<<<<<<<<<<<<<
+ *     smax = rodot + rcut
+ *     ds = (smax - smin)/float(Ns)
+ */
+  __pyx_v_smin = (__pyx_v_10get_counts_rodot - __pyx_v_rcut);
+
+  /* "get_counts.pyx":160
+ *     # for s integration
+ *     smin = rodot - rcut
+ *     smax = rodot + rcut             # <<<<<<<<<<<<<<
+ *     ds = (smax - smin)/float(Ns)
+ * 
+ */
+  __pyx_v_smax = (__pyx_v_10get_counts_rodot + __pyx_v_rcut);
+
+  /* "get_counts.pyx":161
+ *     smin = rodot - rcut
+ *     smax = rodot + rcut
+ *     ds = (smax - smin)/float(Ns)             # <<<<<<<<<<<<<<
+ * 
+ *     for i_b in range(Nang):
+ */
+  __pyx_v_ds = ((__pyx_v_smax - __pyx_v_smin) / ((double)__pyx_v_Ns));
+
+  /* "get_counts.pyx":163
+ *     ds = (smax - smin)/float(Ns)
+ * 
+ *     for i_b in range(Nang):             # <<<<<<<<<<<<<<
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):
  */
   __pyx_t_5 = __pyx_v_Nang;
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_i_b = __pyx_t_6;
 
-    /* "get_counts.pyx":150
+    /* "get_counts.pyx":164
  * 
- * 	for i_b in range(Nang):
- * 		b = b_start + i_b*d_ang             # <<<<<<<<<<<<<<
- * 		for i_ell in range(Nang):
- * 			ell = ell_start + i_ell*d_ang
+ *     for i_b in range(Nang):
+ *         b = b_start + i_b*d_ang             # <<<<<<<<<<<<<<
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang
  */
     __pyx_v_b = (__pyx_v_b_start + (__pyx_v_i_b * __pyx_v_d_ang));
 
-    /* "get_counts.pyx":151
- * 	for i_b in range(Nang):
- * 		b = b_start + i_b*d_ang
- * 		for i_ell in range(Nang):             # <<<<<<<<<<<<<<
- * 			ell = ell_start + i_ell*d_ang
- * 			coslval = cos(ell * degtorad)
+    /* "get_counts.pyx":165
+ *     for i_b in range(Nang):
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):             # <<<<<<<<<<<<<<
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)
  */
     __pyx_t_7 = __pyx_v_Nang;
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_i_ell = __pyx_t_8;
 
-      /* "get_counts.pyx":152
- * 		b = b_start + i_b*d_ang
- * 		for i_ell in range(Nang):
- * 			ell = ell_start + i_ell*d_ang             # <<<<<<<<<<<<<<
- * 			coslval = cos(ell * degtorad)
- * 			cosbval = cos(b * degtorad)
+      /* "get_counts.pyx":166
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang             # <<<<<<<<<<<<<<
+ *             coslval = cos(ell * degtorad)
+ *             cosbval = cos(b * degtorad)
  */
       __pyx_v_ell = (__pyx_v_ell_start + (__pyx_v_i_ell * __pyx_v_d_ang));
 
-      /* "get_counts.pyx":153
- * 		for i_ell in range(Nang):
- * 			ell = ell_start + i_ell*d_ang
- * 			coslval = cos(ell * degtorad)             # <<<<<<<<<<<<<<
- * 			cosbval = cos(b * degtorad)
+      /* "get_counts.pyx":167
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)             # <<<<<<<<<<<<<<
+ *             cosbval = cos(b * degtorad)
  * 
  */
       __pyx_v_coslval = cos((__pyx_v_ell * __pyx_v_10get_counts_degtorad));
 
-      /* "get_counts.pyx":154
- * 			ell = ell_start + i_ell*d_ang
- * 			coslval = cos(ell * degtorad)
- * 			cosbval = cos(b * degtorad)             # <<<<<<<<<<<<<<
+      /* "get_counts.pyx":168
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)
+ *             cosbval = cos(b * degtorad)             # <<<<<<<<<<<<<<
  * 
- * 			res = 0.0
+ *             #res = 0.0
  */
       __pyx_v_cosbval = cos((__pyx_v_b * __pyx_v_10get_counts_degtorad));
 
-      /* "get_counts.pyx":156
- * 			cosbval = cos(b * degtorad)
+      /* "get_counts.pyx":171
  * 
- * 			res = 0.0             # <<<<<<<<<<<<<<
- * 			incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
- * 			if incl > 0:
- */
-      __pyx_v_res = 0.0;
-
-      /* "get_counts.pyx":157
- * 
- * 			res = 0.0
- * 			incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)             # <<<<<<<<<<<<<<
- * 			if incl > 0:
- * 				pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *             #res = 0.0
+ *             incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)             # <<<<<<<<<<<<<<
+ *             if incl > 0:
+ *                 # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
  */
       __pyx_v_incl = (1. - ((1. - pow((__pyx_v_rcut / __pyx_v_10get_counts_rodot), 2.0)) * pow((__pyx_v_coslval * __pyx_v_cosbval), 2.0)));
 
-      /* "get_counts.pyx":158
- * 			res = 0.0
- * 			incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
- * 			if incl > 0:             # <<<<<<<<<<<<<<
- * 				pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 				pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+      /* "get_counts.pyx":172
+ *             #res = 0.0
+ *             incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+ *             if incl > 0:             # <<<<<<<<<<<<<<
+ *                 # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *                 # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  */
       __pyx_t_9 = ((__pyx_v_incl > 0.0) != 0);
       if (__pyx_t_9) {
 
-        /* "get_counts.pyx":159
- * 			incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
- * 			if incl > 0:
- * 				pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)             # <<<<<<<<<<<<<<
- * 				pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
- * 
- */
-        __pyx_v_pref_rho = (((((__pyx_v_omega_ijk * __pyx_v_Nbulge) * (3. - __pyx_v_alpha)) / 4.) / __pyx_v_10get_counts_pi) / pow(__pyx_v_rcut, (3.0 - __pyx_v_alpha)));
-
-        /* "get_counts.pyx":160
- * 			if incl > 0:
- * 				pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 				pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)             # <<<<<<<<<<<<<<
- * 
- * 				smin = rodot - rcut
- */
-        __pyx_v_pref_L = ((pow((4. * __pyx_v_10get_counts_pi), (1. - __pyx_v_beta)) * (pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)))) / (pow(__pyx_v_Lmin, (1.0 - __pyx_v_beta)) - pow(__pyx_v_Lmax, (1.0 - __pyx_v_beta))));
-
-        /* "get_counts.pyx":162
- * 				pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
- * 
- * 				smin = rodot - rcut             # <<<<<<<<<<<<<<
- * 				smax = rodot + rcut
- * 				ds = (smax - smin)/float(Ns)
- */
-        __pyx_v_smin = (__pyx_v_10get_counts_rodot - __pyx_v_rcut);
-
-        /* "get_counts.pyx":163
- * 
- * 				smin = rodot - rcut
- * 				smax = rodot + rcut             # <<<<<<<<<<<<<<
- * 				ds = (smax - smin)/float(Ns)
- * 				integral = 0.0
- */
-        __pyx_v_smax = (__pyx_v_10get_counts_rodot + __pyx_v_rcut);
-
-        /* "get_counts.pyx":164
- * 				smin = rodot - rcut
- * 				smax = rodot + rcut
- * 				ds = (smax - smin)/float(Ns)             # <<<<<<<<<<<<<<
- * 				integral = 0.0
- * 				s = smin
- */
-        __pyx_v_ds = ((__pyx_v_smax - __pyx_v_smin) / ((double)__pyx_v_Ns));
-
-        /* "get_counts.pyx":165
- * 				smax = rodot + rcut
- * 				ds = (smax - smin)/float(Ns)
- * 				integral = 0.0             # <<<<<<<<<<<<<<
- * 				s = smin
- * 				for l in range(Ns):
+        /* "get_counts.pyx":179
+ *                 # smax = rodot + rcut
+ *                 # ds = (smax - smin)/float(Ns)
+ *                 integral = 0.0             # <<<<<<<<<<<<<<
+ *                 s = smin
+ *                 for l in range(Ns):
  */
         __pyx_v_integral = 0.0;
 
-        /* "get_counts.pyx":166
- * 				ds = (smax - smin)/float(Ns)
- * 				integral = 0.0
- * 				s = smin             # <<<<<<<<<<<<<<
- * 				for l in range(Ns):
- * 					r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+        /* "get_counts.pyx":180
+ *                 # ds = (smax - smin)/float(Ns)
+ *                 integral = 0.0
+ *                 s = smin             # <<<<<<<<<<<<<<
+ *                 for l in range(Ns):
+ *                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
  */
         __pyx_v_s = __pyx_v_smin;
 
-        /* "get_counts.pyx":167
- * 				integral = 0.0
- * 				s = smin
- * 				for l in range(Ns):             # <<<<<<<<<<<<<<
- * 					r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 					#print r_squared
+        /* "get_counts.pyx":181
+ *                 integral = 0.0
+ *                 s = smin
+ *                 for l in range(Ns):             # <<<<<<<<<<<<<<
+ *                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                     #print r_squared
  */
         __pyx_t_10 = __pyx_v_Ns;
         for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
           __pyx_v_l = __pyx_t_11;
 
-          /* "get_counts.pyx":168
- * 				s = smin
- * 				for l in range(Ns):
- * 					r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )             # <<<<<<<<<<<<<<
- * 					#print r_squared
- * 					if r_squared < rcut**2:
+          /* "get_counts.pyx":182
+ *                 s = smin
+ *                 for l in range(Ns):
+ *                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )             # <<<<<<<<<<<<<<
+ *                     #print r_squared
+ *                     if r_squared < rcut**2:
  */
           __pyx_v_r_squared = (pow((((__pyx_v_s * __pyx_v_cosbval) * __pyx_v_coslval) - __pyx_v_10get_counts_rodot), 2.0) + (pow(__pyx_v_s, 2.0) * (1. - pow((__pyx_v_cosbval * __pyx_v_coslval), 2.0))));
 
-          /* "get_counts.pyx":170
- * 					r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 					#print r_squared
- * 					if r_squared < rcut**2:             # <<<<<<<<<<<<<<
- * 						integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 					s += ds
+          /* "get_counts.pyx":184
+ *                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                     #print r_squared
+ *                     if r_squared < rcut**2:             # <<<<<<<<<<<<<<
+ *                         integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *                     s += ds
  */
           __pyx_t_9 = ((__pyx_v_r_squared < pow(__pyx_v_rcut, 2.0)) != 0);
           if (__pyx_t_9) {
 
-            /* "get_counts.pyx":171
- * 					#print r_squared
- * 					if r_squared < rcut**2:
- * 						integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)             # <<<<<<<<<<<<<<
- * 					s += ds
+            /* "get_counts.pyx":185
+ *                     #print r_squared
+ *                     if r_squared < rcut**2:
+ *                         integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)             # <<<<<<<<<<<<<<
+ *                     s += ds
  * 
  */
             __pyx_v_integral = (__pyx_v_integral + (pow(__pyx_v_s, (4. - (2. * __pyx_v_beta))) * pow(__pyx_v_r_squared, ((-__pyx_v_alpha) / 2.))));
 
-            /* "get_counts.pyx":170
- * 					r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
- * 					#print r_squared
- * 					if r_squared < rcut**2:             # <<<<<<<<<<<<<<
- * 						integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 					s += ds
+            /* "get_counts.pyx":184
+ *                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                     #print r_squared
+ *                     if r_squared < rcut**2:             # <<<<<<<<<<<<<<
+ *                         integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *                     s += ds
  */
           }
 
-          /* "get_counts.pyx":172
- * 					if r_squared < rcut**2:
- * 						integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
- * 					s += ds             # <<<<<<<<<<<<<<
+          /* "get_counts.pyx":186
+ *                     if r_squared < rcut**2:
+ *                         integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+ *                     s += ds             # <<<<<<<<<<<<<<
  * 
- * 				res = cosbval * integral * ds * pref_L * pref_rho
+ *                 total_res += cosbval * integral #* ds * pref_L * pref_rho
  */
           __pyx_v_s = (__pyx_v_s + __pyx_v_ds);
         }
 
-        /* "get_counts.pyx":174
- * 					s += ds
+        /* "get_counts.pyx":188
+ *                     s += ds
  * 
- * 				res = cosbval * integral * ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
- * 				total_res += res
- * 		#print integral, ds, pref_L, pref_rho
+ *                 total_res += cosbval * integral #* ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
+ *                 #total_res += res
+ *         #print integral, ds, pref_L, pref_rho
  */
-        __pyx_v_res = ((((__pyx_v_cosbval * __pyx_v_integral) * __pyx_v_ds) * __pyx_v_pref_L) * __pyx_v_pref_rho);
+        __pyx_v_total_res = (__pyx_v_total_res + (__pyx_v_cosbval * __pyx_v_integral));
 
-        /* "get_counts.pyx":175
- * 
- * 				res = cosbval * integral * ds * pref_L * pref_rho
- * 				total_res += res             # <<<<<<<<<<<<<<
- * 		#print integral, ds, pref_L, pref_rho
- * 
- */
-        __pyx_v_total_res = (__pyx_v_total_res + __pyx_v_res);
-
-        /* "get_counts.pyx":158
- * 			res = 0.0
- * 			incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
- * 			if incl > 0:             # <<<<<<<<<<<<<<
- * 				pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
- * 				pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+        /* "get_counts.pyx":172
+ *             #res = 0.0
+ *             incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+ *             if incl > 0:             # <<<<<<<<<<<<<<
+ *                 # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+ *                 # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
  */
       }
     }
   }
 
-  /* "get_counts.pyx":179
+  /* "get_counts.pyx":193
  * 
- * 	#print area, cosbval, integral, ds, pref_L, pref_rho
- * 	return total_res * d_ang**2. * degtorad**2             # <<<<<<<<<<<<<<
+ *     #print area, cosbval, integral, ds, pref_L, pref_rho
+ *     return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_r = ((__pyx_v_total_res * pow(__pyx_v_d_ang, 2.)) * pow(__pyx_v_10get_counts_degtorad, 2.0));
+  __pyx_r = (((((__pyx_v_total_res * pow(__pyx_v_d_ang, 2.)) * pow(__pyx_v_10get_counts_degtorad, 2.0)) * __pyx_v_ds) * __pyx_v_pref_L) * __pyx_v_pref_rho);
   goto __pyx_L0;
 
-  /* "get_counts.pyx":116
+  /* "get_counts.pyx":120
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut = 3.0, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10) nogil:             # <<<<<<<<<<<<<<
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
- * 	---arguments---
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
  */
 
   /* function exit code */
@@ -3074,7 +3071,7 @@ static double __pyx_f_10get_counts_Nbulge_full_ang_ijk(int __pyx_v_i, int __pyx_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_10get_counts_2Nbulge_full_ang_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n\t---arguments---\n\tNs : number of points in s integration\n\t----units---\n\trcut : in kpc\n\tLmin : erg s^{-1}\n\tLmax : erg s^{-1}\n\t";
+static char __pyx_doc_10get_counts_2Nbulge_full_ang_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n    ---arguments---\n    Ns : number of points in s integration\n    ----units---\n    rcut : in kpc\n    Lmin : erg s^{-1}\n    Lmax : erg s^{-1}\n    ";
 static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_i;
   int __pyx_v_j;
@@ -3121,32 +3118,32 @@ static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_j)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 1); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 1); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 2); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 2); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nbulge)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 3); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 3); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega_ijk)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 4); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 4); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 5); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 5); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 6); __PYX_ERR(0, 116, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, 6); __PYX_ERR(0, 120, __pyx_L3_error)
         }
         case  7:
         if (kw_args > 0) {
@@ -3175,7 +3172,7 @@ static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_full_ang_ijk") < 0)) __PYX_ERR(0, 116, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_full_ang_ijk") < 0)) __PYX_ERR(0, 120, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3195,42 +3192,42 @@ static PyObject *__pyx_pw_10get_counts_3Nbulge_full_ang_ijk(PyObject *__pyx_self
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
-    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
+    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     if (values[7]) {
-      __pyx_v_rcut = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rcut == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+      __pyx_v_rcut = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rcut == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     } else {
       __pyx_v_rcut = ((double)3.0);
     }
     if (values[8]) {
-      __pyx_v_Lmin = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_Lmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+      __pyx_v_Lmin = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_Lmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     } else {
       __pyx_v_Lmin = ((double)1.0e31);
     }
     if (values[9]) {
-      __pyx_v_Lmax = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_Lmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+      __pyx_v_Lmax = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_Lmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     } else {
       __pyx_v_Lmax = ((double)1.0e36);
     }
     if (values[10]) {
-      __pyx_v_Ns = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_Ns == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+      __pyx_v_Ns = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_Ns == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     } else {
       __pyx_v_Ns = ((int)0x3E8);
     }
     if (values[11]) {
-      __pyx_v_Nang = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_Nang == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L3_error)
+      __pyx_v_Nang = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_Nang == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L3_error)
     } else {
       __pyx_v_Nang = ((int)10);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 116, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("Nbulge_full_ang_ijk", 0, 7, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 120, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("get_counts.Nbulge_full_ang_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3258,7 +3255,7 @@ static PyObject *__pyx_pf_10get_counts_2Nbulge_full_ang_ijk(CYTHON_UNUSED PyObje
   __pyx_t_2.Ns = __pyx_v_Ns;
   __pyx_t_2.Nang = __pyx_v_Nang;
   __pyx_t_1 = __pyx_f_10get_counts_Nbulge_full_ang_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta, 0, &__pyx_t_2); 
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -3275,15 +3272,601 @@ static PyObject *__pyx_pf_10get_counts_2Nbulge_full_ang_ijk(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "get_counts.pyx":196
+/* "get_counts.pyx":207
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cpdef double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double omega_ijk, double n, double sigma,double z0, double beta, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10,double smax=40) nogil:             # <<<<<<<<<<<<<<
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
+ */
+
+static PyObject *__pyx_pw_10get_counts_5Ndisk_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static double __pyx_f_10get_counts_Ndisk_full_ang_ijk(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_10get_counts_Ndisk_full_ang_ijk *__pyx_optional_args) {
+  double __pyx_v_Lmin = ((double)1.0e31);
+  double __pyx_v_Lmax = ((double)1.0e36);
+  int __pyx_v_Ns = ((int)0x3E8);
+  int __pyx_v_Nang = ((int)10);
+  double __pyx_v_smax = ((double)40.0);
+  double __pyx_v_fluxmin;
+  double __pyx_v_fluxmax;
+  CYTHON_UNUSED double __pyx_v_Nijk;
+  double __pyx_v_pref_rho;
+  double __pyx_v_pref_L;
+  double __pyx_v_integral;
+  double __pyx_v_s;
+  double __pyx_v_ds;
+  CYTHON_UNUSED int __pyx_v_l;
+  CYTHON_UNUSED double __pyx_v_res;
+  int __pyx_v_i_b;
+  int __pyx_v_i_ell;
+  double __pyx_v_ell;
+  double __pyx_v_b;
+  double __pyx_v_ell_start;
+  double __pyx_v_b_start;
+  double __pyx_v_d_ang;
+  double __pyx_v_total_res;
+  double __pyx_v_coslval;
+  double __pyx_v_cosbval;
+  double __pyx_v_R;
+  double __pyx_v_z;
+  double __pyx_v_smin;
+  double __pyx_v_r_squared;
+  double __pyx_r;
+  Py_ssize_t __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  Py_ssize_t __pyx_t_3;
+  Py_ssize_t __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_Lmin = __pyx_optional_args->Lmin;
+      if (__pyx_optional_args->__pyx_n > 1) {
+        __pyx_v_Lmax = __pyx_optional_args->Lmax;
+        if (__pyx_optional_args->__pyx_n > 2) {
+          __pyx_v_Ns = __pyx_optional_args->Ns;
+          if (__pyx_optional_args->__pyx_n > 3) {
+            __pyx_v_Nang = __pyx_optional_args->Nang;
+            if (__pyx_optional_args->__pyx_n > 4) {
+              __pyx_v_smax = __pyx_optional_args->smax;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* "get_counts.pyx":219
+ *     """
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
+ * 
+ */
+  __pyx_v_fluxmin = ((__pyx_v_10get_counts_fluxvals[__pyx_v_k]) * __pyx_v_10get_counts_fluxunits);
+
+  /* "get_counts.pyx":220
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
+ * 
+ *     # Setup output and if variables
+ */
+  __pyx_v_fluxmax = ((__pyx_v_10get_counts_fluxvals[(__pyx_v_k + 1)]) * __pyx_v_10get_counts_fluxunits);
+
+  /* "get_counts.pyx":223
+ * 
+ *     # Setup output and if variables
+ *     cdef double Nijk = 0.             # <<<<<<<<<<<<<<
+ *     cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral,s,ds
+ * 
+ */
+  __pyx_v_Nijk = 0.;
+
+  /* "get_counts.pyx":228
+ *     cdef int l
+ * 
+ *     cdef double res = 0.0             # <<<<<<<<<<<<<<
+ * 
+ *     cdef int i_b, i_ell
+ */
+  __pyx_v_res = 0.0;
+
+  /* "get_counts.pyx":232
+ *     cdef int i_b, i_ell
+ *     cdef double ell,b
+ *     cdef double ell_start = ang_boundaries[i]             # <<<<<<<<<<<<<<
+ *     cdef double b_start = ang_boundaries[j]
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+ */
+  __pyx_t_1 = __pyx_v_i;
+  __pyx_v_ell_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_1)) )));
+
+  /* "get_counts.pyx":233
+ *     cdef double ell,b
+ *     cdef double ell_start = ang_boundaries[i]
+ *     cdef double b_start = ang_boundaries[j]             # <<<<<<<<<<<<<<
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+ * 
+ */
+  __pyx_t_2 = __pyx_v_j;
+  __pyx_v_b_start = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_2)) )));
+
+  /* "get_counts.pyx":234
+ *     cdef double ell_start = ang_boundaries[i]
+ *     cdef double b_start = ang_boundaries[j]
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)             # <<<<<<<<<<<<<<
+ * 
+ *     cdef double total_res = 0.0
+ */
+  __pyx_t_3 = 1;
+  __pyx_t_4 = 0;
+  __pyx_v_d_ang = (((*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_3)) ))) - (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_10get_counts_ang_boundaries.data) + __pyx_t_4)) )))) / ((double)__pyx_v_Nang));
+
+  /* "get_counts.pyx":236
+ *     cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+ * 
+ *     cdef double total_res = 0.0             # <<<<<<<<<<<<<<
+ * 
+ *     cdef double coslval, cosbval, sinbval
+ */
+  __pyx_v_total_res = 0.0;
+
+  /* "get_counts.pyx":244
+ * 
+ *     # Common prefactors
+ *     pref_rho = omega_ijk * Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)             # <<<<<<<<<<<<<<
+ *     pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+ * 
+ */
+  __pyx_v_pref_rho = ((((((__pyx_v_omega_ijk * __pyx_v_Ndisk) / 4.) / __pyx_v_10get_counts_pi) / __pyx_v_z0) / pow(__pyx_v_sigma, (__pyx_v_n + 2.0))) / tgamma((__pyx_v_n + 2.0)));
+
+  /* "get_counts.pyx":245
+ *     # Common prefactors
+ *     pref_rho = omega_ijk * Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)
+ *     pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)             # <<<<<<<<<<<<<<
+ * 
+ *     # for s integration
+ */
+  __pyx_v_pref_L = ((pow((4. * __pyx_v_10get_counts_pi), (1. - __pyx_v_beta)) * (pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)))) / (pow(__pyx_v_Lmin, (1.0 - __pyx_v_beta)) - pow(__pyx_v_Lmax, (1.0 - __pyx_v_beta))));
+
+  /* "get_counts.pyx":248
+ * 
+ *     # for s integration
+ *     smin = 0.0             # <<<<<<<<<<<<<<
+ *     ds = (smax - smin)/float(Ns)
+ * 
+ */
+  __pyx_v_smin = 0.0;
+
+  /* "get_counts.pyx":249
+ *     # for s integration
+ *     smin = 0.0
+ *     ds = (smax - smin)/float(Ns)             # <<<<<<<<<<<<<<
+ * 
+ *     for i_b in range(Nang):
+ */
+  __pyx_v_ds = ((__pyx_v_smax - __pyx_v_smin) / ((double)__pyx_v_Ns));
+
+  /* "get_counts.pyx":251
+ *     ds = (smax - smin)/float(Ns)
+ * 
+ *     for i_b in range(Nang):             # <<<<<<<<<<<<<<
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):
+ */
+  __pyx_t_5 = __pyx_v_Nang;
+  for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_i_b = __pyx_t_6;
+
+    /* "get_counts.pyx":252
+ * 
+ *     for i_b in range(Nang):
+ *         b = b_start + i_b*d_ang             # <<<<<<<<<<<<<<
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang
+ */
+    __pyx_v_b = (__pyx_v_b_start + (__pyx_v_i_b * __pyx_v_d_ang));
+
+    /* "get_counts.pyx":253
+ *     for i_b in range(Nang):
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):             # <<<<<<<<<<<<<<
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)
+ */
+    __pyx_t_7 = __pyx_v_Nang;
+    for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+      __pyx_v_i_ell = __pyx_t_8;
+
+      /* "get_counts.pyx":254
+ *         b = b_start + i_b*d_ang
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang             # <<<<<<<<<<<<<<
+ *             coslval = cos(ell * degtorad)
+ *             cosbval = cos(b * degtorad)
+ */
+      __pyx_v_ell = (__pyx_v_ell_start + (__pyx_v_i_ell * __pyx_v_d_ang));
+
+      /* "get_counts.pyx":255
+ *         for i_ell in range(Nang):
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)             # <<<<<<<<<<<<<<
+ *             cosbval = cos(b * degtorad)
+ *             #sinbval = sin(b * degtorad)
+ */
+      __pyx_v_coslval = cos((__pyx_v_ell * __pyx_v_10get_counts_degtorad));
+
+      /* "get_counts.pyx":256
+ *             ell = ell_start + i_ell*d_ang
+ *             coslval = cos(ell * degtorad)
+ *             cosbval = cos(b * degtorad)             # <<<<<<<<<<<<<<
+ *             #sinbval = sin(b * degtorad)
+ * 
+ */
+      __pyx_v_cosbval = cos((__pyx_v_b * __pyx_v_10get_counts_degtorad));
+
+      /* "get_counts.pyx":259
+ *             #sinbval = sin(b * degtorad)
+ * 
+ *             res = 0.0             # <<<<<<<<<<<<<<
+ *             integral = 0.0
+ *             s = smin
+ */
+      __pyx_v_res = 0.0;
+
+      /* "get_counts.pyx":260
+ * 
+ *             res = 0.0
+ *             integral = 0.0             # <<<<<<<<<<<<<<
+ *             s = smin
+ *             for l in range(Ns):
+ */
+      __pyx_v_integral = 0.0;
+
+      /* "get_counts.pyx":261
+ *             res = 0.0
+ *             integral = 0.0
+ *             s = smin             # <<<<<<<<<<<<<<
+ *             for l in range(Ns):
+ *                 r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ */
+      __pyx_v_s = __pyx_v_smin;
+
+      /* "get_counts.pyx":262
+ *             integral = 0.0
+ *             s = smin
+ *             for l in range(Ns):             # <<<<<<<<<<<<<<
+ *                 r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                 z = s*sqrt(1 - cosbval**2)
+ */
+      __pyx_t_9 = __pyx_v_Ns;
+      for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
+        __pyx_v_l = __pyx_t_10;
+
+        /* "get_counts.pyx":263
+ *             s = smin
+ *             for l in range(Ns):
+ *                 r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )             # <<<<<<<<<<<<<<
+ *                 z = s*sqrt(1 - cosbval**2)
+ *                 R = sqrt( r_squared - z**2 )
+ */
+        __pyx_v_r_squared = (pow((((__pyx_v_s * __pyx_v_cosbval) * __pyx_v_coslval) - __pyx_v_10get_counts_rodot), 2.0) + (pow(__pyx_v_s, 2.0) * (1. - pow((__pyx_v_cosbval * __pyx_v_coslval), 2.0))));
+
+        /* "get_counts.pyx":264
+ *             for l in range(Ns):
+ *                 r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                 z = s*sqrt(1 - cosbval**2)             # <<<<<<<<<<<<<<
+ *                 R = sqrt( r_squared - z**2 )
+ *                 #print r_squared
+ */
+        __pyx_v_z = (__pyx_v_s * sqrt((1.0 - pow(__pyx_v_cosbval, 2.0))));
+
+        /* "get_counts.pyx":265
+ *                 r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+ *                 z = s*sqrt(1 - cosbval**2)
+ *                 R = sqrt( r_squared - z**2 )             # <<<<<<<<<<<<<<
+ *                 #print r_squared
+ *                 integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)
+ */
+        __pyx_v_R = sqrt((__pyx_v_r_squared - pow(__pyx_v_z, 2.0)));
+
+        /* "get_counts.pyx":267
+ *                 R = sqrt( r_squared - z**2 )
+ *                 #print r_squared
+ *                 integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)             # <<<<<<<<<<<<<<
+ *                 s += ds
+ * 
+ */
+        __pyx_v_integral = (__pyx_v_integral + ((pow(__pyx_v_s, (4. - (2. * __pyx_v_beta))) * pow(__pyx_v_R, __pyx_v_n)) * exp((((-__pyx_v_R) / __pyx_v_sigma) - (__pyx_v_z / __pyx_v_z0)))));
+
+        /* "get_counts.pyx":268
+ *                 #print r_squared
+ *                 integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)
+ *                 s += ds             # <<<<<<<<<<<<<<
+ * 
+ *             res = cosbval * integral #* ds * pref_L * pref_rho
+ */
+        __pyx_v_s = (__pyx_v_s + __pyx_v_ds);
+      }
+
+      /* "get_counts.pyx":270
+ *                 s += ds
+ * 
+ *             res = cosbval * integral #* ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
+ *             total_res += cosbval * integral
+ *         #print integral, ds, pref_L, pref_rho
+ */
+      __pyx_v_res = (__pyx_v_cosbval * __pyx_v_integral);
+
+      /* "get_counts.pyx":271
+ * 
+ *             res = cosbval * integral #* ds * pref_L * pref_rho
+ *             total_res += cosbval * integral             # <<<<<<<<<<<<<<
+ *         #print integral, ds, pref_L, pref_rho
+ * 
+ */
+      __pyx_v_total_res = (__pyx_v_total_res + (__pyx_v_cosbval * __pyx_v_integral));
+    }
+  }
+
+  /* "get_counts.pyx":275
+ * 
+ *     #print area, cosbval, integral, ds, pref_L, pref_rho
+ *     return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = (((((__pyx_v_total_res * pow(__pyx_v_d_ang, 2.)) * pow(__pyx_v_10get_counts_degtorad, 2.0)) * __pyx_v_ds) * __pyx_v_pref_L) * __pyx_v_pref_rho);
+  goto __pyx_L0;
+
+  /* "get_counts.pyx":207
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cpdef double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double omega_ijk, double n, double sigma,double z0, double beta, double Lmin= 1.0e31, double Lmax = 1.0e36,int Ns = 1000,int Nang = 10,double smax=40) nogil:             # <<<<<<<<<<<<<<
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *     ---arguments---
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_10get_counts_5Ndisk_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_10get_counts_4Ndisk_full_ang_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n    ---arguments---\n    Ns : number of points in s integration\n    ----units---\n    z0 : kpc\n    sigma : kpc\n    Lmin : erg s^{-1}\n    Lmax : erg s^{-1}\n    smax : 40 kpc default, how far to integrate out to from Sun?\n    ";
+static PyObject *__pyx_pw_10get_counts_5Ndisk_full_ang_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_k;
+  double __pyx_v_Ndisk;
+  double __pyx_v_omega_ijk;
+  double __pyx_v_n;
+  double __pyx_v_sigma;
+  double __pyx_v_z0;
+  double __pyx_v_beta;
+  double __pyx_v_Lmin;
+  double __pyx_v_Lmax;
+  int __pyx_v_Ns;
+  int __pyx_v_Nang;
+  double __pyx_v_smax;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("Ndisk_full_ang_ijk (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_i,&__pyx_n_s_j,&__pyx_n_s_k,&__pyx_n_s_Ndisk,&__pyx_n_s_omega_ijk,&__pyx_n_s_n,&__pyx_n_s_sigma,&__pyx_n_s_z0,&__pyx_n_s_beta,&__pyx_n_s_Lmin,&__pyx_n_s_Lmax,&__pyx_n_s_Ns,&__pyx_n_s_Nang,&__pyx_n_s_smax,0};
+    PyObject* values[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case 14: values[13] = PyTuple_GET_ITEM(__pyx_args, 13);
+        case 13: values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
+        case 12: values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
+        case 11: values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
+        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
+        case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_i)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_j)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 1); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  2:
+        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 2); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  3:
+        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Ndisk)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 3); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  4:
+        if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega_ijk)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 4); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  5:
+        if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 5); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  6:
+        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_sigma)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 6); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  7:
+        if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_z0)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 7); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  8:
+        if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, 8); __PYX_ERR(0, 207, __pyx_L3_error)
+        }
+        case  9:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Lmin);
+          if (value) { values[9] = value; kw_args--; }
+        }
+        case 10:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Lmax);
+          if (value) { values[10] = value; kw_args--; }
+        }
+        case 11:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Ns);
+          if (value) { values[11] = value; kw_args--; }
+        }
+        case 12:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nang);
+          if (value) { values[12] = value; kw_args--; }
+        }
+        case 13:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_smax);
+          if (value) { values[13] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Ndisk_full_ang_ijk") < 0)) __PYX_ERR(0, 207, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case 14: values[13] = PyTuple_GET_ITEM(__pyx_args, 13);
+        case 13: values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
+        case 12: values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
+        case 11: values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
+        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
+        case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+        values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+        values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_Ndisk = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Ndisk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_n = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_n == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_sigma = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_sigma == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_z0 = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_z0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    if (values[9]) {
+      __pyx_v_Lmin = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_Lmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    } else {
+      __pyx_v_Lmin = ((double)1.0e31);
+    }
+    if (values[10]) {
+      __pyx_v_Lmax = __pyx_PyFloat_AsDouble(values[10]); if (unlikely((__pyx_v_Lmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    } else {
+      __pyx_v_Lmax = ((double)1.0e36);
+    }
+    if (values[11]) {
+      __pyx_v_Ns = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_Ns == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    } else {
+      __pyx_v_Ns = ((int)0x3E8);
+    }
+    if (values[12]) {
+      __pyx_v_Nang = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_Nang == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    } else {
+      __pyx_v_Nang = ((int)10);
+    }
+    if (values[13]) {
+      __pyx_v_smax = __pyx_PyFloat_AsDouble(values[13]); if (unlikely((__pyx_v_smax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    } else {
+      __pyx_v_smax = ((double)40.0);
+    }
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("Ndisk_full_ang_ijk", 0, 9, 14, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 207, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("get_counts.Ndisk_full_ang_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_10get_counts_4Ndisk_full_ang_ijk(__pyx_self, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Ndisk, __pyx_v_omega_ijk, __pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta, __pyx_v_Lmin, __pyx_v_Lmax, __pyx_v_Ns, __pyx_v_Nang, __pyx_v_smax);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_10get_counts_4Ndisk_full_ang_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, double __pyx_v_Lmin, double __pyx_v_Lmax, int __pyx_v_Ns, int __pyx_v_Nang, double __pyx_v_smax) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  double __pyx_t_1;
+  struct __pyx_opt_args_10get_counts_Ndisk_full_ang_ijk __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("Ndisk_full_ang_ijk", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 5;
+  __pyx_t_2.Lmin = __pyx_v_Lmin;
+  __pyx_t_2.Lmax = __pyx_v_Lmax;
+  __pyx_t_2.Ns = __pyx_v_Ns;
+  __pyx_t_2.Nang = __pyx_v_Nang;
+  __pyx_t_2.smax = __pyx_v_smax;
+  __pyx_t_1 = __pyx_f_10get_counts_Ndisk_full_ang_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Ndisk, __pyx_v_omega_ijk, __pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta, 0, &__pyx_t_2); 
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("get_counts.Ndisk_full_ang_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "get_counts.pyx":291
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_ijk(int i, int j, int k, double Nbulge, double omega_ijk,             # <<<<<<<<<<<<<<
- * 						double alpha, double beta) nogil:
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *                         double alpha, double beta) nogil:
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
  */
 
-static PyObject *__pyx_pw_10get_counts_5Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_10get_counts_7Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static double __pyx_f_10get_counts_Nbulge_ijk(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_coslval;
   double __pyx_v_cosbval;
@@ -3298,140 +3881,140 @@ static double __pyx_f_10get_counts_Nbulge_ijk(int __pyx_v_i, int __pyx_v_j, int 
   double __pyx_r;
   int __pyx_t_1;
 
-  /* "get_counts.pyx":202
+  /* "get_counts.pyx":297
  * 
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
  */
   __pyx_v_coslval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_i]) * __pyx_v_10get_counts_degtorad));
 
-  /* "get_counts.pyx":203
- * 	# Determine angles and flux boundaries, convert flux to erg/kpc^2/s
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
+  /* "get_counts.pyx":298
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
  */
   __pyx_v_cosbval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_j]) * __pyx_v_10get_counts_degtorad));
 
-  /* "get_counts.pyx":204
- * 	cdef double coslval = cos(angvals[i] * degtorad)
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits
+  /* "get_counts.pyx":299
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
  * 
  */
   __pyx_v_fluxmin = ((__pyx_v_10get_counts_fluxvals[__pyx_v_k]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":205
- * 	cdef double cosbval = cos(angvals[j] * degtorad)
- * 	cdef double fluxmin = fluxvals[k] * fluxunits
- * 	cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
+  /* "get_counts.pyx":300
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
  * 
- * 	# Setup output and if variables
+ *     # Setup output and if variables
  */
   __pyx_v_fluxmax = ((__pyx_v_10get_counts_fluxvals[(__pyx_v_k + 1)]) * __pyx_v_10get_counts_fluxunits);
 
-  /* "get_counts.pyx":208
+  /* "get_counts.pyx":303
  * 
- * 	# Setup output and if variables
- * 	cdef double Nijk = 0.             # <<<<<<<<<<<<<<
- * 	cdef double prefactor, lim_m, lim_p, integral
+ *     # Setup output and if variables
+ *     cdef double Nijk = 0.             # <<<<<<<<<<<<<<
+ *     cdef double prefactor, lim_m, lim_p, integral
  * 
  */
   __pyx_v_Nijk = 0.;
 
-  /* "get_counts.pyx":213
- * 	# Figure out if line of sight includes bulge, if not return 0
- * 	cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
- * 					   - 1.             # <<<<<<<<<<<<<<
- * 	if sdet > 0.:
- * 		# Compute prefactor
+  /* "get_counts.pyx":308
+ *     # Figure out if line of sight includes bulge, if not return 0
+ *     cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
+ *                        - 1.             # <<<<<<<<<<<<<<
+ *     if sdet > 0.:
+ *         # Compute prefactor
  */
   __pyx_v_sdet = ((pow((__pyx_v_coslval * __pyx_v_cosbval), 2.) + (9. / pow(__pyx_v_10get_counts_rodot, 2.))) - 1.);
 
-  /* "get_counts.pyx":214
- * 	cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
- * 					   - 1.
- * 	if sdet > 0.:             # <<<<<<<<<<<<<<
- * 		# Compute prefactor
- * 		prefactor = Nbulge * omega_ijk * 100. * (3.-alpha) \
+  /* "get_counts.pyx":309
+ *     cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
+ *                        - 1.
+ *     if sdet > 0.:             # <<<<<<<<<<<<<<
+ *         # Compute prefactor
+ *         prefactor = Nbulge * omega_ijk * 100. * (3.-alpha) \
  */
   __pyx_t_1 = ((__pyx_v_sdet > 0.) != 0);
   if (__pyx_t_1) {
 
-    /* "get_counts.pyx":219
- * 					/ pow(4*pi, beta) / pow(3., 5.-alpha) \
- * 					* (pow(fluxmax, 1.-beta) - pow(fluxmin, 1.-beta)) \
- * 					/ (pow(1.0e36, 1.-beta) - pow(1.0e31, 1.-beta))             # <<<<<<<<<<<<<<
+    /* "get_counts.pyx":314
+ *                     / pow(4*pi, beta) / pow(3., 5.-alpha) \
+ *                     * (pow(fluxmax, 1.-beta) - pow(fluxmin, 1.-beta)) \
+ *                     / (pow(1.0e36, 1.-beta) - pow(1.0e31, 1.-beta))             # <<<<<<<<<<<<<<
  * 
- * 		# Compute limits and integral
+ *         # Compute limits and integral
  */
     __pyx_v_prefactor = (((((((__pyx_v_Nbulge * __pyx_v_omega_ijk) * 100.) * (3. - __pyx_v_alpha)) / pow((4.0 * __pyx_v_10get_counts_pi), __pyx_v_beta)) / pow(3., (5. - __pyx_v_alpha))) * (pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)))) / (pow(1.0e36, (1. - __pyx_v_beta)) - pow(1.0e31, (1. - __pyx_v_beta))));
 
-    /* "get_counts.pyx":222
+    /* "get_counts.pyx":317
  * 
- * 		# Compute limits and integral
- * 		lim_m = rodot * (coslval * cosbval - sqrt(sdet))             # <<<<<<<<<<<<<<
- * 		lim_p = rodot * (coslval * cosbval + sqrt(sdet))
+ *         # Compute limits and integral
+ *         lim_m = rodot * (coslval * cosbval - sqrt(sdet))             # <<<<<<<<<<<<<<
+ *         lim_p = rodot * (coslval * cosbval + sqrt(sdet))
  * 
  */
     __pyx_v_lim_m = (__pyx_v_10get_counts_rodot * ((__pyx_v_coslval * __pyx_v_cosbval) - sqrt(__pyx_v_sdet)));
 
-    /* "get_counts.pyx":223
- * 		# Compute limits and integral
- * 		lim_m = rodot * (coslval * cosbval - sqrt(sdet))
- * 		lim_p = rodot * (coslval * cosbval + sqrt(sdet))             # <<<<<<<<<<<<<<
+    /* "get_counts.pyx":318
+ *         # Compute limits and integral
+ *         lim_m = rodot * (coslval * cosbval - sqrt(sdet))
+ *         lim_p = rodot * (coslval * cosbval + sqrt(sdet))             # <<<<<<<<<<<<<<
  * 
- * 		integral = bulge_int(alpha, beta, coslval, cosbval, lim_m, lim_p)
+ *         integral = bulge_int(alpha, beta, coslval, cosbval, lim_m, lim_p)
  */
     __pyx_v_lim_p = (__pyx_v_10get_counts_rodot * ((__pyx_v_coslval * __pyx_v_cosbval) + sqrt(__pyx_v_sdet)));
 
-    /* "get_counts.pyx":225
- * 		lim_p = rodot * (coslval * cosbval + sqrt(sdet))
+    /* "get_counts.pyx":320
+ *         lim_p = rodot * (coslval * cosbval + sqrt(sdet))
  * 
- * 		integral = bulge_int(alpha, beta, coslval, cosbval, lim_m, lim_p)             # <<<<<<<<<<<<<<
+ *         integral = bulge_int(alpha, beta, coslval, cosbval, lim_m, lim_p)             # <<<<<<<<<<<<<<
  * 
- * 		# Combine factors and convert units to sr from degrees^2
+ *         # Combine factors and convert units to sr from degrees^2
  */
     __pyx_v_integral = __pyx_f_10get_counts_bulge_int(__pyx_v_alpha, __pyx_v_beta, __pyx_v_coslval, __pyx_v_cosbval, __pyx_v_lim_m, __pyx_v_lim_p);
 
-    /* "get_counts.pyx":228
+    /* "get_counts.pyx":323
  * 
- * 		# Combine factors and convert units to sr from degrees^2
- * 		Nijk = prefactor * integral * pow(degtorad,2.)             # <<<<<<<<<<<<<<
+ *         # Combine factors and convert units to sr from degrees^2
+ *         Nijk = prefactor * integral * pow(degtorad,2.)             # <<<<<<<<<<<<<<
  * 
- * 	return Nijk
+ *     return Nijk
  */
     __pyx_v_Nijk = ((__pyx_v_prefactor * __pyx_v_integral) * pow(__pyx_v_10get_counts_degtorad, 2.));
 
-    /* "get_counts.pyx":214
- * 	cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
- * 					   - 1.
- * 	if sdet > 0.:             # <<<<<<<<<<<<<<
- * 		# Compute prefactor
- * 		prefactor = Nbulge * omega_ijk * 100. * (3.-alpha) \
+    /* "get_counts.pyx":309
+ *     cdef double sdet = pow(coslval * cosbval, 2.) + 9. / pow(rodot, 2.) \
+ *                        - 1.
+ *     if sdet > 0.:             # <<<<<<<<<<<<<<
+ *         # Compute prefactor
+ *         prefactor = Nbulge * omega_ijk * 100. * (3.-alpha) \
  */
   }
 
-  /* "get_counts.pyx":230
- * 		Nijk = prefactor * integral * pow(degtorad,2.)
+  /* "get_counts.pyx":325
+ *         Nijk = prefactor * integral * pow(degtorad,2.)
  * 
- * 	return Nijk             # <<<<<<<<<<<<<<
+ *     return Nijk             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __pyx_r = __pyx_v_Nijk;
   goto __pyx_L0;
 
-  /* "get_counts.pyx":196
+  /* "get_counts.pyx":291
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cpdef double Nbulge_ijk(int i, int j, int k, double Nbulge, double omega_ijk,             # <<<<<<<<<<<<<<
- * 						double alpha, double beta) nogil:
- * 	""" Return the number of bulge PSRs in bin (i,j,k) for given parameters
+ *                         double alpha, double beta) nogil:
+ *     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
  */
 
   /* function exit code */
@@ -3440,9 +4023,9 @@ static double __pyx_f_10get_counts_Nbulge_ijk(int __pyx_v_i, int __pyx_v_j, int 
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10get_counts_5Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_10get_counts_4Nbulge_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n\t";
-static PyObject *__pyx_pw_10get_counts_5Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_10get_counts_7Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_10get_counts_6Nbulge_ijk[] = " Return the number of bulge PSRs in bin (i,j,k) for given parameters\n    ";
+static PyObject *__pyx_pw_10get_counts_7Nbulge_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_k;
@@ -3478,36 +4061,36 @@ static PyObject *__pyx_pw_10get_counts_5Nbulge_ijk(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_j)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 1); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 1); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 2); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 2); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nbulge)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 3); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 3); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega_ijk)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 4); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 4); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 5); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 5); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 6); __PYX_ERR(0, 196, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, 6); __PYX_ERR(0, 291, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_ijk") < 0)) __PYX_ERR(0, 196, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Nbulge_ijk") < 0)) __PYX_ERR(0, 291, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -3520,36 +4103,36 @@ static PyObject *__pyx_pw_10get_counts_5Nbulge_ijk(PyObject *__pyx_self, PyObjec
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
-    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L3_error)
-    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L3_error)
+    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_Nbulge = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Nbulge == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L3_error)
+    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 196, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("Nbulge_ijk", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 291, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("get_counts.Nbulge_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10get_counts_4Nbulge_ijk(__pyx_self, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta);
+  __pyx_r = __pyx_pf_10get_counts_6Nbulge_ijk(__pyx_self, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10get_counts_4Nbulge_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta) {
+static PyObject *__pyx_pf_10get_counts_6Nbulge_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Nbulge, double __pyx_v_omega_ijk, double __pyx_v_alpha, double __pyx_v_beta) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("Nbulge_ijk", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10get_counts_Nbulge_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10get_counts_Nbulge_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Nbulge, __pyx_v_omega_ijk, __pyx_v_alpha, __pyx_v_beta, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3566,12 +4149,272 @@ static PyObject *__pyx_pf_10get_counts_4Nbulge_ijk(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "get_counts.pyx":241
+/* "get_counts.pyx":336
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cpdef double Ndisk_ijk(int i, int j, int k, double Ndisk, double omega_ijk,             # <<<<<<<<<<<<<<
+ *                        double n, double sigma, double z0, double beta) nogil:
+ *     """ Return the number of disk PSRs in bin (i,j,k) for given parameters
+ */
+
+static PyObject *__pyx_pw_10get_counts_9Ndisk_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static double __pyx_f_10get_counts_Ndisk_ijk(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  double __pyx_v_coslval;
+  double __pyx_v_cosbval;
+  double __pyx_v_tanbval;
+  double __pyx_v_fluxmin;
+  double __pyx_v_fluxmax;
+  double __pyx_v_prefactor;
+  double __pyx_v_integral;
+  double __pyx_v_Nijk;
+  double __pyx_r;
+
+  /* "get_counts.pyx":342
+ * 
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double tanbval = fabs(tan(angvals[j] * degtorad)) # abs as in |z|
+ */
+  __pyx_v_coslval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_i]) * __pyx_v_10get_counts_degtorad));
+
+  /* "get_counts.pyx":343
+ *     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)             # <<<<<<<<<<<<<<
+ *     cdef double tanbval = fabs(tan(angvals[j] * degtorad)) # abs as in |z|
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ */
+  __pyx_v_cosbval = cos(((__pyx_v_10get_counts_angvals[__pyx_v_j]) * __pyx_v_10get_counts_degtorad));
+
+  /* "get_counts.pyx":344
+ *     cdef double coslval = cos(angvals[i] * degtorad)
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double tanbval = fabs(tan(angvals[j] * degtorad)) # abs as in |z|             # <<<<<<<<<<<<<<
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
+ */
+  __pyx_v_tanbval = fabs(tan(((__pyx_v_10get_counts_angvals[__pyx_v_j]) * __pyx_v_10get_counts_degtorad)));
+
+  /* "get_counts.pyx":345
+ *     cdef double cosbval = cos(angvals[j] * degtorad)
+ *     cdef double tanbval = fabs(tan(angvals[j] * degtorad)) # abs as in |z|
+ *     cdef double fluxmin = fluxvals[k] * fluxunits             # <<<<<<<<<<<<<<
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits
+ * 
+ */
+  __pyx_v_fluxmin = ((__pyx_v_10get_counts_fluxvals[__pyx_v_k]) * __pyx_v_10get_counts_fluxunits);
+
+  /* "get_counts.pyx":346
+ *     cdef double tanbval = fabs(tan(angvals[j] * degtorad)) # abs as in |z|
+ *     cdef double fluxmin = fluxvals[k] * fluxunits
+ *     cdef double fluxmax = fluxvals[k+1] * fluxunits             # <<<<<<<<<<<<<<
+ * 
+ *     # Compute prefactor
+ */
+  __pyx_v_fluxmax = ((__pyx_v_10get_counts_fluxvals[(__pyx_v_k + 1)]) * __pyx_v_10get_counts_fluxunits);
+
+  /* "get_counts.pyx":352
+ *                             * z0 * pow(sigma, 2.+n) * tgamma(2.+n)) \
+ *                             * (pow(fluxmax, 1.-beta) - pow(fluxmin, 1.-beta)) \
+ *                             / (pow(1.0e36, 1.-beta) - pow(1.0e31, 1.-beta))             # <<<<<<<<<<<<<<
+ * 
+ *     # Compute integral
+ */
+  __pyx_v_prefactor = (((((__pyx_v_Ndisk * __pyx_v_omega_ijk) * 100.) / ((((9. * pow((4.0 * __pyx_v_10get_counts_pi), __pyx_v_beta)) * __pyx_v_z0) * pow(__pyx_v_sigma, (2. + __pyx_v_n))) * tgamma((2. + __pyx_v_n)))) * (pow(__pyx_v_fluxmax, (1. - __pyx_v_beta)) - pow(__pyx_v_fluxmin, (1. - __pyx_v_beta)))) / (pow(1.0e36, (1. - __pyx_v_beta)) - pow(1.0e31, (1. - __pyx_v_beta))));
+
+  /* "get_counts.pyx":355
+ * 
+ *     # Compute integral
+ *     cdef double integral = disk_int(n, sigma, z0, beta, coslval, cosbval, tanbval)             # <<<<<<<<<<<<<<
+ * 
+ *     # Combine factors and convert units to sr from degrees^2
+ */
+  __pyx_v_integral = __pyx_f_10get_counts_disk_int(__pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta, __pyx_v_coslval, __pyx_v_cosbval, __pyx_v_tanbval);
+
+  /* "get_counts.pyx":358
+ * 
+ *     # Combine factors and convert units to sr from degrees^2
+ *     cdef double Nijk = prefactor * integral * pow(degtorad,2.)             # <<<<<<<<<<<<<<
+ * 
+ *     return Nijk
+ */
+  __pyx_v_Nijk = ((__pyx_v_prefactor * __pyx_v_integral) * pow(__pyx_v_10get_counts_degtorad, 2.));
+
+  /* "get_counts.pyx":360
+ *     cdef double Nijk = prefactor * integral * pow(degtorad,2.)
+ * 
+ *     return Nijk             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = __pyx_v_Nijk;
+  goto __pyx_L0;
+
+  /* "get_counts.pyx":336
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cpdef double Ndisk_ijk(int i, int j, int k, double Ndisk, double omega_ijk,             # <<<<<<<<<<<<<<
+ *                        double n, double sigma, double z0, double beta) nogil:
+ *     """ Return the number of disk PSRs in bin (i,j,k) for given parameters
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_10get_counts_9Ndisk_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_10get_counts_8Ndisk_ijk[] = " Return the number of disk PSRs in bin (i,j,k) for given parameters\n    ";
+static PyObject *__pyx_pw_10get_counts_9Ndisk_ijk(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_k;
+  double __pyx_v_Ndisk;
+  double __pyx_v_omega_ijk;
+  double __pyx_v_n;
+  double __pyx_v_sigma;
+  double __pyx_v_z0;
+  double __pyx_v_beta;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("Ndisk_ijk (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_i,&__pyx_n_s_j,&__pyx_n_s_k,&__pyx_n_s_Ndisk,&__pyx_n_s_omega_ijk,&__pyx_n_s_n,&__pyx_n_s_sigma,&__pyx_n_s_z0,&__pyx_n_s_beta,0};
+    PyObject* values[9] = {0,0,0,0,0,0,0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+        case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_i)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_j)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 1); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  2:
+        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 2); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  3:
+        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Ndisk)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 3); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  4:
+        if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega_ijk)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 4); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  5:
+        if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 5); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  6:
+        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_sigma)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 6); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  7:
+        if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_z0)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 7); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+        case  8:
+        if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, 8); __PYX_ERR(0, 336, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "Ndisk_ijk") < 0)) __PYX_ERR(0, 336, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+      values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+      values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+      values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
+      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
+      values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+    }
+    __pyx_v_i = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_i == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_j = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_j == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_k = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_k == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_Ndisk = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Ndisk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_omega_ijk = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_omega_ijk == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_n = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_n == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 337, __pyx_L3_error)
+    __pyx_v_sigma = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_sigma == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 337, __pyx_L3_error)
+    __pyx_v_z0 = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_z0 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 337, __pyx_L3_error)
+    __pyx_v_beta = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_beta == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 337, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("Ndisk_ijk", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 336, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("get_counts.Ndisk_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_10get_counts_8Ndisk_ijk(__pyx_self, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Ndisk, __pyx_v_omega_ijk, __pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_10get_counts_8Ndisk_ijk(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, double __pyx_v_Ndisk, double __pyx_v_omega_ijk, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("Ndisk_ijk", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10get_counts_Ndisk_ijk(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_Ndisk, __pyx_v_omega_ijk, __pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("get_counts.Ndisk_ijk", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "get_counts.pyx":371
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cdef double bulge_int(double alpha, double beta, double coslval, double cosbval,             # <<<<<<<<<<<<<<
- * 					  double lim_m, double lim_p) nogil:
- * 	""" Calculate the integral over the bulge from lim_m to lim_p
+ *                       double lim_m, double lim_p) nogil:
+ *     """ Calculate the integral over the bulge from lim_m to lim_p
  */
 
 static double __pyx_f_10get_counts_bulge_int(double __pyx_v_alpha, double __pyx_v_beta, double __pyx_v_coslval, double __pyx_v_cosbval, double __pyx_v_lim_m, double __pyx_v_lim_p) {
@@ -3580,79 +4423,79 @@ static double __pyx_f_10get_counts_bulge_int(double __pyx_v_alpha, double __pyx_
   double __pyx_r;
   int __pyx_t_1;
 
-  /* "get_counts.pyx":247
- * 	"""
+  /* "get_counts.pyx":377
+ *     """
  * 
- * 	cdef double intval = 0.             # <<<<<<<<<<<<<<
- * 	cdef double sval = lim_m + sbin/2.
- * 	while (sval < lim_p):
+ *     cdef double intval = 0.             # <<<<<<<<<<<<<<
+ *     cdef double sval = lim_m + sbin/2.
+ *     while (sval < lim_p):
  */
   __pyx_v_intval = 0.;
 
-  /* "get_counts.pyx":248
+  /* "get_counts.pyx":378
  * 
- * 	cdef double intval = 0.
- * 	cdef double sval = lim_m + sbin/2.             # <<<<<<<<<<<<<<
- * 	while (sval < lim_p):
- * 		intval += integrand(sval, alpha, beta, coslval, cosbval)
+ *     cdef double intval = 0.
+ *     cdef double sval = lim_m + sbin/2.             # <<<<<<<<<<<<<<
+ *     while (sval < lim_p):
+ *         intval += integrand(sval, alpha, beta, coslval, cosbval)
  */
   __pyx_v_sval = (__pyx_v_lim_m + (__pyx_v_10get_counts_sbin / 2.));
 
-  /* "get_counts.pyx":249
- * 	cdef double intval = 0.
- * 	cdef double sval = lim_m + sbin/2.
- * 	while (sval < lim_p):             # <<<<<<<<<<<<<<
- * 		intval += integrand(sval, alpha, beta, coslval, cosbval)
- * 		sval += sbin
+  /* "get_counts.pyx":379
+ *     cdef double intval = 0.
+ *     cdef double sval = lim_m + sbin/2.
+ *     while (sval < lim_p):             # <<<<<<<<<<<<<<
+ *         intval += integrand(sval, alpha, beta, coslval, cosbval)
+ *         sval += sbin
  */
   while (1) {
     __pyx_t_1 = ((__pyx_v_sval < __pyx_v_lim_p) != 0);
     if (!__pyx_t_1) break;
 
-    /* "get_counts.pyx":250
- * 	cdef double sval = lim_m + sbin/2.
- * 	while (sval < lim_p):
- * 		intval += integrand(sval, alpha, beta, coslval, cosbval)             # <<<<<<<<<<<<<<
- * 		sval += sbin
+    /* "get_counts.pyx":380
+ *     cdef double sval = lim_m + sbin/2.
+ *     while (sval < lim_p):
+ *         intval += integrand(sval, alpha, beta, coslval, cosbval)             # <<<<<<<<<<<<<<
+ *         sval += sbin
  * 
  */
     __pyx_v_intval = (__pyx_v_intval + __pyx_f_10get_counts_integrand(__pyx_v_sval, __pyx_v_alpha, __pyx_v_beta, __pyx_v_coslval, __pyx_v_cosbval));
 
-    /* "get_counts.pyx":251
- * 	while (sval < lim_p):
- * 		intval += integrand(sval, alpha, beta, coslval, cosbval)
- * 		sval += sbin             # <<<<<<<<<<<<<<
+    /* "get_counts.pyx":381
+ *     while (sval < lim_p):
+ *         intval += integrand(sval, alpha, beta, coslval, cosbval)
+ *         sval += sbin             # <<<<<<<<<<<<<<
  * 
- * 	intval *= sbin
+ *     intval *= sbin
  */
     __pyx_v_sval = (__pyx_v_sval + __pyx_v_10get_counts_sbin);
   }
 
-  /* "get_counts.pyx":253
- * 		sval += sbin
+  /* "get_counts.pyx":383
+ *         sval += sbin
  * 
- * 	intval *= sbin             # <<<<<<<<<<<<<<
+ *     intval *= sbin             # <<<<<<<<<<<<<<
  * 
- * 	return intval
+ *     return intval
  */
   __pyx_v_intval = (__pyx_v_intval * __pyx_v_10get_counts_sbin);
 
-  /* "get_counts.pyx":255
- * 	intval *= sbin
+  /* "get_counts.pyx":385
+ *     intval *= sbin
  * 
- * 	return intval             # <<<<<<<<<<<<<<
+ *     return intval             # <<<<<<<<<<<<<<
  * 
  * @cython.boundscheck(False)
  */
   __pyx_r = __pyx_v_intval;
   goto __pyx_L0;
 
-  /* "get_counts.pyx":241
+  /* "get_counts.pyx":371
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cdef double bulge_int(double alpha, double beta, double coslval, double cosbval,             # <<<<<<<<<<<<<<
- * 					  double lim_m, double lim_p) nogil:
- * 	""" Calculate the integral over the bulge from lim_m to lim_p
+ *                       double lim_m, double lim_p) nogil:
+ *     """ Calculate the integral over the bulge from lim_m to lim_p
  */
 
   /* function exit code */
@@ -3660,32 +4503,189 @@ static double __pyx_f_10get_counts_bulge_int(double __pyx_v_alpha, double __pyx_
   return __pyx_r;
 }
 
-/* "get_counts.pyx":261
+/* "get_counts.pyx":391
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cdef double integrand(double sval, double alpha, double beta, double coslval,             # <<<<<<<<<<<<<<
- * 					  double cosbval) nogil:
- * 	""" Evaluate the bulge integrand
+ *                       double cosbval) nogil:
+ *     """ Evaluate the bulge integrand
  */
 
 static double __pyx_f_10get_counts_integrand(double __pyx_v_sval, double __pyx_v_alpha, double __pyx_v_beta, double __pyx_v_coslval, double __pyx_v_cosbval) {
   double __pyx_r;
 
-  /* "get_counts.pyx":267
+  /* "get_counts.pyx":397
  * 
- * 	return pow(sval, 4.-2.*beta) \
- * 		   * pow(pow(sval, 2.) - 2*rodot*sval*coslval*cosbval + pow(rodot, 2.),             # <<<<<<<<<<<<<<
- * 				 -alpha/2.)
+ *     return pow(sval, 4.-2.*beta) \
+ *            * pow(pow(sval, 2.) - 2*rodot*sval*coslval*cosbval + pow(rodot, 2.),             # <<<<<<<<<<<<<<
+ *                  -alpha/2.)
+ * 
  */
   __pyx_r = (pow(__pyx_v_sval, (4. - (2. * __pyx_v_beta))) * pow(((pow(__pyx_v_sval, 2.) - ((((2.0 * __pyx_v_10get_counts_rodot) * __pyx_v_sval) * __pyx_v_coslval) * __pyx_v_cosbval)) + pow(__pyx_v_10get_counts_rodot, 2.)), ((-__pyx_v_alpha) / 2.)));
   goto __pyx_L0;
 
-  /* "get_counts.pyx":261
+  /* "get_counts.pyx":391
  * @cython.cdivision(True)
  * @cython.initializedcheck(False)
  * cdef double integrand(double sval, double alpha, double beta, double coslval,             # <<<<<<<<<<<<<<
- * 					  double cosbval) nogil:
- * 	""" Evaluate the bulge integrand
+ *                       double cosbval) nogil:
+ *     """ Evaluate the bulge integrand
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "get_counts.pyx":410
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cdef double disk_int(double n, double sigma, double z0, double beta,             # <<<<<<<<<<<<<<
+ *                      double coslval, double cosbval, double tanbval) nogil:
+ *     """ Calculate the integral over the disk from 0 to smax
+ */
+
+static double __pyx_f_10get_counts_disk_int(double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, double __pyx_v_coslval, double __pyx_v_cosbval, double __pyx_v_tanbval) {
+  double __pyx_v_intval;
+  double __pyx_v_sval;
+  double __pyx_v_smax;
+  double __pyx_r;
+  int __pyx_t_1;
+
+  /* "get_counts.pyx":416
+ *     """
+ * 
+ *     cdef double intval = 0.             # <<<<<<<<<<<<<<
+ *     cdef double sval = sbin/2.
+ *     cdef double smax = 30.0
+ */
+  __pyx_v_intval = 0.;
+
+  /* "get_counts.pyx":417
+ * 
+ *     cdef double intval = 0.
+ *     cdef double sval = sbin/2.             # <<<<<<<<<<<<<<
+ *     cdef double smax = 30.0
+ *     while (sval < smax):
+ */
+  __pyx_v_sval = (__pyx_v_10get_counts_sbin / 2.);
+
+  /* "get_counts.pyx":418
+ *     cdef double intval = 0.
+ *     cdef double sval = sbin/2.
+ *     cdef double smax = 30.0             # <<<<<<<<<<<<<<
+ *     while (sval < smax):
+ *         intval += integrand_disk(sval, n, sigma, z0, beta, coslval, cosbval, tanbval)
+ */
+  __pyx_v_smax = 30.0;
+
+  /* "get_counts.pyx":419
+ *     cdef double sval = sbin/2.
+ *     cdef double smax = 30.0
+ *     while (sval < smax):             # <<<<<<<<<<<<<<
+ *         intval += integrand_disk(sval, n, sigma, z0, beta, coslval, cosbval, tanbval)
+ *         sval += sbin
+ */
+  while (1) {
+    __pyx_t_1 = ((__pyx_v_sval < __pyx_v_smax) != 0);
+    if (!__pyx_t_1) break;
+
+    /* "get_counts.pyx":420
+ *     cdef double smax = 30.0
+ *     while (sval < smax):
+ *         intval += integrand_disk(sval, n, sigma, z0, beta, coslval, cosbval, tanbval)             # <<<<<<<<<<<<<<
+ *         sval += sbin
+ * 
+ */
+    __pyx_v_intval = (__pyx_v_intval + __pyx_f_10get_counts_integrand_disk(__pyx_v_sval, __pyx_v_n, __pyx_v_sigma, __pyx_v_z0, __pyx_v_beta, __pyx_v_coslval, __pyx_v_cosbval, __pyx_v_tanbval));
+
+    /* "get_counts.pyx":421
+ *     while (sval < smax):
+ *         intval += integrand_disk(sval, n, sigma, z0, beta, coslval, cosbval, tanbval)
+ *         sval += sbin             # <<<<<<<<<<<<<<
+ * 
+ *     intval *= sbin
+ */
+    __pyx_v_sval = (__pyx_v_sval + __pyx_v_10get_counts_sbin);
+  }
+
+  /* "get_counts.pyx":423
+ *         sval += sbin
+ * 
+ *     intval *= sbin             # <<<<<<<<<<<<<<
+ * 
+ *     return intval
+ */
+  __pyx_v_intval = (__pyx_v_intval * __pyx_v_10get_counts_sbin);
+
+  /* "get_counts.pyx":425
+ *     intval *= sbin
+ * 
+ *     return intval             # <<<<<<<<<<<<<<
+ * 
+ * @cython.boundscheck(False)
+ */
+  __pyx_r = __pyx_v_intval;
+  goto __pyx_L0;
+
+  /* "get_counts.pyx":410
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cdef double disk_int(double n, double sigma, double z0, double beta,             # <<<<<<<<<<<<<<
+ *                      double coslval, double cosbval, double tanbval) nogil:
+ *     """ Calculate the integral over the disk from 0 to smax
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "get_counts.pyx":431
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cdef double integrand_disk(double sval, double n, double sigma, double z0,             # <<<<<<<<<<<<<<
+ *                       double beta, double coslval, double cosbval,
+ *                       double tanbval) nogil:
+ */
+
+static double __pyx_f_10get_counts_integrand_disk(double __pyx_v_sval, double __pyx_v_n, double __pyx_v_sigma, double __pyx_v_z0, double __pyx_v_beta, double __pyx_v_coslval, CYTHON_UNUSED double __pyx_v_cosbval, double __pyx_v_tanbval) {
+  double __pyx_v_Rval;
+  double __pyx_v_zval;
+  double __pyx_r;
+
+  /* "get_counts.pyx":437
+ *     """
+ * 
+ *     cdef double Rval = sqrt(pow(sval, 2.) - 2*rodot*sval*coslval + pow(rodot, 2.))             # <<<<<<<<<<<<<<
+ *     cdef double zval = sval * tanbval
+ * 
+ */
+  __pyx_v_Rval = sqrt(((pow(__pyx_v_sval, 2.) - (((2.0 * __pyx_v_10get_counts_rodot) * __pyx_v_sval) * __pyx_v_coslval)) + pow(__pyx_v_10get_counts_rodot, 2.)));
+
+  /* "get_counts.pyx":438
+ * 
+ *     cdef double Rval = sqrt(pow(sval, 2.) - 2*rodot*sval*coslval + pow(rodot, 2.))
+ *     cdef double zval = sval * tanbval             # <<<<<<<<<<<<<<
+ * 
+ *     return pow(sval, 4.-2.*beta) * pow(Rval, n) * exp(-Rval/sigma) * exp(-zval/z0)
+ */
+  __pyx_v_zval = (__pyx_v_sval * __pyx_v_tanbval);
+
+  /* "get_counts.pyx":440
+ *     cdef double zval = sval * tanbval
+ * 
+ *     return pow(sval, 4.-2.*beta) * pow(Rval, n) * exp(-Rval/sigma) * exp(-zval/z0)             # <<<<<<<<<<<<<<
+ */
+  __pyx_r = (((pow(__pyx_v_sval, (4. - (2. * __pyx_v_beta))) * pow(__pyx_v_Rval, __pyx_v_n)) * exp(((-__pyx_v_Rval) / __pyx_v_sigma))) * exp(((-__pyx_v_zval) / __pyx_v_z0)));
+  goto __pyx_L0;
+
+  /* "get_counts.pyx":431
+ * @cython.cdivision(True)
+ * @cython.initializedcheck(False)
+ * cdef double integrand_disk(double sval, double n, double sigma, double z0,             # <<<<<<<<<<<<<<
+ *                       double beta, double coslval, double cosbval,
+ *                       double tanbval) nogil:
  */
 
   /* function exit code */
@@ -18529,7 +19529,9 @@ static PyTypeObject __pyx_type___pyx_memoryviewslice = {
 static PyMethodDef __pyx_methods[] = {
   {"Nbulge_full_ijk", (PyCFunction)__pyx_pw_10get_counts_1Nbulge_full_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_Nbulge_full_ijk},
   {"Nbulge_full_ang_ijk", (PyCFunction)__pyx_pw_10get_counts_3Nbulge_full_ang_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_2Nbulge_full_ang_ijk},
-  {"Nbulge_ijk", (PyCFunction)__pyx_pw_10get_counts_5Nbulge_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_4Nbulge_ijk},
+  {"Ndisk_full_ang_ijk", (PyCFunction)__pyx_pw_10get_counts_5Ndisk_full_ang_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_4Ndisk_full_ang_ijk},
+  {"Nbulge_ijk", (PyCFunction)__pyx_pw_10get_counts_7Nbulge_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_6Nbulge_ijk},
+  {"Ndisk_ijk", (PyCFunction)__pyx_pw_10get_counts_9Ndisk_ijk, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10get_counts_8Ndisk_ijk},
   {0, 0, 0, 0}
 };
 
@@ -18573,6 +19575,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_MemoryView_of_r_object, __pyx_k_MemoryView_of_r_object, sizeof(__pyx_k_MemoryView_of_r_object), 0, 0, 1, 0},
   {&__pyx_n_s_Nang, __pyx_k_Nang, sizeof(__pyx_k_Nang), 0, 0, 1, 1},
   {&__pyx_n_s_Nbulge, __pyx_k_Nbulge, sizeof(__pyx_k_Nbulge), 0, 0, 1, 1},
+  {&__pyx_n_s_Ndisk, __pyx_k_Ndisk, sizeof(__pyx_k_Ndisk), 0, 0, 1, 1},
   {&__pyx_kp_u_Non_native_byte_order_not_suppor, __pyx_k_Non_native_byte_order_not_suppor, sizeof(__pyx_k_Non_native_byte_order_not_suppor), 0, 1, 0, 0},
   {&__pyx_n_s_Ns, __pyx_k_Ns, sizeof(__pyx_k_Ns), 0, 0, 1, 1},
   {&__pyx_n_b_O, __pyx_k_O, sizeof(__pyx_k_O), 0, 0, 0, 1},
@@ -18612,6 +19615,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
+  {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
   {&__pyx_kp_u_ndarray_is_not_C_contiguous, __pyx_k_ndarray_is_not_C_contiguous, sizeof(__pyx_k_ndarray_is_not_C_contiguous), 0, 1, 0, 0},
@@ -18630,7 +19634,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_rcut, __pyx_k_rcut, sizeof(__pyx_k_rcut), 0, 0, 1, 1},
   {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
+  {&__pyx_n_s_sigma, __pyx_k_sigma, sizeof(__pyx_k_sigma), 0, 0, 1, 1},
   {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
+  {&__pyx_n_s_smax, __pyx_k_smax, sizeof(__pyx_k_smax), 0, 0, 1, 1},
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
   {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
@@ -18643,10 +19649,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
   {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
+  {&__pyx_n_s_z0, __pyx_k_z0, sizeof(__pyx_k_z0), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 96, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 989, __pyx_L1_error)
@@ -18908,14 +19915,14 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
 
-  /* "get_counts.pyx":40
+  /* "get_counts.pyx":45
  * 
  * # These are the bin boundaries
  * cdef double[::1] ang_boundaries = np.linspace(-20.,20.,13,dtype=DTYPE)             # <<<<<<<<<<<<<<
  * 
  * # Bin edges for flux in units [MeV/cm^2/s]
  */
-  __pyx_tuple__23 = PyTuple_Pack(3, __pyx_float_neg_20_, __pyx_float_20_, __pyx_int_13); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_tuple__23 = PyTuple_Pack(3, __pyx_float_neg_20_, __pyx_float_20_, __pyx_int_13); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
 
@@ -19166,23 +20173,23 @@ PyMODINIT_FUNC PyInit_get_counts(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "get_counts.pyx":27
- * 	double cos(double x) nogil
+  /* "get_counts.pyx":32
+ *     double tan(double x) nogil
  * 
  * cdef double pi = np.pi             # <<<<<<<<<<<<<<
  * cdef double rodot = 8.5 # Earth GC distance in kpc
  * cdef double degtorad = pi/180.
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_10get_counts_pi = __pyx_t_3;
 
-  /* "get_counts.pyx":28
+  /* "get_counts.pyx":33
  * 
  * cdef double pi = np.pi
  * cdef double rodot = 8.5 # Earth GC distance in kpc             # <<<<<<<<<<<<<<
@@ -19191,7 +20198,7 @@ PyMODINIT_FUNC PyInit_get_counts(void)
  */
   __pyx_v_10get_counts_rodot = 8.5;
 
-  /* "get_counts.pyx":29
+  /* "get_counts.pyx":34
  * cdef double pi = np.pi
  * cdef double rodot = 8.5 # Earth GC distance in kpc
  * cdef double degtorad = pi/180.             # <<<<<<<<<<<<<<
@@ -19200,7 +20207,7 @@ PyMODINIT_FUNC PyInit_get_counts(void)
  */
   __pyx_v_10get_counts_degtorad = (__pyx_v_10get_counts_pi / 180.);
 
-  /* "get_counts.pyx":30
+  /* "get_counts.pyx":35
  * cdef double rodot = 8.5 # Earth GC distance in kpc
  * cdef double degtorad = pi/180.
  * cdef double fluxunits = 1.52529e37 # [converts MeV/cm^2 to erg/kpc^2]             # <<<<<<<<<<<<<<
@@ -19209,7 +20216,7 @@ PyMODINIT_FUNC PyInit_get_counts(void)
  */
   __pyx_v_10get_counts_fluxunits = 1.52529e37;
 
-  /* "get_counts.pyx":32
+  /* "get_counts.pyx":37
  * cdef double fluxunits = 1.52529e37 # [converts MeV/cm^2 to erg/kpc^2]
  * # Below value is chosen for mix of speed and accuracy - not perfect
  * cdef double sbin = 0.05 # Width of integration bins in kpc             # <<<<<<<<<<<<<<
@@ -19218,11 +20225,11 @@ PyMODINIT_FUNC PyInit_get_counts(void)
  */
   __pyx_v_10get_counts_sbin = 0.05;
 
-  /* "get_counts.pyx":36
+  /* "get_counts.pyx":41
  * # These are the central bin values for l and b. Note l is positive to the left
  * cdef double angvals[12]
  * angvals = [18.33333333, 15., 11.66666667, 8.33333333, 5., 1.66666667,             # <<<<<<<<<<<<<<
- * 		   -1.66666667, -5., -8.33333333, -11.66666667, -15., -18.33333333]
+ *            -1.66666667, -5., -8.33333333, -11.66666667, -15., -18.33333333]
  * 
  */
   __pyx_t_4[0] = 18.33333333;
@@ -19239,42 +20246,42 @@ PyMODINIT_FUNC PyInit_get_counts(void)
   __pyx_t_4[11] = -18.33333333;
   memcpy(&(__pyx_v_10get_counts_angvals[0]), __pyx_t_4, sizeof(__pyx_v_10get_counts_angvals[0]) * (12));
 
-  /* "get_counts.pyx":40
+  /* "get_counts.pyx":45
  * 
  * # These are the bin boundaries
  * cdef double[::1] ang_boundaries = np.linspace(-20.,20.,13,dtype=DTYPE)             # <<<<<<<<<<<<<<
  * 
  * # Bin edges for flux in units [MeV/cm^2/s]
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_linspace); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_linspace); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__23, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__23, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_5);
-  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __PYX_XDEC_MEMVIEW(&__pyx_v_10get_counts_ang_boundaries, 1);
   __pyx_v_10get_counts_ang_boundaries = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "get_counts.pyx":44
+  /* "get_counts.pyx":49
  * # Bin edges for flux in units [MeV/cm^2/s]
  * cdef double fluxvals[9]
  * fluxvals = [1.00000000e-06, 1.46779927e-06, 2.15443469e-06, 3.16227766e-06,             # <<<<<<<<<<<<<<
- * 			4.64158883e-06, 6.81292069e-06, 1.00000000e-05, 3.16227766e-05,
- * 			1.00000000e-04]
+ *             4.64158883e-06, 6.81292069e-06, 1.00000000e-05, 3.16227766e-05,
+ *             1.00000000e-04]
  */
   __pyx_t_7[0] = 1.00000000e-06;
   __pyx_t_7[1] = 1.46779927e-06;
@@ -19287,8 +20294,8 @@ PyMODINIT_FUNC PyInit_get_counts(void)
   __pyx_t_7[8] = 1.00000000e-04;
   memcpy(&(__pyx_v_10get_counts_fluxvals[0]), __pyx_t_7, sizeof(__pyx_v_10get_counts_fluxvals[0]) * (9));
 
-  /* "get_counts.pyx":48
- * 			1.00000000e-04]
+  /* "get_counts.pyx":53
+ *             1.00000000e-04]
  * 
  * cdef double area = pow(angvals[1]-angvals[0],2)*pow(2.*pi/360.,2.)             # <<<<<<<<<<<<<<
  * 
