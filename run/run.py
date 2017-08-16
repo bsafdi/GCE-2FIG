@@ -1,70 +1,129 @@
 ###############################################################################
-# PSR_base_analysis.py
+# run.py
 ###############################################################################
 #
-# Perform the analysis using the likelihood coded up following 1705.00009
-# Here we only scan over Nbulge and Ndisk, leaving other paramters fixed
+# Perform scan to obtain best-fit disk and bulge PS population parameters
 #
-# Written: Nick Rodd, MIT, 5 August 2017
-#
+# Written: Siddharth Mishra-Sharma, Princeton, 15 August 2017
+# 
 ###############################################################################
 
-# Fix base parameters
-n=2.35
-sigma=1.528
-alpha=2.6
-z0=0.7
-beta=1.2
+import sys, os
+sys.path.append("../python/")
 
-# Set up log priors on Ndisk and Nbulge
-Nbulge_prior = [0,1e7]
-Ndisk_prior = [0,1e7]
-
-
-# Basic modules
 import numpy as np
 import pymultinest
 
-# Import custom ll
-import sys
-sys.path.append('/group/hepheno/smsharma/GCE-2FIG-Ben/python')
 import LL
 
-# Load the binned efficiency and data files
-PSR_data = np.load('../data/PSR_data.npy') + np.load('../data/PSR_data_3fgl.npy')
-omega_ijk = np.load('../data/omega_ijk.npy')
+class run_scan():
+    def __init__(self, fixed_params, fixed_param_vals, floated_params, floated_param_priors, data_dir = '../data/', chains_dir = '/group/hepheno/smsharma/GCE-2FIG-bsafdi/run/chains/analysis/',
+                 Lmin = 1.0e31, Lmax_disk = 1.0e36, Lmax_bulge = 1.0e36, Ns = 100, Nang = 1, smax_disk = 40, theta_mask=2.0):
+        """ Initialize scan class.
 
-# Multinest settings
-nlive = 200
-chains_dir = './chains/base/'
-pymultinest_options = {'importance_nested_sampling': False,
-                        'resume': False, 'verbose': True,
-                        'sampling_efficiency': 'model',
-                        'init_MPI': False, 'evidence_tolerance': 0.5,
-                        'const_efficiency_mode': False}
+            :param fixed_params: Array of parameters to be held fixed
+            :param fixed_param_vals: Array of values for parameters to be held fixed
+            :param floated_params: Array of parameters to be floated
+            :param floated_param_priors: Priors array for parameters to be floated
+        """
+        self.fixed_params = fixed_params
+        self.fixed_param_vals = fixed_param_vals
+        self.floated_params = floated_params
+        self.floated_param_priors = floated_param_priors
+        self.data_dir = data_dir
 
-# Setup priors
-theta_min = [Nbulge_prior[0], Ndisk_prior[0]]
-theta_max = [Nbulge_prior[1], Ndisk_prior[1]]
-theta_interval = list(np.array(theta_max) - np.array(theta_min))
+        self.Lmin = Lmin
+        self.Lmax_disk = Lmax_disk
+        self.Lmax_bulge = Lmax_bulge
+        self.Ns = Ns
+        self.Nang = Nang
+        self.smax_disk = smax_disk
+        self.theta_mask = theta_mask
+        self.chains_dir = chains_dir
 
-def prior_cube(cube, ndim=1, nparams=1):
-    """ Cube of priors - in the format required by MultiNest
-    """
+        self.all_params = ['N_bulge','N_disk','alpha','n','sigma','z0','beta_disk','beta_bulge']
 
-    for i in range(ndim):
-        cube[i] = cube[i] * theta_interval[i] + theta_min[i]
-    return cube
+        self.make_dirs([self.chains_dir])
+        self.load_data()
+        self.setup_fixed_params()
+        self.setup_prior_thetas()
 
-# Define likelihood
-def ll(theta, ndim = 1, nparams = 1):
-    """ Log Likelihood in the format required by Multinest
-    """
+    def load_data(self):
+        """ Load the binned efficiency and data files
+        """       
+        self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') + np.load(self.data_dir + '/PSR_data_3fgl.npy')
+        self.omega_ijk = np.load(self.data_dir + '/omega_ijk.npy')
 
-    return LL.ll(PSR_data, omega_ijk, theta[0], theta[1],
-                     alpha, n, sigma, z0, beta, beta)
+    def setup_fixed_params(self):
+        """ Set up values and arrays for parameters to be held fixed
+        """ 
+        self.theta = np.zeros(len(self.all_params))
+        for param in self.all_params:
+            if param in self.fixed_params:
+                param_pos = np.argwhere(np.array(self.fixed_params) == param)[0][0]
+                param_all_pos = np.argwhere(np.array(self.all_params) == param)[0][0]
+                self.theta[param_all_pos] = self.fixed_param_vals[param_pos]
 
-# Run multinest
-n_params = len(theta_min)
-pymultinest.run(ll, prior_cube, n_params, outputfiles_basename = chains_dir, 
-                n_live_points = nlive, **pymultinest_options)
+    def setup_prior_thetas(self):
+        """ Set up priors and arrays for parameters to be floated
+        """ 
+        self.param_all_pos_ary = []
+        self.theta_min = []
+        self.theta_max = []
+        for param in self.all_params:
+            if param in self.floated_params:
+                param_pos = np.argwhere(np.array(self.floated_params) == param)[0][0]
+                param_all_pos = np.argwhere(np.array(self.all_params) == param)[0][0]
+                self.param_all_pos_ary.append(param_all_pos)
+                self.theta_min += [self.floated_param_priors[param_pos][0]]
+                self.theta_max += [self.floated_param_priors[param_pos][1]]
+
+        self.theta_interval = list(np.array(self.theta_max) - np.array(self.theta_min))
+
+    def prior_cube(self, cube, ndim=1, nparams=1):
+        """ Cube of priors - in the format required by MultiNest
+        """
+        for i in range(ndim):
+            cube[i] = cube[i] * self.theta_interval[i] + self.theta_min[i]
+        return cube
+
+    def ll(self, theta, ndim = 1, nparams = 1):
+        """ Log Likelihood in the format required by MultiNest
+        """
+        theta_ll = self.theta
+        for float_idx, float_item in enumerate(self.param_all_pos_ary):
+            theta_ll[float_item] = theta[float_idx]
+        
+        ll_val =  LL.ll(self.PSR_data, self.omega_ijk,                  
+                        *theta_ll, 
+                        Lmin = self.Lmin, Lmax_disk = self.Lmax_disk, Lmax_bulge = self.Lmax_bulge, 
+                        Ns = self.Ns, Nang = self.Nang, smax_disk = self.smax_disk, theta_mask = self.theta_mask)
+        print theta_ll, ll_val
+
+        return ll_val
+
+    def perform_scan(self):
+        # Run multinest
+        n_params = len(self.floated_params)
+        nlive = 200
+        pymultinest_options = {'importance_nested_sampling': False,
+                                'resume': False, 'verbose': True,
+                                'sampling_efficiency': 'model',
+                                'init_MPI': False, 'evidence_tolerance': 0.5,
+                                'const_efficiency_mode': False}
+
+        pymultinest.run(self.ll, self.prior_cube, n_params, outputfiles_basename = self.chains_dir, 
+                        n_live_points = nlive, **pymultinest_options)
+
+    @staticmethod
+    def make_dirs(dirs):
+        """ Creates directories if they do not already exist 
+        """
+        for d in dirs:
+            if not os.path.exists(d):
+                try:
+                    os.mkdir(d)
+                except OSError as e:
+                    if e.errno != 17:
+                        raise
+

@@ -49,7 +49,7 @@ cdef double pi = np.pi
 @cython.initializedcheck(False)
 cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk, 
                 double Nbulge, double Ndisk, double alpha, double n, 
-                double sigma, double z0, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31, double Lmax_disk = 1.0e36,double Lmax_bulge = 1.0e36,int Ns = 500, int Nang = 50,double smax_disk = 40,double theta_mask=2.0) nogil:
+                double sigma, double z0, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31, double Lmax_disk = 1.0e36,double Lmax_bulge = 1.0e36,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0) nogil:
     """ Calculate the likelihood as a function of the bulge and disk params
     theta_mask in degrees 
     """
@@ -63,17 +63,18 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     for i in range(12): # loop over longitude
         for j in range(12): # loop over latitude
             for k in range(8): # loop over flux
-                omega_val = omega_ijk[i,j,k] 
+                if i != 6:
+                    omega_val = omega_ijk[i,j,k] 
 
-                N_disk = gc.Ndisk_full_ang_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
-                N_bulge = gc.Nbulge_full_ang_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
+                    N_disk = gc.Ndisk_full_ang_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
+                    N_bulge = gc.Nbulge_full_ang_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
 
-                Nmodel = N_disk + N_bulge
+                    Nmodel = N_disk + N_bulge
 
-                Nobs = PSR_data[i,j,k]
+                    Nobs = PSR_data[i,j,k]
 
 
-                ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
+                    ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
                 
     # # Now separately calculate 
     # cdef double Nmodeltot = 0.

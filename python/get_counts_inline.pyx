@@ -133,8 +133,9 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
                     s = smin
                     for l in range(Ns):
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+                        # r_squared = pow(s, 2.) - 2*rodot*s*coslval*cosbval + pow(rodot, 2.)
                         #print r_squared
-                        if r_squared < rcut**2:
+                        if r_squared < pow(rcut,2):
                             integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
                         s += ds
 
