@@ -112,9 +112,9 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
     ds = (smax - smin)/float(Ns)
 
     for i_b in range(Nang):
-        b = b_start + i_b*d_ang
+        b = b_start + i_b*d_ang + d_ang/2.
         for i_ell in range(Nang):
-            ell = ell_start + i_ell*d_ang
+            ell = ell_start + i_ell*d_ang + d_ang/2.
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
 
@@ -208,9 +208,9 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
     ds = (smax - smin)/float(Ns)
 
     for i_b in range(Nang):
-        b = b_start + i_b*d_ang
+        b = b_start + i_b*d_ang + d_ang/2.
         for i_ell in range(Nang):
-            ell = ell_start + i_ell*d_ang
+            ell = ell_start + i_ell*d_ang + d_ang/2.
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
             if cosbval * coslval < costhetaval:
@@ -304,9 +304,9 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
     ds = (smax - smin)/float(Ns)
 
     for i_b in range(Nang):
-        b = b_start + i_b*d_ang
+        b = b_start + i_b*d_ang + d_ang/2.
         for i_ell in range(Nang):
-            ell = ell_start + i_ell*d_ang
+            ell = ell_start + i_ell*d_ang + d_ang/2.
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
             if cosbval * coslval < costhetaval:
@@ -406,9 +406,9 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
     ds = (smax - smin)/float(Ns)
 
     for i_b in range(Nang):
-        b = b_start + i_b*d_ang_b
+        b = b_start + i_b*d_ang_b + d_ang_b/2.
         for i_ell in range(Nang):
-            ell = ell_start + i_ell*d_ang_ell
+            ell = ell_start + i_ell*d_ang_ell + d_ang_ell/2.
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
             if cosbval * coslval < costhetaval:
