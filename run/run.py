@@ -39,10 +39,11 @@ class run_scan():
         self.Nang = Nang
         self.smax_disk = smax_disk
         self.theta_mask = theta_mask
+        self.chains_dir = chains_dir
 
         self.all_params = ['N_bulge','N_disk','alpha','n','sigma','z0','beta_disk','beta_bulge']
 
-        self.make_dirs([chains_dir])
+        self.make_dirs([self.chains_dir])
         self.load_data()
         self.setup_fixed_params()
         self.setup_prior_thetas()
@@ -105,14 +106,13 @@ class run_scan():
         # Run multinest
         n_params = len(self.floated_params)
         nlive = 200
-        chains_dir = '/group/hepheno/smsharma/GCE-2FIG-Ben/run/chains/base'
         pymultinest_options = {'importance_nested_sampling': False,
                                 'resume': False, 'verbose': True,
                                 'sampling_efficiency': 'model',
                                 'init_MPI': False, 'evidence_tolerance': 0.5,
                                 'const_efficiency_mode': False}
 
-        pymultinest.run(self.ll, self.prior_cube, n_params, outputfiles_basename = chains_dir, 
+        pymultinest.run(self.ll, self.prior_cube, n_params, outputfiles_basename = self.chains_dir, 
                         n_live_points = nlive, **pymultinest_options)
 
     @staticmethod
