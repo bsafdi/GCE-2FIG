@@ -35,6 +35,11 @@ cpdef double Nbulge_full_ang_ijk(int , int , int , double , double , double , do
 cpdef double Ndisk_full_ang_ijk(int , int , int , double , double , double, double ,double , double , double , double ,int ,int ,double , double  ) nogil
 
 
+cpdef double Nbulge_total(double , double , double ,double , double , double ,int ,int , double) nogil
+
+
+cpdef double Ndisk_total(double, double, double,double, double, double, double ,int,int ,double, double) nogil
+
 
 
 
