@@ -19786,6 +19786,8 @@ PyMODINIT_FUNC PyInit_get_counts_inline(void)
   /*--- Function export code ---*/
   if (__Pyx_ExportFunction("Nbulge_full_ang_ijk", (void (*)(void))__pyx_f_17get_counts_inline_Nbulge_full_ang_ijk, "double (int, int, int, double, double, double, double, double, double, double, int, int, double, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("Ndisk_full_ang_ijk", (void (*)(void))__pyx_f_17get_counts_inline_Ndisk_full_ang_ijk, "double (int, int, int, double, double, double, double, double, double, double, double, int, int, double, double, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("Nbulge_total", (void (*)(void))__pyx_f_17get_counts_inline_Nbulge_total, "double (double, double, double, double, double, double, int, int, double, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("Ndisk_total", (void (*)(void))__pyx_f_17get_counts_inline_Ndisk_total, "double (double, double, double, double, double, double, double, int, int, double, double, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   /*--- Type init code ---*/
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
