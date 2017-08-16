@@ -113,11 +113,12 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
 
     for i_b in range(Nang):
         b = b_start + i_b*d_ang
-        if cosbval * coslval < costhetaval:
-            for i_ell in range(Nang):
-                ell = ell_start + i_ell*d_ang
-                coslval = cos(ell * degtorad)
-                cosbval = cos(b * degtorad)
+        for i_ell in range(Nang):
+            ell = ell_start + i_ell*d_ang
+            coslval = cos(ell * degtorad)
+            cosbval = cos(b * degtorad)
+
+            if cosbval * coslval < costhetaval:
 
                 #res = 0.0
                 incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
@@ -207,11 +208,11 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
 
     for i_b in range(Nang):
         b = b_start + i_b*d_ang
-        if cosbval * coslval < costhetaval:
-            for i_ell in range(Nang):
-                ell = ell_start + i_ell*d_ang
-                coslval = cos(ell * degtorad)
-                cosbval = cos(b * degtorad)
+        for i_ell in range(Nang):
+            ell = ell_start + i_ell*d_ang
+            coslval = cos(ell * degtorad)
+            cosbval = cos(b * degtorad)
+            if cosbval * coslval < costhetaval:
                 #sinbval = sin(b * degtorad)
 
                 res = 0.0
@@ -253,7 +254,7 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
 @cython.wraparound(False)
 @cython.cdivision(True)
 @cython.initializedcheck(False)
-cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut , double Lmin, double Lmax ,int Ns ,int Nang, double theta_mask ) nogil:
+cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double rcut , double Lmin, double Lmax ,int Ns ,int Nang, double theta_mask) nogil:
     """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
     ---arguments---
     Ns : number of points in s integration
@@ -264,8 +265,8 @@ cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, doubl
     theta_mask : degrees, mask from the GC
     """
     # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
-    cdef double fluxmin = fluxvals[k] * fluxunits
-    cdef double fluxmax = fluxvals[k+1] * fluxunits
+    cdef double fluxmin = 1.8e-5 * fluxunits #MeV cm^{-2} s^{-1}
+    cdef double fluxmax = 6.539e-4 * fluxunits #MeV cm^{-2} s^{-1}
 
     # Setup output and if variables
     cdef double Nijk = 0.
@@ -279,9 +280,9 @@ cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, doubl
 
     cdef int i_b, i_ell
     cdef double ell,b
-    cdef double ell_start = ang_boundaries[i]
-    cdef double b_start = ang_boundaries[j]
-    cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+    cdef double ell_start = -15.0 #ang_boundaries[i]
+    cdef double b_start = -15.0 #ang_boundaries[j]
+    cdef double d_ang = (30.0)/float(Nang)
 
     cdef double total_res = 0.0
 
@@ -293,7 +294,7 @@ cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, doubl
 
 
     # Common prefactors
-    pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+    pref_rho = Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
     pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
 
     # for s integration
@@ -303,12 +304,11 @@ cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, doubl
 
     for i_b in range(Nang):
         b = b_start + i_b*d_ang
-        if cosbval * coslval < costhetaval:
-            for i_ell in range(Nang):
-                ell = ell_start + i_ell*d_ang
-                coslval = cos(ell * degtorad)
-                cosbval = cos(b * degtorad)
-
+        for i_ell in range(Nang):
+            ell = ell_start + i_ell*d_ang
+            coslval = cos(ell * degtorad)
+            cosbval = cos(b * degtorad)
+            if cosbval * coslval < costhetaval:
                 #res = 0.0
                 incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
                 if incl > 0:
@@ -339,5 +339,96 @@ cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, doubl
 
 
 
+
+#########################################################
+# This is New Code written by Ben Safdi                 # 
+# Predicted Disk PSRs in bin (i,j,k) [long, lat, flux] #
+# Performs the angular integral instead of taking the   #
+# value from the bin centre                             #
+#########################################################
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+@cython.initializedcheck(False)
+cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, double beta, double Lmin, double Lmax ,int Ns ,int Nang ,double smax, double theta_mask ) nogil:
+    """ Return the number of bulge PSRs in bin k for given parameters
+    ---arguments---
+    Ns : number of points in s integration
+    ----units---
+    z0 : kpc
+    sigma : kpc
+    Lmin : erg s^{-1}
+    Lmax : erg s^{-1}
+    smax : 40 kpc default, how far to integrate out to from Sun?
+    theta_mask : degrees, mask from the GC
+    """
+    # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+    # cdef double fluxmin = fluxvals[k] * fluxunits
+    # if k <= 6:
+    cdef double fluxmin = 1.8e-5 * fluxunits #MeV cm^{-2} s^{-1}
+    # cdef double fluxmax = max(fluxvals[k+1] * fluxunits,fluxmin)
+    # # if k == 8:
+    cdef double fluxmax = 6.539e-4 * fluxunits #,fluxmin) #MeV cm^{-2} s^{-1}
+
+    # Setup output and if variables
+    cdef double Nijk = 0.
+    cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral,s,ds
+
+    cdef int l
+
+    cdef double res = 0.0
+
+    cdef int i_b, i_ell
+    cdef double ell,b
+    cdef double ell_start = -180.0
+    cdef double b_start = -90.0
+    cdef double d_ang_ell = (360.0)/float(Nang)
+    cdef double d_ang_b = (180.0)/float(Nang)
+
+    cdef double total_res = 0.0
+
+    cdef double coslval, cosbval, sinbval
+
+    ####
+    ##cos theta for the mask
+    cdef double costhetaval = cos(theta_mask * degtorad)
+
+    cdef double R,z
+
+
+    # Common prefactors
+    pref_rho = Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)
+    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+
+    # for s integration
+    smin = 0.0
+    ds = (smax - smin)/float(Ns)
+
+    for i_b in range(Nang):
+        b = b_start + i_b*d_ang_b
+        for i_ell in range(Nang):
+            ell = ell_start + i_ell*d_ang_ell
+            coslval = cos(ell * degtorad)
+            cosbval = cos(b * degtorad)
+            if cosbval * coslval < costhetaval:
+                #sinbval = sin(b * degtorad)
+
+                res = 0.0
+                integral = 0.0
+                s = smin
+                for l in range(Ns):
+                    r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+                    z = s*sqrt(1 - cosbval**2)
+                    R = sqrt( r_squared - z**2 )
+                    #print r_squared
+                    integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)
+                    s += ds
+
+                res = cosbval * integral #* ds * pref_L * pref_rho
+                total_res += cosbval * integral
+        #print integral, ds, pref_L, pref_rho
+
+    #print area, cosbval, integral, ds, pref_L, pref_rho
+    return total_res * d_ang_ell*d_ang_b * degtorad**2 * ds * pref_L * pref_rho
 
 
