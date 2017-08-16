@@ -98,7 +98,6 @@ class run_scan():
                         *theta_ll, 
                         Lmin = self.Lmin, Lmax_disk = self.Lmax_disk, Lmax_bulge = self.Lmax_bulge, 
                         Ns = self.Ns, Nang = self.Nang, smax_disk = self.smax_disk, theta_mask = self.theta_mask)
-        print theta_ll, ll_val
 
         return ll_val
 
