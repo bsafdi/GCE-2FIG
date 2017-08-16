@@ -240,3 +240,104 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
 
 
 
+
+
+#########################################################
+# This is New Code written by Ben Safdi                 # 
+# Predicted Bulge PSRs in bin k, integraded over angs   # 
+# still bins in flux k                                  #
+# Performs the angular integral instead of taking the   #
+# value from the bin centre                             #
+#########################################################
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+@cython.initializedcheck(False)
+cpdef inline double Nbulge_total_k(int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut , double Lmin, double Lmax ,int Ns ,int Nang, double theta_mask ) nogil:
+    """ Return the number of bulge PSRs in bin (i,j,k) for given parameters
+    ---arguments---
+    Ns : number of points in s integration
+    ----units---
+    rcut : in kpc
+    Lmin : erg s^{-1}
+    Lmax : erg s^{-1}
+    theta_mask : degrees, mask from the GC
+    """
+    # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
+    cdef double fluxmin = fluxvals[k] * fluxunits
+    cdef double fluxmax = fluxvals[k+1] * fluxunits
+
+    # Setup output and if variables
+    cdef double Nijk = 0.
+    cdef double prefactor, pref_rho, pref_L, lim_m, lim_p, integral, smin, smax,s,ds
+
+    cdef int l
+
+    cdef double incl 
+
+    cdef double res = 0.0
+
+    cdef int i_b, i_ell
+    cdef double ell,b
+    cdef double ell_start = ang_boundaries[i]
+    cdef double b_start = ang_boundaries[j]
+    cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+
+    cdef double total_res = 0.0
+
+    cdef double coslval, cosbval
+
+    ####
+    ##cos theta for the mask
+    cdef double costhetaval = cos(theta_mask * degtorad)
+
+
+    # Common prefactors
+    pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+
+    # for s integration
+    smin = rodot - rcut
+    smax = rodot + rcut
+    ds = (smax - smin)/float(Ns)
+
+    for i_b in range(Nang):
+        b = b_start + i_b*d_ang
+        if cosbval * coslval < costhetaval:
+            for i_ell in range(Nang):
+                ell = ell_start + i_ell*d_ang
+                coslval = cos(ell * degtorad)
+                cosbval = cos(b * degtorad)
+
+                #res = 0.0
+                incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+                if incl > 0:
+                    # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+                    # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+
+                    # smin = rodot - rcut
+                    # smax = rodot + rcut
+                    # ds = (smax - smin)/float(Ns)
+                    integral = 0.0
+                    s = smin
+                    for l in range(Ns):
+                        r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+                        #print r_squared
+                        if r_squared < rcut**2:
+                            integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+                        s += ds
+
+                    total_res += cosbval * integral #* ds * pref_L * pref_rho
+                    #total_res += res
+            #print integral, ds, pref_L, pref_rho
+
+    #print area, cosbval, integral, ds, pref_L, pref_rho
+    return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho
+
+
+
+
+
+
+
+
