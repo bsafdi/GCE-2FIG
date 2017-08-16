@@ -49,7 +49,8 @@ cdef double pi = np.pi
 @cython.initializedcheck(False)
 cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk, 
                 double Nbulge, double Ndisk, double alpha, double n, 
-                double sigma, double z0, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31, double Lmax_disk = 1.0e36,double Lmax_bulge = 1.0e36,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0) nogil:
+                double sigma, double z0, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31, double Lmax_disk = 1.0e36,double Lmax_bulge = 1.0e36,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0,
+                int use_prior = 0, int Nang_prior = 20) nogil:
     """ Calculate the likelihood as a function of the bulge and disk params
     theta_mask in degrees 
     """
@@ -75,23 +76,21 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
 
 
                     ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
-                
-    # # Now separately calculate 
-    # cdef double Nmodeltot = 0.
-    # # Add bulge
-    # for i in range(12): # loop over longitude
-    #     for j in range(12): # loop over latitude
-    #         Nmodeltot += bpsp.Nbulge_ijk(i, j, Nbulge, alpha, beta)
+             
+    cdef double Nmodeltot = 0.
+    cdef double pmid = 174.
+    cdef double psig = 63.
 
-    # # Add disk
-    # for i in range(108): # loop over longitude
-    #     for j in range(24): # loop over latitude
-    #         Nmodeltot += dpsp.Ndisk_ijk(i, j, Ndisk, n, sigma, z0, beta)
-    
-    # # Now add the prior term - note I'm sure they have a sign error in that too
-    # cdef double pmid = 174.
-    # cdef double psig = 63.
-    # ll -= pow(Nmodeltot - pmid, 2.) / (2. * pow(psig, 2.))
+    if use_prior:  # If using a prior on total number of sources
+
+        # Add bulge
+        Nmodeltot += gc.Nbulge_total(Nbulge,  alpha,  beta_bulge, rcut ,  Lmin,  Lmax_bulge , Ns , Nang_prior,  theta_mask)
+
+        # Add disk
+        Nmodeltot += gc.Ndisk_total(Ndisk,  n,  sigma, z0,  beta_disk,  Lmin,  Lmax_disk , Ns , Nang_prior , smax_disk,  theta_mask )
+        
+        # Now add the prior term - note I'm sure they have a sign error in that too
+        ll -= pow(Nmodeltot - pmid, 2.) / (2. * pow(psig, 2.))
 
     return ll
 

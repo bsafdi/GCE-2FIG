@@ -13,23 +13,39 @@ sys.path.append("../python/")
 
 import numpy as np
 import pymultinest
+from iminuit import Minuit
+import corner
 
-import LL
+import likelihood
+from minuit_functions import call_ll
 
 class run_scan():
-    def __init__(self, fixed_params, fixed_param_vals, floated_params, floated_param_priors, data_dir = '../data/', chains_dir = '/group/hepheno/smsharma/GCE-2FIG-bsafdi/run/chains/analysis/',
-                 Lmin = 1.0e31, Lmax_disk = 1.0e36, Lmax_bulge = 1.0e36, Ns = 100, Nang = 1, smax_disk = 40, theta_mask=2.0):
+    def __init__(self, fixed_params, fixed_param_vals, floated_params, floated_param_priors, data_dir = '../data/',
+                 Lmin = 1.0e31, Lmax_disk = 1.0e36, Lmax_bulge = 1.0e36, Ns = 200, Nang = 1, smax_disk = 40, theta_mask=2.0, share_betas=False,
+                 use_prior=False, Nang_prior=40):
         """ Initialize scan class.
 
             :param fixed_params: Array of parameters to be held fixed
             :param fixed_param_vals: Array of values for parameters to be held fixed
             :param floated_params: Array of parameters to be floated
             :param floated_param_priors: Priors array for parameters to be floated
+            :param data_dir: Directory containing the required maps
+            :param Lmin: Minimum luminosity
+            :param Lmax: Maximum luminosity
+            :param Lmax_disk: Maximum luminosity for disk
+            :param Lmax_bulge: Maximum luminosity for bulge
+            :param Ns: Number of integration point in z
+            :param Nang: Number of angular integration points
+            :param smax_disk: How far to integrate out to for disk, in kpc
+            :param theta_mask: How many inner degrees to mask
+            :param share_betas: Whether to float a single beta for disk and bulge
+            :param use_prior: Whether to use prior on total number of sources
+            :param Nang_prior: How many angular bins to use over full sky when using prior
         """
-        self.fixed_params = fixed_params
-        self.fixed_param_vals = fixed_param_vals
-        self.floated_params = floated_params
-        self.floated_param_priors = floated_param_priors
+        self.fixed_params = np.array(fixed_params)
+        self.fixed_param_vals = np.array(fixed_param_vals)
+        self.floated_params = np.array(floated_params)
+        self.floated_param_priors = np.array(floated_param_priors)
         self.data_dir = data_dir
 
         self.Lmin = Lmin
@@ -39,11 +55,22 @@ class run_scan():
         self.Nang = Nang
         self.smax_disk = smax_disk
         self.theta_mask = theta_mask
-        self.chains_dir = chains_dir
+        self.share_betas = share_betas
 
-        self.all_params = ['N_bulge','N_disk','alpha','n','sigma','z0','beta_disk','beta_bulge']
+        self.use_prior = use_prior
+        self.Nang_prior = Nang_prior
+        
+        self.all_params = np.array(['N_bulge','N_disk','alpha','n','sigma','z0','beta_disk','beta_bulge'])
+        
+        if self.share_betas: # If using same beta for bulge and disk, remove the bulge param and use disk one in common
+            
+            self.all_params = self.all_params[self.all_params != 'beta_bulge']
+            self.floated_params = self.floated_params[self.floated_params != 'beta_bulge']
+            self.fixed_params = self.fixed_params[self.fixed_params != 'beta_bulge']
 
-        self.make_dirs([self.chains_dir])
+            self.all_params[self.all_params == 'beta_disk'] = 'beta'
+            self.floated_params[self.floated_params == 'beta_disk'] = 'beta'
+
         self.load_data()
         self.setup_fixed_params()
         self.setup_prior_thetas()
@@ -81,7 +108,7 @@ class run_scan():
         self.theta_interval = list(np.array(self.theta_max) - np.array(self.theta_min))
 
     def prior_cube(self, cube, ndim=1, nparams=1):
-        """ Cube of priors - in the format required by MultiNest
+        """ Cube of priors in the format required by MultiNest
         """
         for i in range(ndim):
             cube[i] = cube[i] * self.theta_interval[i] + self.theta_min[i]
@@ -93,26 +120,63 @@ class run_scan():
         theta_ll = self.theta
         for float_idx, float_item in enumerate(self.param_all_pos_ary):
             theta_ll[float_item] = theta[float_idx]
-        
-        ll_val =  LL.ll(self.PSR_data, self.omega_ijk,                  
+
+        if self.share_betas and ('beta' in self.floated_params):
+            theta_ll = np.append(theta_ll, theta_ll[-1])  
+
+        ll_val =  likelihood.ll(self.PSR_data, self.omega_ijk,                  
                         *theta_ll, 
                         Lmin = self.Lmin, Lmax_disk = self.Lmax_disk, Lmax_bulge = self.Lmax_bulge, 
-                        Ns = self.Ns, Nang = self.Nang, smax_disk = self.smax_disk, theta_mask = self.theta_mask)
+                        Ns = self.Ns, Nang = self.Nang, smax_disk = self.smax_disk, theta_mask = self.theta_mask,
+                        use_prior = self.use_prior, Nang_prior = self.Nang_prior)
 
         return ll_val
 
-    def perform_scan(self):
-        # Run multinest
+    def perform_scan_multinest(self, nlive=200, chains_dir='/group/hepheno/smsharma/GCE-2FIG-bsafdi/run/chains/analysis/', resume=False):
+        """ Perform a scan with MultiNest
+        """
+        self.make_dirs([chains_dir])
         n_params = len(self.floated_params)
-        nlive = 200
         pymultinest_options = {'importance_nested_sampling': False,
-                                'resume': False, 'verbose': True,
+                                'resume': resume, 'verbose': True,
                                 'sampling_efficiency': 'model',
                                 'init_MPI': False, 'evidence_tolerance': 0.5,
                                 'const_efficiency_mode': False}
 
-        pymultinest.run(self.ll, self.prior_cube, n_params, outputfiles_basename = self.chains_dir, 
+        pymultinest.run(self.ll, self.prior_cube, n_params, outputfiles_basename = chains_dir, 
                         n_live_points = nlive, **pymultinest_options)
+
+    def perform_scan_minuit(self, verbose=1):
+        """ Perform a scan with minuit
+        """
+        limit_dict = {}
+        init_val_dict = {}
+        step_size_dict = {}
+        for iparam, param in enumerate(self.floated_params):
+            limit_dict['limit_'+param] = (self.floated_param_priors[iparam][0],self.floated_param_priors[iparam][1])
+            init_val_dict[param] = 0.0
+            step_size_dict['error_'+param] = 1.0
+        other_kwargs = {'print_level': verbose, 'errordef': 1}
+        z = limit_dict.copy()
+        z.update(other_kwargs)
+        z.update(limit_dict)
+        z.update(init_val_dict)
+        z.update(step_size_dict)
+        f = call_ll(len(self.floated_params),self.ll,self.floated_params)
+        m = Minuit(f,**z)
+        m.migrad()
+
+    def plot_corner(self, chains_dir, labels):
+        # Load the samples
+        chain_file = chains_dir + 'post_equal_weights.dat'
+        samples = np.array(np.loadtxt(chain_file)[:, :-1])
+
+        # Now make a triangle plot using corner
+        corner.corner(samples, labels=labels, smooth=1.5,
+                      smooth1d=1, quantiles=[0.16, 0.5, 0.84], show_titles=True,
+                      title_fmt='.2f', title_args={'fontsize': 14},
+                      range=[1 for _ in range(len(self.floated_params))],
+                      plot_datapoints=False, verbose=False)
 
     @staticmethod
     def make_dirs(dirs):
@@ -125,4 +189,3 @@ class run_scan():
                 except OSError as e:
                     if e.errno != 17:
                         raise
-
