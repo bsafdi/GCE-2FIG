@@ -19,7 +19,7 @@ N_{i,j,k} = \omega_{i,j,k} \int_{\Delta \Omega_{i,j}} d\ell d b \rho(s,\ell,b) s
 $$ 
 where $\omega_{i,j,k}$ is the efficiency factor for pular-like PS detection in that bin.  Note that we have assumed that $\omega_{i,j,k}$ is constant within the bin, so that we may bring it outside of the integral. 
 
-In the code, for both the disk and the Bulge, we normalize both $\rho$ and $dN/dL$ such that the full integral over all of space and flux is equal to the total number of sources $N$ for that population.  The number of sources is one of the model parameters.  To work with this convention, we must know how to properly normalize $\rho$ and $dN/dL$.
+In the code, for both the disk and the Bulge, we normalize both $\rho$ and $dN/dL$ such that the full integral over all of space and flux is equal to the total number of sources $N$ for that population.  The number of sources is one of the model parameters.  To work with this convention, we must know how to properly normalize $\rho$ and $dN/dL$ .
 
 The normalization of $dN/dL$ is common to both the disk and Bulge.  Let 
 $$
@@ -38,7 +38,7 @@ We characterize the Bulge PS population by
 $$
 \rho_\text{bulge} = {C \over r^\alpha} \,,
 $$
-where $r$ is the distance from the Galactic Center, so long as $r < r_\text{cut}$.  $\rho$ is equal to zero for larger values of $r$.  To have to proper normalization, it is straightforward to verify that 
+where $r$ is the distance from the Galactic Center, so long as $r < r_\text{cut}$ .  $\rho$ is equal to zero for larger values of $r$ .  To have to proper normalization, it is straightforward to verify that 
 $$
 C = {(3 - \alpha) N_\text{bulge} \over 4 \pi r_\text{cut}^{3 - \alpha} } \,.
 $$
