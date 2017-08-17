@@ -21,7 +21,7 @@ from minuit_functions import call_ll
 
 class run_scan():
     def __init__(self, fixed_params, fixed_param_vals, floated_params, floated_param_priors, data_dir = '../data/',
-                 Lmin = 1.0e31, Lmax_disk = 1.0e36, Lmax_bulge = 1.0e36, Ns = 200, Nang = 1, smax_disk = 40, theta_mask=2.0, share_betas=False,
+                 Lmin = 1.0e31, Ns = 200, Nang = 1, smax_disk = 40, theta_mask=2.0, share_betas=False,
                  use_prior=False, Nang_prior=40):
         """ Initialize scan class.
 
@@ -31,7 +31,6 @@ class run_scan():
             :param floated_param_priors: Priors array for parameters to be floated
             :param data_dir: Directory containing the required maps
             :param Lmin: Minimum luminosity
-            :param Lmax: Maximum luminosity
             :param Lmax_disk: Maximum luminosity for disk
             :param Lmax_bulge: Maximum luminosity for bulge
             :param Ns: Number of integration point in z
@@ -49,8 +48,6 @@ class run_scan():
         self.data_dir = data_dir
 
         self.Lmin = Lmin
-        self.Lmax_disk = Lmax_disk
-        self.Lmax_bulge = Lmax_bulge
         self.Ns = Ns
         self.Nang = Nang
         self.smax_disk = smax_disk
@@ -60,7 +57,7 @@ class run_scan():
         self.use_prior = use_prior
         self.Nang_prior = Nang_prior
         
-        self.all_params = np.array(['N_bulge','N_disk','alpha','n','sigma','z0','beta_disk','beta_bulge'])
+        self.all_params = np.array(['N_bulge','N_disk','alpha','n','sigma','z0','Lmax_disk','Lmax_bulge','beta_disk','beta_bulge'])
         
         if self.share_betas: # If using same beta for bulge and disk, remove the bulge param and use disk one in common
             
@@ -126,7 +123,7 @@ class run_scan():
 
         ll_val =  likelihood.ll(self.PSR_data, self.omega_ijk,                  
                         *theta_ll, 
-                        Lmin = self.Lmin, Lmax_disk = self.Lmax_disk, Lmax_bulge = self.Lmax_bulge, 
+                        Lmin = self.Lmin, 
                         Ns = self.Ns, Nang = self.Nang, smax_disk = self.smax_disk, theta_mask = self.theta_mask,
                         use_prior = self.use_prior, Nang_prior = self.Nang_prior)
 
@@ -163,16 +160,17 @@ class run_scan():
         z.update(init_val_dict)
         z.update(step_size_dict)
         f = call_ll(len(self.floated_params),self.ll,self.floated_params)
-        m = Minuit(f,**z)
-        m.migrad()
+        self.m = Minuit(f,**z)
+        self.m.migrad()
+        self.max_LL = - self.m.fval
 
     def plot_corner(self, chains_dir, labels):
         # Load the samples
         chain_file = chains_dir + 'post_equal_weights.dat'
-        samples = np.array(np.loadtxt(chain_file)[:, :-1])
+        self.samples = np.array(np.loadtxt(chain_file)[:, :-1])
 
         # Now make a triangle plot using corner
-        corner.corner(samples, labels=labels, smooth=1.5,
+        corner.corner(self.samples, labels=labels, smooth=1.5,
                       smooth1d=1, quantiles=[0.16, 0.5, 0.84], show_titles=True,
                       title_fmt='.2f', title_args={'fontsize': 14},
                       range=[1 for _ in range(len(self.floated_params))],

@@ -49,7 +49,7 @@ cdef double pi = np.pi
 @cython.initializedcheck(False)
 cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk, 
                 double Nbulge, double Ndisk, double alpha, double n, 
-                double sigma, double z0, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31, double Lmax_disk = 1.0e36,double Lmax_bulge = 1.0e36,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0,
+                double sigma, double z0, double Lmax_disk, double Lmax_bulge, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0,
                 int use_prior = 0, int Nang_prior = 20) nogil:
     """ Calculate the likelihood as a function of the bulge and disk params
     theta_mask in degrees 
