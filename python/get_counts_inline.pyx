@@ -106,10 +106,9 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
 
     # Common prefactors
     pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
-    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+    # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
     cdef double pref_L_norm = 1./(pow(Lmin,1-beta) - pow(Lmax,1-beta))
 
-    cdef double flux_min_test, flux_max_test
     cdef double flux_min_eval, flux_max_eval
 
     # for s integration
@@ -137,13 +136,6 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
                         flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
 
                         pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
-
-                        # if flux_min_test < Lmin and flux_max_test > Lmax:
-                        #     pref_L = (pow(Lmin/s**2, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
-                        # elif flux_min_test < Lmin:
-                        #     pref_L = (pow(Lmin/s**2, 1.-beta) - pow(4*pi*fluxmax, 1.-beta))*pref_L_norm
-                        # elif flux_max_test < Lmax:
-                        #     pref_L = (pow(4*pi*fluxmin, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
 
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                         if r_squared < pow(rcut,2):
@@ -208,10 +200,9 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
 
     # Common prefactors
     pref_rho = omega_ijk * Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)
-    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) 
+    #pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) 
     cdef double pref_L_norm = 1./(pow(Lmin,1-beta) - pow(Lmax,1-beta))
 
-    cdef double flux_min_test, flux_max_test
     cdef double flux_min_eval, flux_max_eval
 
     # for s integration
@@ -236,14 +227,6 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
                     flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
 
                     pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
-                    # flux_min_test = 4*pi*s**2*fluxmin
-                    # flux_max_test = 4*pi*s**2*fluxmax
-                    # if flux_min_test < Lmin and flux_max_test > Lmax:
-                    #     pref_L = (pow(Lmin/s**2, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
-                    # elif flux_min_test < Lmin:
-                    #     pref_L = (pow(Lmin/s**2, 1.-beta) - pow(4*pi*fluxmax, 1.-beta))*pref_L_norm
-                    # elif flux_max_test < Lmax:
-                    #     pref_L = (pow(4*pi*fluxmin, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
 
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
@@ -316,10 +299,10 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
 
     # Common prefactors
     pref_rho = Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
-    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+    # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
     cdef double pref_L_norm = 1./(pow(Lmin,1-beta) - pow(Lmax,1-beta))
 
-    cdef double flux_min_test, flux_max_test
+    cdef double flux_min_eval, flux_max_eval
 
     # for s integration
     smin = rodot - rcut
@@ -339,14 +322,9 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
                     s = smin
                     for l in range(Ns):
 
-                        flux_min_test = 4*pi*s**2*fluxmin
-                        flux_max_test = 4*pi*s**2*fluxmax
-                        if flux_min_test < Lmin and flux_max_test > Lmax:
-                            pref_L = (pow(Lmin/s**2, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
-                        elif flux_min_test < Lmin:
-                            pref_L = (pow(Lmin/s**2, 1.-beta) - pow(4*pi*fluxmax, 1.-beta))*pref_L_norm
-                        elif flux_max_test < Lmax:
-                            pref_L = (pow(4*pi*fluxmin, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
+                        flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
+                        flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
+                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                         if r_squared < rcut**2:
@@ -413,10 +391,10 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
 
     # Common prefactors
     pref_rho = Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)
-    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+    #pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
     cdef double pref_L_norm = 1./(pow(Lmin,1-beta) - pow(Lmax,1-beta))
 
-    cdef double flux_min_test, flux_max_test
+    cdef double flux_min_eval, flux_max_eval
 
     # for s integration
     smin = 0.0
@@ -434,14 +412,10 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
                 integral = 0.0
                 s = smin
                 for l in range(Ns):
-                    flux_min_test = 4*pi*s**2*fluxmin
-                    flux_max_test = 4*pi*s**2*fluxmax
-                    if flux_min_test < Lmin and flux_max_test > Lmax:
-                        pref_L = (pow(Lmin/s**2, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
-                    elif flux_min_test < Lmin:
-                        pref_L = (pow(Lmin/s**2, 1.-beta) - pow(4*pi*fluxmax, 1.-beta))*pref_L_norm
-                    elif flux_max_test < Lmax:
-                        pref_L = (pow(4*pi*fluxmin, 1.-beta) - pow(Lmax/s**2, 1.-beta))*pref_L_norm
+
+                    flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
+                    flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
+                    pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
