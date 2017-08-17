@@ -135,7 +135,10 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
                         flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
                         flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
 
-                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
+                        if flux_max_eval < flux_min_eval:
+                            pref_L = 0.0
+                        else:
+                            pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                         if r_squared < pow(rcut,2):
@@ -226,7 +229,10 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
                     flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
                     flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
 
-                    pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
+                    if flux_max_eval < flux_min_eval:
+                        pref_L = 0.0
+                    else:
+                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
@@ -324,7 +330,10 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
 
                         flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
                         flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
-                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
+                        if flux_max_eval < flux_min_eval:
+                            pref_L = 0.0
+                        else:
+                            pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                         if r_squared < rcut**2:
@@ -415,7 +424,10 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
 
                     flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
                     flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
-                    pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
+                    if flux_max_eval < flux_min_eval:
+                        pref_L = 0.0
+                    else:
+                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
 
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
