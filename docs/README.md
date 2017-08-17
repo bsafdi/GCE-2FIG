@@ -74,9 +74,103 @@ $$
 Here, we describe in more detail how we implement the computations of the expected number of PS counts in the file `get_counts_inline.pyx`.
 
 The cartesian grid is given by 12 linear-spaced bins in the inner 40$^\circ$ of the Milky Way:
-```python
+
+```c
 cdef double[::1] ang_boundaries = np.linspace(-20.,20.,13,dtype=DTYPE)
 ``` 
+
+The flux-bin boundaries are given by
+
+```python
+fluxvals = [1.00000000e-06, 1.46779927e-06, 2.15443469e-06, 3.16227766e-06, 4.64158883e-06, 6.81292069e-06, 1.00000000e-05, 3.16227766e-05, 1.00000000e-04]
+```
+
+in units of MeV/cm^2/s.
+
+The function 
+
+```c
+double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, double omega_ijk, double alpha, double beta,double rcut , double Lmin, double Lmax ,int Ns ,int Nang, double theta_mask )
+```
+
+return the number of counts in the Bulge in spatial $\ell$ bin `i`, $b$ bin `j`, and flux bin `k`.  Most of the parameters above are defined previously.  However, there are a few parameters that are specific to the calculation method.  These include
+
+	1. int Ns: the number of points in the numerical integral over s
+	2. int Nang: the number of latitude and longitude points in the numerical integral over the pixel
+	3. double theta_mask: the radius in degrees fro the Galactic Center that will be masked when computing the number of counts
+  
+The code itself proceeds by first initializing relevant quantities, such as
+
+```python
+cdef double ell_start = ang_boundaries[i]
+cdef double b_start = ang_boundaries[j]
+cdef double d_ang = (ang_boundaries[1] - ang_boundaries[0])/float(Nang)
+```
+
+and  calculating relevant pre-factors, such as 
+
+```python
+pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
+```
+
+and 
+
+```python
+pref_L_norm = 1./(pow(Lmin,1-beta) - pow(Lmax,1-beta))
+```
+
+Then, the bulk of the code proceeds through the loops used to perform the angular integration and the integration over $s$:
+
+```python
+for i_b in range(Nang):
+    b = b_start + i_b*d_ang + d_ang/2.
+    for i_ell in range(Nang):
+        ell = ell_start + i_ell*d_ang + d_ang/2.
+        coslval = cos(ell * degtorad)
+        cosbval = cos(b * degtorad)
+
+        if cosbval * coslval < costhetaval: #is it masked?
+
+            incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
+            if incl > 0: # should we bother, or is the answer going to be zero?
+                integral = 0.0
+                s = smin
+                for l in range(Ns): #Loop over `s` for `s` integral
+
+                    flux_min_eval = max(Lmin/s**2,4*pi*fluxmin)
+                    flux_max_eval = min(Lmax/s**2,4*pi*fluxmax)
+
+                    if flux_max_eval < flux_min_eval:
+                        pref_L = 0.0
+                    else:
+                        pref_L = (pow(flux_min_eval, 1.-beta) - pow(flux_max_eval, 1.-beta))*pref_L_norm
+
+                    r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
+                    if r_squared < pow(rcut,2):
+                        integral += pref_L * pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
+                    s += ds
+
+                total_res += cosbval * integral 
+```
+
+Above, `i_ell` is the index over longitude, `i_b` is the index of latitude, and `l` is the index over the $s$ bins.  In the first few lines we simply update the new values for `b` and `ell` and their cosines.  We then see if these values of `b` and `ell` are masked.  The statment `if incl > 0:` looks to see if we are too far away from the GC, such that we will completely miss the bulge.  This is relevant given the finite extent of the bulge, but this step is not needed for the disk contribution.  Then, we begin looping over the `s` integral, through the index `l`.  First, we find the true limits of the flux integral, given that fact that the luminosity function is cut off at `Lmin` and `Lmax`.  Then, we perform the integral over `L` to get `pref_L`.  The quantity `integral` contains both the integral over `s` and the integral over `L`.  
+
+Finally, we return 
+
+```python
+return total_res * d_ang**2. * degtorad**2 * ds * pref_rho
+```  
+
+Note that the disk proceeds similarly, as do the functions that compute the full-sky integrals for the prior distribution.
+    
+## Compiling this document
+
+To render this on `github`, execute the following:
+```
+python -m readme2tex --rerender --bustcache --output README.md docs/README.md
+```
+
+
 
 
 
