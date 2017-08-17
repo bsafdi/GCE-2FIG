@@ -1,12 +1,13 @@
 ###############################################################################
-# get_counts.pyx
+# get_counts_inline.pyx
 ###############################################################################
 #
-# Return the predicted bulge counts in a bin (i,j,k), following the definition
-# in 1705.00009
+# Return the predicted bulge and disk counts in a bin (i,j,k), 
+# following the definition in 1705.00009.  Also compute the number of counts 
+# above in a given flux range over the full sky for use with the prior
+# these functions are called by likelihood.pyx
 #
-# Written: Nick Rodd, MIT, 5 August 2017
-# Modified by Ben Safdi, UM August 15 2017
+# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
 # 
 ###############################################################################
 
@@ -29,6 +30,7 @@ cdef extern from "math.h":
     double fabs(double x) nogil
     double tan(double x) nogil
 
+# Useful numbres
 cdef double pi = np.pi
 cdef double rodot = 8.5 # Earth GC distance in kpc
 cdef double degtorad = pi/180.
@@ -50,14 +52,14 @@ fluxvals = [1.00000000e-06, 1.46779927e-06, 2.15443469e-06, 3.16227766e-06,
             4.64158883e-06, 6.81292069e-06, 1.00000000e-05, 3.16227766e-05, 
             1.00000000e-04]
 
+# Pixel area.
 cdef double area = pow(angvals[1]-angvals[0],2)*pow(2.*pi/360.,2.)
 
 
 #########################################################
-# This is New Code written by Ben Safdi                 # 
 # Predicted Bulge PSRs in bin (i,j,k) [long, lat, flux] #
 # Performs the angular integral instead of taking the   #
-# value from the bin centre                             #
+# value from the bin center                             #
 #########################################################
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -111,6 +113,7 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
     smax = rodot + rcut
     ds = (smax - smin)/float(Ns)
 
+    # loop over angles for angular integral
     for i_b in range(Nang):
         b = b_start + i_b*d_ang + d_ang/2.
         for i_ell in range(Nang):
@@ -118,41 +121,28 @@ cpdef inline double Nbulge_full_ang_ijk(int i, int j, int k, double Nbulge, doub
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
 
-            if cosbval * coslval < costhetaval:
+            if cosbval * coslval < costhetaval: #is it masked?
 
-                #res = 0.0
                 incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
-                if incl > 0:
-                    # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
-                    # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
-
-                    # smin = rodot - rcut
-                    # smax = rodot + rcut
-                    # ds = (smax - smin)/float(Ns)
+                if incl > 0: # should be bother, or is the answer going to be zero?
                     integral = 0.0
                     s = smin
-                    for l in range(Ns):
+                    for l in range(Ns): #Loop over `s` for `s` integral
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
-                        # r_squared = pow(s, 2.) - 2*rodot*s*coslval*cosbval + pow(rodot, 2.)
-                        #print r_squared
                         if r_squared < pow(rcut,2):
                             integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
                         s += ds
 
-                    total_res += cosbval * integral #* ds * pref_L * pref_rho
-                    #total_res += res
-            #print integral, ds, pref_L, pref_rho
+                    total_res += cosbval * integral 
 
-    #print area, cosbval, integral, ds, pref_L, pref_rho
     return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho
 
 
 
-#########################################################
-# This is New Code written by Ben Safdi                 # 
-# Predicted Disk PSRs in bin (i,j,k) [long, lat, flux] #
+######################################################### 
+# Predicted Disk PSRs in bin (i,j,k) [long, lat, flux]  #
 # Performs the angular integral instead of taking the   #
-# value from the bin centre                             #
+# value from the bin center                             #
 #########################################################
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -201,20 +191,20 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
 
     # Common prefactors
     pref_rho = omega_ijk * Ndisk /4./pi/z0/pow(sigma,n+2)/tgamma(n+2)
-    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
+    pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) 
 
     # for s integration
     smin = 0.0
     ds = (smax - smin)/float(Ns)
 
+    # loop over angles
     for i_b in range(Nang):
         b = b_start + i_b*d_ang + d_ang/2.
         for i_ell in range(Nang):
             ell = ell_start + i_ell*d_ang + d_ang/2.
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
-            if cosbval * coslval < costhetaval:
-                #sinbval = sin(b * degtorad)
+            if cosbval * coslval < costhetaval: #is it masked?
 
                 res = 0.0
                 integral = 0.0
@@ -223,33 +213,28 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
                     R = sqrt( r_squared - z**2 )
-                    #print r_squared
                     integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)
                     s += ds
 
-                res = cosbval * integral #* ds * pref_L * pref_rho
+                res = cosbval * integral 
                 total_res += cosbval * integral
-        #print integral, ds, pref_L, pref_rho
 
-    #print area, cosbval, integral, ds, pref_L, pref_rho
     return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho
 
 
-
-
-
-
-
-
+#########################################################
+#########################################################
+#########################################################
+# Below are the functions that calculate the number of  #
+# counts for the prior                                  #
+#########################################################
+#########################################################
+#########################################################
 
 
 
 #########################################################
-# This is New Code written by Ben Safdi                 # 
-# Predicted Bulge PSRs in bin k, integraded over angs   # 
-# still bins in flux k                                  #
-# Performs the angular integral instead of taking the   #
-# value from the bin centre                             #
+# Predicted Bulge PSRs, integraded over angs            # 
 #########################################################
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -281,8 +266,8 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
 
     cdef int i_b, i_ell
     cdef double ell,b
-    cdef double ell_start = -15.0 #ang_boundaries[i]
-    cdef double b_start = -15.0 #ang_boundaries[j]
+    cdef double ell_start = -15.0 # we will integrate for -15 to +15 in lat and lon
+    cdef double b_start = -15.0 
     cdef double d_ang = (30.0)/float(Nang)
 
     cdef double total_res = 0.0
@@ -310,29 +295,18 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
             if cosbval * coslval < costhetaval:
-                #res = 0.0
                 incl = 1. - (1. - pow(rcut/rodot,2) ) * pow(coslval*cosbval,2)
                 if incl > 0:
-                    # pref_rho = omega_ijk * Nbulge * (3. - alpha) / 4. / pi / pow(rcut,3 - alpha)
-                    # pref_L = pow(4.*pi,1.-beta)*(pow(fluxmin, 1.-beta) - pow(fluxmax, 1.-beta))/(pow(Lmin,1-beta) - pow(Lmax,1-beta)) #(beta-1.)
-
-                    # smin = rodot - rcut
-                    # smax = rodot + rcut
-                    # ds = (smax - smin)/float(Ns)
                     integral = 0.0
                     s = smin
                     for l in range(Ns):
                         r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
-                        #print r_squared
                         if r_squared < rcut**2:
                             integral += pow(s,4.-2.*beta)*pow(r_squared,-alpha/2.)
                         s += ds
 
-                    total_res += cosbval * integral #* ds * pref_L * pref_rho
-                    #total_res += res
-            #print integral, ds, pref_L, pref_rho
+                    total_res += cosbval * integral 
 
-    #print area, cosbval, integral, ds, pref_L, pref_rho
     return total_res * d_ang**2. * degtorad**2 * ds * pref_L * pref_rho
 
 
@@ -341,11 +315,8 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,double
 
 
 
-#########################################################
-# This is New Code written by Ben Safdi                 # 
-# Predicted Disk PSRs in bin (i,j,k) [long, lat, flux] #
-# Performs the angular integral instead of taking the   #
-# value from the bin centre                             #
+######################################################### 
+# Predicted Disk PSRs for prior                         #
 #########################################################
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -363,13 +334,8 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
     smax : 40 kpc default, how far to integrate out to from Sun?
     theta_mask : degrees, mask from the GC
     """
-    # Determine angles and flux boundaries, convert flux to erg/kpc^2/s
-    # cdef double fluxmin = fluxvals[k] * fluxunits
-    # if k <= 6:
     cdef double fluxmin = 1.8e-5 * fluxunits #MeV cm^{-2} s^{-1}
-    # cdef double fluxmax = max(fluxvals[k+1] * fluxunits,fluxmin)
-    # # if k == 8:
-    cdef double fluxmax = 6.539e-4 * fluxunits #,fluxmin) #MeV cm^{-2} s^{-1}
+    cdef double fluxmax = 6.539e-4 * fluxunits  #MeV cm^{-2} s^{-1}
 
     # Setup output and if variables
     cdef double Nijk = 0.
@@ -381,8 +347,8 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
 
     cdef int i_b, i_ell
     cdef double ell,b
-    cdef double ell_start = -180.0
-    cdef double b_start = -90.0
+    cdef double ell_start = -180.0 #integrate from -180 to +180 in lon
+    cdef double b_start = -90.0 #and from -90 to +90 in lat
     cdef double d_ang_ell = (360.0)/float(Nang)
     cdef double d_ang_b = (180.0)/float(Nang)
 
@@ -412,7 +378,6 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
             coslval = cos(ell * degtorad)
             cosbval = cos(b * degtorad)
             if cosbval * coslval < costhetaval:
-                #sinbval = sin(b * degtorad)
 
                 res = 0.0
                 integral = 0.0
@@ -421,15 +386,12 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
                     r_squared = (s*cosbval*coslval - rodot)**2 + s**2*(1. - pow(cosbval*coslval,2) )
                     z = s*sqrt(1 - cosbval**2)
                     R = sqrt( r_squared - z**2 )
-                    #print r_squared
                     integral += pow(s,4.-2.*beta)*pow(R,n)*exp(-R/sigma - z/z0)
                     s += ds
 
-                res = cosbval * integral #* ds * pref_L * pref_rho
+                res = cosbval * integral 
                 total_res += cosbval * integral
-        #print integral, ds, pref_L, pref_rho
 
-    #print area, cosbval, integral, ds, pref_L, pref_rho
     return total_res * d_ang_ell*d_ang_b * degtorad**2 * ds * pref_L * pref_rho
 
 

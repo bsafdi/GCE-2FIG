@@ -1,14 +1,11 @@
 ###############################################################################
-# LL.pyx
+# likelihood.pyx
 ###############################################################################
 #
-# Evaluate the likelihood as defined in 1705.00009, accounting for the minus
-# error. For the moment the prior term has been left out
+# Evaluate the likelihood as defined in 1705.00009.
 #
-# Mask whatever you want
 #
-# Written: Nick Rodd, MIT, 5 August 2017
-# Modified: Ben Safdi,UM, 15 August 2017
+# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
 #
 ###############################################################################
 

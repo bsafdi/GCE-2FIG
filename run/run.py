@@ -4,7 +4,7 @@
 #
 # Perform scan to obtain best-fit disk and bulge PS population parameters
 #
-# Written: Siddharth Mishra-Sharma, Princeton, 15 August 2017
+# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
 # 
 ###############################################################################
 
