@@ -61,18 +61,17 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     for i in range(12): # loop over longitude
         for j in range(12): # loop over latitude
             for k in range(8): # loop over flux
-                if i != 6:
-                    omega_val = omega_ijk[i,j,k] 
+                omega_val = omega_ijk[i,j,k] 
 
-                    N_disk = gc.Ndisk_full_ang_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
-                    N_bulge = gc.Nbulge_full_ang_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
+                N_disk = gc.Ndisk_full_ang_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
+                N_bulge = gc.Nbulge_full_ang_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
 
-                    Nmodel = N_disk + N_bulge
+                Nmodel = N_disk + N_bulge
 
-                    Nobs = PSR_data[i,j,k]
+                Nobs = PSR_data[i,j,k]
 
 
-                    ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
+                ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
              
     cdef double Nmodeltot = 0.
     cdef double pmid = 174.
