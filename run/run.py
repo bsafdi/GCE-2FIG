@@ -22,7 +22,7 @@ from minuit_functions import call_ll
 class run_scan():
     def __init__(self, fixed_params, fixed_param_vals, floated_params, floated_param_priors, data_dir = '../data/',
                  Lmin = 1.0e31, Ns = 200, Nang = 1, smax_disk = 40, theta_mask=2.0, share_betas=False,
-                 use_prior=False, Nang_prior=40):
+                 use_prior=False, Nang_prior=40, efficiency_long=False, efficiency_custom=None):
         """ Initialize scan class.
 
             :param fixed_params: Array of parameters to be held fixed
@@ -30,16 +30,18 @@ class run_scan():
             :param floated_params: Array of parameters to be floated
             :param floated_param_priors: Priors array for parameters to be floated
             :param data_dir: Directory containing the required maps
-            :param Lmin: Minimum luminosity
-            :param Lmax_disk: Maximum luminosity for disk
-            :param Lmax_bulge: Maximum luminosity for bulge
-            :param Ns: Number of integration point in z
+            :param Lmin: Minimum luminosity (erg s$^{-1}$)
+            :param Lmax_disk: Maximum luminosity for disk (erg s$^{-1}$)
+            :param Lmax_bulge: Maximum luminosity for bulge (erg s$^{-1}$)
+            :param Ns: Number of integration point in z (kpc)
             :param Nang: Number of angular integration points
-            :param smax_disk: How far to integrate out to for disk, in kpc
+            :param smax_disk: How far to integrate out to for disk  (kpc)
             :param theta_mask: How many inner degrees to mask
             :param share_betas: Whether to float a single beta for disk and bulge
             :param use_prior: Whether to use prior on total number of sources
             :param Nang_prior: How many angular bins to use over full sky when using prior
+            :param efficiency_long: Whether to use longitude-dependent efficiency
+            :param efficiency_custom: A custom efficiency function
         """
         self.fixed_params = np.array(fixed_params)
         self.fixed_param_vals = np.array(fixed_param_vals)
@@ -53,6 +55,9 @@ class run_scan():
         self.smax_disk = smax_disk
         self.theta_mask = theta_mask
         self.share_betas = share_betas
+
+        self.efficiency_long = efficiency_long
+        self.efficiency_custom = efficiency_custom
 
         self.use_prior = use_prior
         self.Nang_prior = Nang_prior
@@ -76,7 +81,17 @@ class run_scan():
         """ Load the binned efficiency and data files
         """       
         self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') + np.load(self.data_dir + '/PSR_data_3fgl.npy')
-        self.omega_ijk = np.load(self.data_dir + '/omega_ijk.npy')
+        
+        if self.efficiency_custom is None: # If not using a custom efficiency
+            if not self.efficiency_long: # If not using longitude-dependent efficiency
+                omega_jk = np.load('../data/omega_jk.npy')
+                self.omega_ijk = np.zeros((12, 12, 8))
+                for i in range(12):
+                    self.omega_ijk[i,:,:] = omega_jk
+            else: # Load in longitude-dependent efficiency
+                self.omega_ijk = np.load(self.data_dir + '/omega_ijk.npy')
+        else: # Load in custom efficiency if this is specified
+            self.omega_ijk = self.efficiency_custom
 
     def setup_fixed_params(self):
         """ Set up values and arrays for parameters to be held fixed
@@ -115,6 +130,7 @@ class run_scan():
         """ Log Likelihood in the format required by MultiNest
         """
         theta_ll = self.theta
+
         for float_idx, float_item in enumerate(self.param_all_pos_ary):
             theta_ll[float_item] = theta[float_idx]
 
@@ -151,7 +167,7 @@ class run_scan():
         step_size_dict = {}
         for iparam, param in enumerate(self.floated_params):
             limit_dict['limit_'+param] = (self.floated_param_priors[iparam][0],self.floated_param_priors[iparam][1])
-            init_val_dict[param] = 0.0
+            init_val_dict[param] = (self.floated_param_priors[iparam][0] + self.floated_param_priors[iparam][1])/2.
             step_size_dict['error_'+param] = 1.0
         other_kwargs = {'print_level': verbose, 'errordef': 1}
         z = limit_dict.copy()
