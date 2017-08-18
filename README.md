@@ -156,6 +156,31 @@ To render this on `github`, execute the following:
 python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 ```
 
+# Results
+
+Unless floated, $n = 2.35$,
+$\sigma = 1.528$,
+$\alpha = 2.6$,
+$\beta = 1.2$,
+$z_0 = 0.7$.
+
+Only floating $N_D$ and $N_B$:
+
+| $N_D$        | $N_B$       | TS   |
+|--------------|-------------|------|
+| $4462\pm635$ | 0           | 0    |
+| $3152\pm800$ | $690\pm359$ | 9    |
+
+Floating other paramsters as in 2FIG Table 2:
+
+
+| $N_D$             | $N_B$                     | $z_0$         | $\beta$       | $\alpha$      | TS |
+|-------------------|---------------------------|---------------|---------------|---------------|----|
+| $953805\pm149704$ | 0                         | $0.11\pm0.05$ | $2\pm0.08$    | -             | 0  |
+| $675207\pm174537$ | $265164\pm117051$         | $0.07\pm0.04$ | $2\pm0.14$    | -             | 11 |
+| $869369\pm426897$ | $849551\pm2.53\times10^6$ | $0.08\pm0.06$ | $1.99\pm0.72$ | $2.93\pm0.66$ | 15 |
+
+
 
 
 
