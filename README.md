@@ -171,7 +171,7 @@ Only floating <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e1337360d
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/7a0f0aa0911bd3b1d1addcd098d5599f.svg?af23b183a9&invert_in_darkmode" align=middle width=77.363055pt height=21.10812pt/> | 0           | 0    |
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/f8f49654354face57665ff181ea75d93.svg?e08aaadbd5&invert_in_darkmode" align=middle width=77.363055pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/91477bf6f35e556d39997dc1868f77bb.svg?ccf6d23fd3&invert_in_darkmode" align=middle width=69.174435pt height=21.10812pt/> | 9    |
 
-Floating other paramsters as in 2FIG Table 2:
+Floating other parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
 
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e1337360d9fc04449e0bd6a786b5ad20.svg?9d1e504c06&invert_in_darkmode" align=middle width=24.21903pt height=22.38192pt/>             | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/f7a0c7db2f0eff424a274f52f4a5c8d6.svg?8eecf02365&invert_in_darkmode" align=middle width=23.61183pt height=22.38192pt/>                     | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/d1a81d9dc6dd30e43ba27c5490a34a32.svg?cc93cac32e&invert_in_darkmode" align=middle width=14.14413pt height=14.10255pt/>         | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?64ed2dd591&invert_in_darkmode" align=middle width=10.1277pt height=22.74591pt/>       | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/c745b9b57c145ec5577b82542b2df546.svg?dc94089a21&invert_in_darkmode" align=middle width=10.537065pt height=14.10255pt/>      | TS |
@@ -179,12 +179,3 @@ Floating other paramsters as in 2FIG Table 2:
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/ec6cea16099dbe5a9f2fb45666d5658c.svg?d3462cd471&invert_in_darkmode" align=middle width=118.305495pt height=21.10812pt/> | 0                         | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/606ace14a2ca8b4f7ef3e2137462b079.svg?684b3c8d0c&invert_in_darkmode" align=middle width=78.272865pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/b53de9f14103f6035fb3ce63020c47c9.svg?a6c885d759&invert_in_darkmode" align=middle width=57.346575pt height=21.10812pt/>    | -             | 0  |
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/da20d18e326313db38eb09e073bad7b6.svg?6a7ba399c&invert_in_darkmode" align=middle width=118.305495pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/ba7f1115809c2bd23b76e5febaed7bc5.svg?9058c6bf8b&invert_in_darkmode" align=middle width=118.305495pt height=21.10812pt/>         | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/fc26eadee300afd8e0dff7bfb86e0ea6.svg?832c08c42f&invert_in_darkmode" align=middle width=78.272865pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/2025c0428acc0ea9c9c5ba5e49d2c1a3.svg?a284800d14&invert_in_darkmode" align=middle width=57.346575pt height=21.10812pt/>    | -             | 11 |
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/9229c91164348582d906c40de52e4e34.svg?5d1a7731b6&invert_in_darkmode" align=middle width=118.305495pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/b3404575a194b9da6f88769e0fcc2d0a.svg?38232f0160&invert_in_darkmode" align=middle width=141.23769pt height=26.70657pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/b86c11f6a1107422729bf42ef2610bed.svg?cca80f6815&invert_in_darkmode" align=middle width=78.272865pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/75a99920137f2e61c80e0072aca6b794.svg?69ec014b2d&invert_in_darkmode" align=middle width=78.272865pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/5cc7341d5550038b2026b8159f85a8d9.svg?dc311bb0f&invert_in_darkmode" align=middle width=78.272865pt height=21.10812pt/> | 15 |
-
-
-
-
-
-
-
-
- 
