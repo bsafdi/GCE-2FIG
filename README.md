@@ -171,7 +171,7 @@ Only floating <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e1337360d
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/7a0f0aa0911bd3b1d1addcd098d5599f.svg?5b85bdcbc6&invert_in_darkmode" align=middle width=77.363055pt height=21.10812pt/> | 0           | 0    |
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/f8f49654354face57665ff181ea75d93.svg?5ebba425ca&invert_in_darkmode" align=middle width=77.363055pt height=21.10812pt/> | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/91477bf6f35e556d39997dc1868f77bb.svg?4c28edbe3f&invert_in_darkmode" align=middle width=69.174435pt height=21.10812pt/> | 9    |
 
-Floating other paramsters as in 2FIG Table 2:
+Floating other parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
 
 | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e1337360d9fc04449e0bd6a786b5ad20.svg?bbdf705b5c&invert_in_darkmode" align=middle width=24.21903pt height=22.38192pt/>             | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/f7a0c7db2f0eff424a274f52f4a5c8d6.svg?8dd288c68b&invert_in_darkmode" align=middle width=23.61183pt height=22.38192pt/>                     | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/d1a81d9dc6dd30e43ba27c5490a34a32.svg?3159b7dc9&invert_in_darkmode" align=middle width=14.14413pt height=14.10255pt/>         | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?2f8d994630&invert_in_darkmode" align=middle width=10.1277pt height=22.74591pt/>       | <img src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/c745b9b57c145ec5577b82542b2df546.svg?2af421da81&invert_in_darkmode" align=middle width=10.537065pt height=14.10255pt/>      | TS |
