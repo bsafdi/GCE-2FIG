@@ -170,7 +170,7 @@ To render this on `github`, execute the following:
 python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 ```
 
-# Results
+## Results
 
 Unless floated, $n = 2.35$,
 $\sigma = 1.528$,
@@ -182,13 +182,22 @@ Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.000
 
 | $N_D$             | $N_B$                     | $z_0$         | $\beta$       | $\alpha$      | TS |
 |-------------------|---------------------------|---------------|---------------|---------------|----|
-| $809656^{+145623}_{-201011}$ | 0                         | $0.13^{+0.05}_{-0.04}$ | $1.97^{+0.02}_{-0.04}$    | -             | 0  |
-| $193115^{+95025}_{-54248}$   | $593816^{+162031}_{-137632}$      | $0.09^{+0.05}_{-0.03}$| $1.98^{+0.02}_{-0.03}$    | 2.6             | 6.5 |
-| $605900^{+127518}_{-148625}$ | $455634^{+879485}_{-268794}$ | $0.09^{+0.05}_{-0.03}$ | $1.98^{+0.02}_{-0.03}$ | $2.87^{+0.09}_{-0.26}$ | 6.3 |
+| $1555689^{+561019}_{-485702}$ | $0$                         | $0.07^{+0.05}_{-0.03}$ | $2.10^{+0.07}_{-0.07}$    | -             | $0$  |
+|$1108693^{+514448}_{-326621}$      | $492868^{+386802}_{-198368}$    |  $0.05^{+0.03}_{-0.02}$| $2.10^{+0.07}_{-0.06}$    | $2.6$             | $7.89$ |
+| $1028221^{+475070}_{-286000}$ | $987087^{+1035851}_{-604551}$ | $0.06^{+0.04}_{-0.02}$ | $2.08^{+0.08}_{-0.06}$ | $2.83^{+0.10}_{-0.24}$ | $8.36$ |
 
 
+### Float $N_D$, $z_0$ and $\beta$
 
+![Disk only](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/nd.png "Disk only")
 
+### Float $N_D$, $N_B$, $z_0$ and $\beta$
+
+![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/ndnb.png "Disk and bulge")
+
+### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
+
+![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/ndnbalpha.png "Float alpha")
 
 
 
