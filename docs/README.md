@@ -172,8 +172,6 @@ python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 
 ## Results
 
-Fits performed with `MultiNest`. 
-
 Unless floated, values assumed:
 - $n = 2.35$,
 - $\sigma = 1.528$,
@@ -189,6 +187,16 @@ Priors used:
 
 Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
+### Minuit
+
+| $N_D$             | $N_B$                     | $z_0$         | $\beta$       | $\alpha$      | TS |
+|-------------------|---------------------------|---------------|---------------|---------------|----|
+| $(1.53\pm0.76)\times 10^6$ | $0$                         | $0.06\pm0.05$ | $2.10\pm0.11$    | -             | $0$  |
+| $(9.00\pm5.24)\times 10^5$    | $(3.76\pm3.24)\times 10^5$      | $ 0.05\pm0.04$| $ 2.05\pm0.10$    | $2.6$             | $10.37$ |
+| $(9.17\pm4.98)\times 10^5$ | $(2.99\pm1.53)\times 10^5$ | $0.05\pm0.04$ | $2.06\pm0.10$ | $2.96\pm0.03$ | $11.66$ |
+
+### MultiNest
+
 | $N_D$             | $N_B$                     | $z_0$         | $\beta$       | $\alpha$      | TS |
 |-------------------|---------------------------|---------------|---------------|---------------|----|
 | $1555689^{+561019}_{-485702}$ | $0$                         | $0.07^{+0.05}_{-0.03}$ | $2.10^{+0.07}_{-0.07}$    | -             | $0$  |
@@ -196,15 +204,15 @@ Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.000
 | $1028221^{+475070}_{-286000}$ | $987087^{+1035851}_{-604551}$ | $0.06^{+0.04}_{-0.02}$ | $2.08^{+0.08}_{-0.06}$ | $2.83^{+0.10}_{-0.24}$ | $8.36$ |
 
 
-### Float $N_D$, $z_0$ and $\beta$
+#### Float $N_D$, $z_0$ and $\beta$
 
 ![Disk only](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/nd.png "Disk only")
 
-### Float $N_D$, $N_B$, $z_0$ and $\beta$
+#### Float $N_D$, $N_B$, $z_0$ and $\beta$
 
 ![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/ndnb.png "Disk and bulge")
 
-### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
+#### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
 
 ![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/ndnbalpha.png "Float alpha")
 
