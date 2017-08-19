@@ -1,0 +1,102 @@
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
+  'installed on your system') % tex_req)
+ *****************************************************
+ MultiNest v3.10
+ Copyright Farhan Feroz & Mike Hobson
+ Release Jul 2015
+
+ no. of live points =  100
+ dimensionality =    3
+ *****************************************************
+ Starting MultiNest
+ generating live points
+ live points generated, starting sampling
+Acceptance Rate:                        0.914634
+Replacements:                                150
+Total Samples:                               164
+Nested Sampling ln(Z):              -3116.665073
+Acceptance Rate:                        0.706714
+Replacements:                                200
+Total Samples:                               283
+Nested Sampling ln(Z):               -682.625318
+Acceptance Rate:                        0.524109
+Replacements:                                250
+Total Samples:                               477
+Nested Sampling ln(Z):               -403.690051
+Acceptance Rate:                        0.445765
+Replacements:                                300
+Total Samples:                               673
+Nested Sampling ln(Z):               -349.788109
+Acceptance Rate:                        0.404157
+Replacements:                                350
+Total Samples:                               866
+Nested Sampling ln(Z):               -336.756137
+Acceptance Rate:                        0.382409
+Replacements:                                400
+Total Samples:                              1046
+Nested Sampling ln(Z):               -328.526644
+Acceptance Rate:                        0.360577
+Replacements:                                450
+Total Samples:                              1248
+Nested Sampling ln(Z):               -320.768654
+Acceptance Rate:                        0.332226
+Replacements:                                500
+Total Samples:                              1505
+Nested Sampling ln(Z):               -316.425146
+Acceptance Rate:                        0.303365
+Replacements:                                550
+Total Samples:                              1813
+Nested Sampling ln(Z):               -312.892031
+Acceptance Rate:                        0.282619
+Replacements:                                600
+Total Samples:                              2123
+Nested Sampling ln(Z):               -310.400964
+Acceptance Rate:                        0.267160
+Replacements:                                650
+Total Samples:                              2433
+Nested Sampling ln(Z):               -308.414364
+Acceptance Rate:                        0.261976
+Replacements:                                700
+Total Samples:                              2672
+Nested Sampling ln(Z):               -307.167483
+Acceptance Rate:                        0.253207
+Replacements:                                750
+Total Samples:                              2962
+Nested Sampling ln(Z):               -306.215254
+Acceptance Rate:                        0.243457
+Replacements:                                800
+Total Samples:                              3286
+Nested Sampling ln(Z):               -305.535165
+Acceptance Rate:                        0.234612
+Replacements:                                850
+Total Samples:                              3623
+Nested Sampling ln(Z):               -305.053362
+Acceptance Rate:                        0.230651
+Replacements:                                900
+Total Samples:                              3902
+Nested Sampling ln(Z):               -304.725529
+Acceptance Rate:                        0.226622
+Replacements:                                950
+Total Samples:                              4192
+Nested Sampling ln(Z):               -304.500018
+Acceptance Rate:                        0.222916
+Replacements:                               1000
+Total Samples:                              4486
+Nested Sampling ln(Z):               -304.347253
+Acceptance Rate:                        0.220958
+Replacements:                               1010
+Total Samples:                              4571
+Nested Sampling ln(Z):               -304.322987
+ ln(ev)=  -304.04690682523579      +/-  0.25263532818461976     
+ Total Likelihood Evaluations:         4571
+ Sampling finished. Exiting MultiNest

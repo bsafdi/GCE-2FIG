@@ -145,7 +145,7 @@ class run_scan():
 
         return ll_val
 
-    def perform_scan_multinest(self, nlive=200, chains_dir='/group/hepheno/smsharma/GCE-2FIG-bsafdi/run/chains/analysis/', resume=False):
+    def perform_scan_multinest(self, nlive=100, chains_dir='/group/hepheno/smsharma/GCE-2FIG-bsafdi/run/chains/analysis/', resume=False):
         """ Perform a scan with MultiNest
         """
         self.make_dirs([chains_dir])
@@ -191,6 +191,17 @@ class run_scan():
                       title_fmt='.2f', title_args={'fontsize': 14},
                       range=[1 for _ in range(len(self.floated_params))],
                       plot_datapoints=False, verbose=False)
+
+    def get_lge(self, chains_dir):
+        # Load the samples
+        a = pymultinest.Analyzer(n_params=len(self.floated_params),
+                                     outputfiles_basename=chains_dir)
+        s = a.get_stats()
+
+        lge = s['nested sampling global log-evidence']
+        lge_err = s['nested sampling global log-evidence error']
+
+        return lge, lge_err
 
     @staticmethod
     def make_dirs(dirs):
