@@ -172,11 +172,20 @@ python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 
 ## Results
 
-Unless floated, $n = 2.35$,
-$\sigma = 1.528$,
-$\alpha = 2.6$,
-$\beta = 1.2$,
-$z_0 = 0.7$.
+Fits performed with `MultiNest`. 
+
+Unless floated, values assumed:
+- $n = 2.35$,
+- $\sigma = 1.528$,
+- $\alpha = 2.6$,
+- $\beta = 1.2$,
+- $z_0 = 0.7$.
+
+Priors used: 
+- $N_B, N_D$: [0,3000000]
+- $\alpha$: [2.1, 5.0]
+- $z_0$: [0.01, 2.0]
+- $\beta$: [1.1,3.0]
 
 Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
