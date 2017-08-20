@@ -89,7 +89,7 @@ class run_scan():
                 for i in range(12):
                     self.omega_ijk[i,:,:] = omega_jk
             else: # Load in longitude-dependent efficiency
-                self.omega_ijk = np.load(self.data_dir + '/omega_ijk.npy')
+                self.omega_ijk = np.load(self.data_dir + '/omega_ijk_2PC.npy')
         else: # Load in custom efficiency if this is specified
             self.omega_ijk = self.efficiency_custom
 

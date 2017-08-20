@@ -11,5 +11,5 @@ fixed_param_vals = [2.35,1.528,2.6,1.0e36,1.0e36]
 floated_params = ['N_bulge','N_disk','z0', 'beta']
 floated_param_priors = [[0,3000000],[0,3000000],[0.01,2.0],[1.1,3.0]]
 
-rs_nd_nb = run_scan(fixed_params, fixed_param_vals, floated_params, floated_param_priors, Ns = 200, Nang = 5, share_betas=True, use_prior=True)
-rs_nd_nb.perform_scan_multinest(nlive=500, chains_dir='chains/rs_nd_nb_fixed_nlive500/')
+rs_nd_nb = run_scan(fixed_params, fixed_param_vals, floated_params, floated_param_priors, Ns = 200, Nang = 5, share_betas=True, use_prior=True, efficiency_long=True)
+rs_nd_nb.perform_scan_multinest(nlive=500, chains_dir='chains/rs_nd_nb_fixed_nlive500_longeff_2PC/')

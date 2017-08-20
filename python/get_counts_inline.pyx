@@ -209,7 +209,7 @@ cpdef inline double Ndisk_full_ang_ijk(int i, int j, int k, double Ndisk, double
     cdef double flux_min_eval, flux_max_eval
 
     # for s integration
-    smin = 0.0
+    smin = 0.01
     ds = (smax - smin)/float(Ns)
 
     # loop over angles
@@ -406,7 +406,7 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma,double z0, 
     cdef double flux_min_eval, flux_max_eval
 
     # for s integration
-    smin = 0.0
+    smin = 0.01
     ds = (smax - smin)/float(Ns)
 
     for i_b in range(Nang):
