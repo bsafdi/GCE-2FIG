@@ -222,11 +222,11 @@ All results below are computed using `multinest`.
 
 #### Float $N_D$, $N_B$, $z_0$ and $\beta$
 
-![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-z0-beta-lon-indep_eff.png "Disk and bulge")
+![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-z0-beta-lon-indep_eff.png "Disk and bulge")
 
 #### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
 
-![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-alpha-z0-beta-lon-indep_eff.png "Float alpha")
+![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-alpha-z0-beta-lon-indep_eff.png "Float alpha")
 
 
 ### `2PC-Corrected`
@@ -244,11 +244,11 @@ All results below are computed using `multinest`.
 
 #### Float $N_D$, $N_B$, $z_0$ and $\beta$
 
-![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-z0-beta.png "Disk and bulge")
+![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-z0-beta.png "Disk and bulge")
 
 #### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
 
-![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-alpha-z0-beta.png "Float alpha")
+![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-alpha-z0-beta.png "Float alpha")
 
  
 ### `data-corrected`
@@ -266,10 +266,10 @@ All results below are computed using `multinest`.
 
 #### Float $N_D$, $N_B$, $z_0$ and $\beta$
 
-![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-z0-beta-data_eff.png "Disk and bulge")
+![Disk and bulge](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-z0-beta-data_eff.png "Disk and bulge")
 
 #### Float $N_D$, $N_B$, $z_0$, $\beta$ and $\alpha$
 
-![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/2PC-nd-nb-alpha-z0-beta-data_eff.png "Float alpha")
+![Float alpha](https://raw.githubusercontent.com/bsafdi/GCE-2FIG/master/examples/plots/2PC-nd-nb-alpha-z0-beta-data_eff.png "Float alpha")
 
  
