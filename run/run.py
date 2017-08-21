@@ -196,12 +196,21 @@ class run_scan():
         # Load the samples
         a = pymultinest.Analyzer(n_params=len(self.floated_params),
                                      outputfiles_basename=chains_dir)
+        self.a = a
         s = a.get_stats()
 
         lge = s['nested sampling global log-evidence']
         lge_err = s['nested sampling global log-evidence error']
 
         return lge, lge_err
+
+    def get_max_log_likelihood(self, chains_dir):
+        # Load the samples
+        a = pymultinest.Analyzer(n_params=len(self.floated_params),
+                                     outputfiles_basename=chains_dir)
+
+        return a.get_best_fit() #['log_likelihood']
+
 
     @staticmethod
     def make_dirs(dirs):
