@@ -1,3 +1,0 @@
-/group/hepheno/heptools/anaconda3/envs/venv_py27/lib/python2.7/site-packages/matplotlib/__init__.py:513: UserWarning: matplotlibrc text.usetex option can not be used unless TeX-3.1415 or later is installed on your system
-  'installed on your system') % tex_req)
-slurmstepd: error: *** JOB 19245 ON node041 CANCELLED AT 2017-08-18T16:42:18 ***
