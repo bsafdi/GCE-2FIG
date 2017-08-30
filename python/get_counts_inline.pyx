@@ -35,13 +35,6 @@ cdef double pi = np.pi
 cdef double rodot = 8.5 # Earth GC distance in kpc
 cdef double degtorad = pi/180.
 cdef double fluxunits = 1.52529e37 # [converts MeV/cm^2 to erg/kpc^2]
-# Below value is chosen for mix of speed and accuracy - not perfect
-#cdef double sbin = 0.05 # Width of integration bins in kpc
-
-# # These are the central bin values for l and b. Note l is positive to the left
-# cdef double angvals[12]
-# angvals = [18.33333333, 15., 11.66666667, 8.33333333, 5., 1.66666667, 
-#            -1.66666667, -5., -8.33333333, -11.66666667, -15., -18.33333333]
 
 # These are the angular bin boundaries in degrees for l and b
 cdef double[::1] ang_boundaries = np.linspace(-20.,20.,13,dtype=DTYPE)
@@ -51,9 +44,6 @@ cdef double fluxvals[9]
 fluxvals = [1.00000000e-06, 1.46779927e-06, 2.15443469e-06, 3.16227766e-06, 
             4.64158883e-06, 6.81292069e-06, 1.00000000e-05, 3.16227766e-05, 
             1.00000000e-04]
-
-# # Pixel area.
-# cdef double area = pow(angvals[1]-angvals[0],2)*pow(2.*pi/360.,2.)
 
 
 #########################################################
