@@ -110,3 +110,4 @@ ENV/
 # Slurm files
 slurm-*.out
 .nfs*
+*.batch
