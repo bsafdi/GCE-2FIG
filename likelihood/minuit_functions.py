@@ -17,4 +17,3 @@ class call_ll:
         self.ll = ll
     def __call__(self, *args):
         return - self.ll([arg for arg in args])
-

@@ -130,7 +130,7 @@ cpdef inline double Nbulge_ijk(int i, int j, int k, double Nbulge,
                 
                 # This point only contributes if it is within the bulge
                 if rsq < pow(rcut, 2.):
-                    sum_1ang += pref_L * pow(sval,4.-2.*beta)*pow(rsq,-alpha/2.)
+                    sum_1ang += pref_f * pow(sval,4.-2.*beta)*pow(rsq,-alpha/2.)
                 
                 sval += ds # increment s for the next step
 
@@ -228,7 +228,7 @@ cpdef inline double Ndisk_ijk(int i, int j, int k, double Ndisk,
                 R = sqrt(rsq - pow(zabs,2.))
 
                 # Add value to the sum
-                sum_1ang += pref_L * pow(sval,4.-2.*beta) * pow(R,n) \
+                sum_1ang += pref_f * pow(sval,4.-2.*beta) * pow(R,n) \
                             * exp(-R/sigma - zabs/z0)
                 
                 sval += ds # increment s for the next step
@@ -325,7 +325,7 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,
 
                 # This point only contributes if it is within the bulge
                 if rsq < pow(rcut, 2.):
-                    sum_1ang += pref_L * pow(sval,4.-2.*beta)*pow(rsq,-alpha/2.)
+                    sum_1ang += pref_f * pow(sval,4.-2.*beta)*pow(rsq,-alpha/2.)
 
                 sval += ds # increment s for the next step
 
@@ -423,7 +423,7 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma, double z0,
                 R = sqrt(rsq - pow(zabs,2.))
 
                 # Add value to the sum
-                sum_1ang += pref_L * pow(sval,4.-2.*beta) * pow(R,n) \
+                sum_1ang += pref_f * pow(sval,4.-2.*beta) * pow(R,n) \
                             * exp(-R/sigma - zabs/z0)
 
                 sval += ds # increment s for the next step
