@@ -106,3 +106,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Slurm files
+slurm-*.out
+.nfs*
