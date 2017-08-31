@@ -17,7 +17,7 @@ cimport cython
 
 
 # import get_counts as gc
-cimport get_counts_inline as gc
+cimport PSR_counts as pc
 
 DTYPE = np.float
 ctypedef np.float_t DTYPE_t
@@ -63,8 +63,8 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
             for k in range(8): # loop over flux
                 omega_val = omega_ijk[i,j,k] 
 
-                N_disk = gc.Ndisk_full_ang_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
-                N_bulge = gc.Nbulge_full_ang_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
+                N_disk = pc.Ndisk_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
+                N_bulge = pc.Nbulge_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
 
                 Nmodel = N_disk + N_bulge
 
@@ -80,10 +80,10 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     if use_prior:  # If using a prior on total number of sources
 
         # Add bulge
-        Nmodeltot += gc.Nbulge_total(Nbulge,  alpha,  beta_bulge, rcut ,  Lmin,  Lmax_bulge , Ns , Nang_prior,  theta_mask)
+        Nmodeltot += pc.Nbulge_total(Nbulge,  alpha,  beta_bulge, rcut ,  Lmin,  Lmax_bulge , Ns , Nang_prior,  theta_mask)
 
         # Add disk
-        Nmodeltot += gc.Ndisk_total(Ndisk,  n,  sigma, z0,  beta_disk,  Lmin,  Lmax_disk , Ns , Nang_prior , smax_disk,  theta_mask )
+        Nmodeltot += pc.Ndisk_total(Ndisk,  n,  sigma, z0,  beta_disk,  Lmin,  Lmax_disk , Ns , Nang_prior , smax_disk,  theta_mask )
         
         # Now add the prior term - note I'm sure they have a sign error in that too
         ll -= pow(Nmodeltot - pmid, 2.) / (2. * pow(psig, 2.))
