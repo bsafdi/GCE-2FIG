@@ -1,8 +1,8 @@
 ###############################################################################
-# TS_noprior_minuit.py
+# TS_prior_minuit.py
 ###############################################################################
 # 
-# Evaluate the TS for the bulge using Minuit without the prior
+# Evaluate the TS for the bulge using Minuit with the prior
 #
 ###############################################################################
 
@@ -18,7 +18,7 @@ floated_param_priors = [[0.,1.e6],[0.,1.e6],[0.01,2.],[1.1,3.]]
 
 rs_wb = run_scan(fixed_params, fixed_param_vals, floated_params, 
                  floated_param_priors, Nang=1, share_betas=True, 
-                 use_prior=False)
+                 use_prior=True)
 rs_wb.perform_scan_minuit(verbose=0)
 wb_ll = rs_wb.max_LL
 
@@ -31,7 +31,7 @@ floated_param_priors = [[0.,1.e6],[0.01,2.],[1.1,3.]]
 
 rs_nb = run_scan(fixed_params, fixed_param_vals, floated_params,
                  floated_param_priors, Nang=1, share_betas=True,
-                 use_prior=False)
+                 use_prior=True)
 rs_nb.perform_scan_minuit(verbose=0)
 nb_ll = rs_nb.max_LL
 
