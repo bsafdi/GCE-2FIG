@@ -2,42 +2,24 @@
 # likelihood.pyx
 ###############################################################################
 #
-# Evaluate the likelihood as defined in 1705.00009.
-#
+# Evaluate the likelihood as defined in 1705.00009, using our custom PSR count
+# functions in PSR_counts.pyx 
 #
 # Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
 #
 ###############################################################################
 
 
-# Import basic functions
+# Import functions including custom PSR count functions
 import numpy as np
 cimport numpy as np
 cimport cython
-
-
-# import get_counts as gc
 cimport PSR_counts as pc
-
-DTYPE = np.float
-ctypedef np.float_t DTYPE_t
 
 # C functions
 cdef extern from "math.h":
     double pow(double x, double y) nogil
-    double sqrt(double x) nogil
-    double cos(double x) nogil
-    double tgamma(double x) nogil
-    double exp(double x) nogil
-    double sin(double x) nogil
-    double fabs(double x) nogil
-    double tan(double x) nogil
-
     double log(double x) nogil
-    double lgamma(double x) nogil
-
-cdef double pi = np.pi
-
 
 
 @cython.boundscheck(False)
@@ -46,46 +28,65 @@ cdef double pi = np.pi
 @cython.initializedcheck(False)
 cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk, 
                 double Nbulge, double Ndisk, double alpha, double n, 
-                double sigma, double z0, double Lmax_disk, double Lmax_bulge, double beta_disk, double beta_bulge, double rcut = 3.0, double Lmin = 1.0e31,int Ns = 200, int Nang = 1,double smax_disk = 30,double theta_mask=0.0,
+                double sigma, double z0, double Lmax_disk, double Lmax_bulge, 
+                double beta_disk, double beta_bulge, double rcut = 3., 
+                double Lmin = 1.e31, int Ns = 200, int Nang = 1, 
+                double smax_disk = 30, double theta_mask = 2.,
                 int use_prior = 0, int Nang_prior = 20) nogil:
     """ Calculate the likelihood as a function of the bulge and disk params
-    theta_mask in degrees 
+
+    ---arguments---
+    PSR_data : data binned in [longitude, latitude, flux]
+    omega_ijk : efficiency in same binning as data
+    Nbulge : number of bulge PSRs
+    Ndisk : number of disk PSRs
+    alpha : inner slope of the bulge spatial profile
+    n : cylindrical radial index of the disk profile
+    sigma : exponential cutoff of disk radius [kpc]
+    z0 : exponential cutoff of disk height [kpc]
+    Lmax_disk : max luminosity of the disk [erg/s]
+    Lmax_bulge : max luminosity of the bulge [erg/s]
+    Nang : number of angular steps per bin for the likelihood integral
+    smax_disk : maximum distance to integrate through the disk from Earth [kpc]
+    theta_mask : angle from the GC to be masked
+    use_prior : whether to use the prior
+    Nang_prior : number of angular steps per bin for the prior integral
     """
 
     # Setup loop variables
-    cdef double omega_val, Nmodel, Nobs, N_bulge, N_disk
+    cdef double Nobs, omega_val, Nmodel
     cdef Py_ssize_t i, j, k
     
-    # Now calculate the likelihood over all bins
+    # Now calculate the log likelihood by summing over all bins
     cdef double ll = 0.
     for i in range(12): # loop over longitude
         for j in range(12): # loop over latitude
             for k in range(8): # loop over flux
+                Nobs = PSR_data[i,j,k]
                 omega_val = omega_ijk[i,j,k] 
 
-                N_disk = pc.Ndisk_ijk(i,j,k,Ndisk, omega_val,n,sigma,z0,beta_disk,Lmin,Lmax_disk,Ns,Nang,smax_disk,theta_mask)
-                N_bulge = pc.Nbulge_ijk(i,j,k,Nbulge, omega_val,alpha,beta_bulge,rcut, Lmin,Lmax_bulge,Ns,Nang,theta_mask)
+                Nmodel = 0.
+                Nmodel += pc.Ndisk_ijk(i,j,k,Ndisk,omega_val,n,sigma,z0,
+                                      beta_disk,Lmin,Lmax_disk,Ns,Nang,
+                                      smax_disk,theta_mask)
+                Nmodel += pc.Nbulge_ijk(i,j,k,Nbulge,omega_val,alpha,
+                                        beta_bulge,rcut, Lmin,Lmax_bulge,Ns,
+                                        Nang,theta_mask)
 
-                Nmodel = N_disk + N_bulge
-
-                Nobs = PSR_data[i,j,k]
-
-
-                ll += Nobs*log(Nmodel) - Nmodel #- lgamma(Nobs + 1)
+                ll += Nobs*log(Nmodel) - Nmodel 
              
+    # Add the prior contribution if specified
     cdef double Nmodeltot = 0.
     cdef double pmid = 174.
     cdef double psig = 63.
 
-    if use_prior:  # If using a prior on total number of sources
-
-        # Add bulge
-        Nmodeltot += pc.Nbulge_total(Nbulge,  alpha,  beta_bulge, rcut ,  Lmin,  Lmax_bulge , Ns , Nang_prior,  theta_mask)
-
-        # Add disk
-        Nmodeltot += pc.Ndisk_total(Ndisk,  n,  sigma, z0,  beta_disk,  Lmin,  Lmax_disk , Ns , Nang_prior , smax_disk,  theta_mask )
+    if use_prior:  
+        Nmodeltot += pc.Nbulge_total(Nbulge,alpha,beta_bulge,rcut,Lmin,
+                                     Lmax_bulge,Ns,Nang_prior,theta_mask)
+        Nmodeltot += pc.Ndisk_total(Ndisk,n,sigma,z0,beta_disk,Lmin,Lmax_disk,
+                                    Ns,Nang_prior,smax_disk,theta_mask)
         
-        # Now add the prior term - note I'm sure they have a sign error in that too
+        # Add the prior contribution to the log likelihood
         ll -= pow(Nmodeltot - pmid, 2.) / (2. * pow(psig, 2.))
 
     return ll

@@ -64,8 +64,8 @@ cpdef inline double Nbulge_ijk(int i, int j, int k, double Nbulge,
     
     ----units---
     rcut : in kpc, distance from GC after which to set bulge to 0
-    Lmin : erg s^{-1}
-    Lmax : erg s^{-1}
+    Lmin : [erg/s]
+    Lmax : [erg/s]
     theta_mask : degrees, mask from the GC   
     """
     
@@ -162,8 +162,8 @@ cpdef inline double Ndisk_ijk(int i, int j, int k, double Ndisk,
     ----units---
     z0 : kpc
     sigma : kpc
-    Lmin : erg s^{-1}
-    Lmax : erg s^{-1}
+    Lmin : [erg/s]
+    Lmax : [erg/s]
     smax : 40 kpc default, how far to integrate out to from the Sun
     theta_mask : degrees, mask from the GC
     """
@@ -259,8 +259,8 @@ cpdef inline double Nbulge_total(double Nbulge, double alpha, double beta,
     
     ----units---
     rcut : in kpc, distance from GC after which to set bulge to 0
-    Lmin : erg s^{-1}
-    Lmax : erg s^{-1}
+    Lmin : [erg/s]
+    Lmax : [erg/s]
     theta_mask : degrees, mask from the GC
     """
 
@@ -356,8 +356,8 @@ cpdef inline double Ndisk_total(double Ndisk, double n, double sigma, double z0,
     ----units---
     z0 : kpc
     sigma : kpc
-    Lmin : erg s^{-1}
-    Lmax : erg s^{-1}
+    Lmin : [erg/s]
+    Lmax : [erg/s]
     smax : 40 kpc default, how far to integrate out to from Sun?
     theta_mask : degrees, mask from the GC
     """
