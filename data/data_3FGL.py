@@ -11,6 +11,9 @@
 import numpy as np
 from astropy.io import fits
 
+# Set mask in degrees - distance from GC within which we ignore events
+mask = 2.
+
 # Load Mattia catalog
 load = fits.open('./2FIG_Pass8_Arxiv.fits')
 cat = np.array(load[1].data)
@@ -41,6 +44,7 @@ PSR_data = np.zeros((12,12,8))
 for ips in range(len(glon)):
     lval = glon[ips]
     bval = glat[ips]
+    if np.cos(lval*np.pi/180.)*np.cos(bval*np.pi/180.) > np.cos(mask*np.pi/180.): continue
     fval = eflux[ips]
     for li in range(12):
         if (lval <= angbins[li]) & (lval > angbins[li+1]):

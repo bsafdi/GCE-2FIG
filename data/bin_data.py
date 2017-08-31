@@ -10,6 +10,9 @@
 
 import numpy as np
 
+# Set mask in degrees - distance from GC within which we ignore events
+mask = 2.
+
 # Load the raw data, contains 86 pulsar candidates with associated l, b, flux values
 rd = np.loadtxt('./psrcandidates.dat')
 
@@ -24,6 +27,7 @@ for ips in range(len(rd)):
     lval = rd[ips, 0]
     bval = rd[ips, 1]
     fval = rd[ips, 2]
+    if np.cos(lval*np.pi/180.)*np.cos(bval*np.pi/180.) > np.cos(mask*np.pi/180.): continue
     for li in range(12):
         if (lval <= angbins[li]) & (lval > angbins[li+1]):
             for bi in range(12):

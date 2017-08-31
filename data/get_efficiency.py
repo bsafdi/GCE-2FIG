@@ -3,11 +3,11 @@
 ###############################################################################
 #
 # Evaluate the efficiency at the center of each of the bins using the data
-# provided by Dan
+# provided by Dan, who was given this by Mattia
 #
-# Here we infer the longitude efficiency straight from the Fermi data
+# Here we have no longitude dependence in the efficiency as that's not public
 #
-# Written: Nick Rodd, MIT, 8 August 2017
+# Written: Nick Rodd, MIT, 5 August 2017
 #
 ###############################################################################
 
@@ -75,48 +75,7 @@ for i in range(len(our_bvals)):
     for j in range(len(our_fluxvals)):
         our_efficiency[i,j] = np.interp(our_b_interp[i], np.arange(len(bvals), dtype=float), efficiency_ourflux[:,j])
 
-# Now let's try and get the longitude dependence from the data 
-# Need to load the fermi plugin to load the Fermi data - pointing to this on Erebus
-import sys
-import healpy as hp
-sys.path.append('/zfs/nrodd/NPTF/')
-from fermi import fermi_plugin as fp
-maps_dir='/zfs/bsafdi/data/'
-fermi_data_dir='/zfs/tslatyer/fermimaps/allsky/'
-work_dir='/zfs/nrodd/GCE-2FIG-CrossCheck/data/'
-f_global = fp.fermi_plugin(maps_dir,fermi_data_dir=fermi_data_dir,work_dir=work_dir,CTB_en_min=0,CTB_en_max=40,nside=512,eventclass=5,eventtype=0,newstyle=1,data_July16=True)
+print our_efficiency
+print np.shape(our_efficiency)
 
-data = np.zeros(hp.nside2npix(512))
-for ebin in range(2,34): # bins from ~0.3 to 500 GeV
-    data += f_global.CTB_count_maps[ebin]
-
-# Setup coordinates
-theta, phi = hp.pix2ang(512, range(hp.nside2npix(512)))
-barr = 180./np.pi*(np.pi/2. - theta)
-larr_0360 = phi*180./np.pi
-larr = ((larr_0360 + 180.) % 360.)-180.
-
-# Now calculate the full efficiency
-full_efficiency = np.zeros((len(our_bvals),len(our_bvals),len(our_fluxvals)))
-for i in range(len(our_bvals)): 
-    # Determine l weighting factor - higher weight where less data
-    lweight = np.zeros(len(our_bvals))
-    for j in range(len(our_bvals)):
-        roi = np.where((barr < 20.-10./3.*i) & (barr > 20.-10./3.*(i+1)) & (larr < 20.-10./3.*j) & (larr > 20.-10./3.*(j+1)))[0]
-        lweight[j] = 1.0 / np.sum(data[roi])
-    lweight /= np.mean(lweight)
-
-    #print lweight
-
-    # Now to the full efficiency
-    for j in range(len(our_bvals)):
-        for k in range(len(our_fluxvals)):
-            full_efficiency[j,i,k] = our_efficiency[i,k]*lweight[j]
-            # Artificially truncate to 1 - this needs to be fixed!
-            if full_efficiency[j,i,k] > 1.:
-                full_efficiency[j,i,k] = 1.
-
-print full_efficiency
-print np.shape(full_efficiency)
-
-np.save('./omega_ijk',full_efficiency)
+np.save('./omega_jk',our_efficiency)
