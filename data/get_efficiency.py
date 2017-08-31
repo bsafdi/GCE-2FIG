@@ -75,7 +75,4 @@ for i in range(len(our_bvals)):
     for j in range(len(our_fluxvals)):
         our_efficiency[i,j] = np.interp(our_b_interp[i], np.arange(len(bvals), dtype=float), efficiency_ourflux[:,j])
 
-print our_efficiency
-print np.shape(our_efficiency)
-
 np.save('./omega_jk',our_efficiency)

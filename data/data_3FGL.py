@@ -32,8 +32,6 @@ for i in range(len(cat)):
         eflux = np.append(eflux,cat[i][11])
         count += 1
 
-print count
-
 # Now bin
 
 angbins = -np.linspace(-20,20,13) # - because top left is 0,0 and astro longitude
