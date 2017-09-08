@@ -170,8 +170,7 @@ cpdef inline double Ndisk_ijk(int i, int j, int k, double Ndisk,
 
     ## Setup variables
     cdef double fluxmin = fluxvals[k] * fluxunits # min flux in [erg/kpc^2/s]
-    cdef double fluxmax = fluxvals[k+1] * fluxunits # max flux in [erg/kpc^2/s]
-
+    cdef double fluxmax = fluxvals[k+1] * fluxunits # max flux in [erg/kpc^2/s]    
     cdef double l_start = ang_boundaries[i] # initial l value
     cdef double b_start = ang_boundaries[j] # initial b value
     cdef double dang = (ang_boundaries[0] - ang_boundaries[1])/float(Nang)
