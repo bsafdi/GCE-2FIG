@@ -4,6 +4,8 @@
 #
 # Bin 3FGL psr candidates using file from Mattia
 #
+# Data is binned from top left (l,b)=(+20,+20) to bottom right (-20,-20)
+#
 # Written: Nick Rodd, MIT, 7 August 2017
 #
 ###############################################################################
@@ -33,7 +35,6 @@ for i in range(len(cat)):
         count += 1
 
 # Now bin
-
 angbins = -np.linspace(-20,20,13) # - because top left is 0,0 and astro longitude
 fluxbins = np.append(np.logspace(-6,-5,7), np.logspace(-5,-4,3)[1:3])
 

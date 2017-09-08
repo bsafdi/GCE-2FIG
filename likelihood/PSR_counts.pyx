@@ -8,6 +8,8 @@
 # these functions are called by likelihood.pyx and are compiled with the aid
 # of PSR_counts.pxd
 #
+# Data is binned from top left (l,b)=(+20,+20) to bottom right (-20,-20)
+#
 # Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
 #
 ###############################################################################
@@ -35,6 +37,7 @@ cdef double degtorad = pi/180.
 cdef double fluxunits = 1.52529e37 # [converts MeV/cm^2 to erg/kpc^2]
 
 # Angular bin boundaries for b and l in [degrees]
+# +20 to -20 because we work from the top left to the bottom right
 cdef double[::1] ang_boundaries = -np.linspace(-20.,20.,13,dtype=np.float)
 
 # Flux bin boundaries in [Mev/cm^2/s]

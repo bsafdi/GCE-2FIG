@@ -6,6 +6,7 @@
 # provided by Dan, who was given this by Mattia
 #
 # Here we have no longitude dependence in the efficiency as that's not public
+# We start from the top of the map to the bottom, so b=+20 to -20
 #
 # Written: Nick Rodd, MIT, 5 August 2017
 #
@@ -47,7 +48,7 @@ efficiency[:, 6] = [0.02142857, 0.05263158, 0.20833333, 0.55905512, 0.71052632,
                     0.76237624, 0.80357143, 0.87878788, 0.92391304, 0.95555556,
                     0.93750000, 0.95000000, 1.00000000, 1.00000000]
 
-# Load the array of bvals and flux vals for our bins
+# Load the array of bvals and flux vals for our bins - start at top of map
 our_bvals = np.abs([18.33333333, 15., 11.66666667, 8.33333333, 5., 1.66666667,
                     -1.66666667, -5., -8.33333333, -11.66666667, -15., -18.33333333])
 

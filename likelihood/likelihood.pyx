@@ -59,6 +59,7 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     
     # Now calculate the log likelihood by summing over all bins
     cdef double ll = 0.
+    # Data is binned from top left (l,b)=(+20,+20) to bottom right (-20,-20)
     for i in range(12): # loop over longitude
         for j in range(12): # loop over latitude
             for k in range(8): # loop over flux
