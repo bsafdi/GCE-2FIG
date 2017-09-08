@@ -4,6 +4,8 @@
 #
 # Bin the 2FIG PSR candidates into the l, b and flux bins
 #
+# Data is binned from top left (l,b)=(+20,+20) to bottom right (-20,-20)
+#
 # Written: Nick Rodd, MIT, 5 August 2017
 #
 ###############################################################################
