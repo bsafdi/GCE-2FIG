@@ -1,19 +1,21 @@
 # GCE-2FIG
-This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  The main purpose of the code is to test the results presented in 1705.00009.
+This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
-## Compiling and Running
+## Compiling and running
 
-This code package is written in `python` and `cython`.  To compile the `cython`, go into the `python/` subfolder and execute the file `make.sh`.  Note that you must have `cython` installed.  Examples of how to run the code are presented in the `examples/` subfolder.
+This code package is written in `python` and `cython`.  To compile the `cython`, go into the `likelihood/` subfolder and execute the file `make.sh`.  Note that you must have `cython` installed.  Examples of how to run the code are presented in the `examples/` subfolder.
 
-## The likelihood Function
+## The data
 
-The `GCE-2FIG` code package uses the likelihood function presented in 1705.00009.  The likelihood is implemented in the file `likelihood.pyx` in the `python/` subfolder.  The sky is spatially binned in a cartesian grid, and the data consists of the number of pulsar candidates detected in each bin.  The model parameters characterize the disk and Bulge point source populations, and as we scan over the model parameters we calculated the expected number of detected sources in each bin, utilizing the _Fermi_-provided efficiency function for detecting sources at a given flux and spatial position.  The likelihood is then given by the product over all pixels of the Poisson probabilities to observe the data counts given the predicted model counts.
+## The likelihood function
 
-As an option, we also incorporate the prior distribution in 1705.00009.
+The `GCE-2FIG` code package uses the likelihood function presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).  The likelihood is implemented in the file `likelihood.pyx` in the `likelihood/` subfolder.  The sky is spatially binned in a cartesian grid, and the data consists of the number of pulsar candidates detected in each bin.  The model parameters characterize the disk and Bulge point source populations, and as we scan over the model parameters we calculated the expected number of detected sources in each bin, utilizing the _Fermi_-provided efficiency function for detecting sources at a given flux and spatial position.  The likelihood is then given by the product over all pixels of the Poisson probabilities to observe the data counts given the predicted model counts.
 
-## The Expected Number PS Counts
+As an option, we also incorporate the prior distribution in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
-Here, we describe how we calculate the expected number of PS counts, given the model parameters.  These computations are implemented in the file `get_counts_inline.pyx` in the `python/` subfolder.  First, we describe the computation for a general PS population, with density function <img alt="$\rho(s,\ell,b)$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e33a91659757dc5a5a317888c76bc940.svg?135662e0b0&invert_in_darkmode" align=middle width="57.31143pt" height="24.56553pt"/>, where <img alt="$(s,\ell,b)$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e4c7375533c0164f8ecc75cfe4198ea0.svg?7fa93e0114&invert_in_darkmode" align=middle width="48.84429pt" height="24.56553pt"/> are spatial coordinates with origin at the Earth, and luminosity function <img alt="$dN/dL$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/bb7f89046aaec2638cc892ac2d6b7b12.svg?394f58780d&invert_in_darkmode" align=middle width="49.96266pt" height="24.56553pt"/>.  Note that <img alt="$\ell$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/d30a65b936d8007addc9c789d5a7ae49.svg?1cf828d251&invert_in_darkmode" align=middle width="6.8238225pt" height="22.74591pt"/> and <img alt="$b$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/4bdc8d9bcfb35e1c9bfb51fc69687dfc.svg?3995720df4&invert_in_darkmode" align=middle width="7.0284885pt" height="22.74591pt"/> are Galactic longitude and latitude, respectively, while <img alt="$s$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?cf818cc893&invert_in_darkmode" align=middle width="7.6767405pt" height="14.10255pt"/> is the distance from the Earth.  The expected number of counts in a given spatial bin (labeled by <img alt="$i,j$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/4fe48dde86ac2d37419f0b35d57ac460.svg?c87608b475&invert_in_darkmode" align=middle width="20.612625pt" height="21.60213pt"/>) and flux bin (labelled by <img alt="$k$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/63bb9849783d01d91403bc9a5fea12a2.svg?6ca70f7740&invert_in_darkmode" align=middle width="9.041505pt" height="22.74591pt"/>) is given by the integral
+## The expected number of PS counts
+
+Here, we describe how we calculate the expected number of PS counts, given the model parameters.  These computations are implemented in the file `get_counts_inline.pyx` in the `likelihood/` subfolder.  First, we describe the computation for a general PS population, with density function <img alt="$\rho(s,\ell,b)$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e33a91659757dc5a5a317888c76bc940.svg?135662e0b0&invert_in_darkmode" align=middle width="57.31143pt" height="24.56553pt"/>, where <img alt="$(s,\ell,b)$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/e4c7375533c0164f8ecc75cfe4198ea0.svg?7fa93e0114&invert_in_darkmode" align=middle width="48.84429pt" height="24.56553pt"/> are spatial coordinates with origin at the Earth, and luminosity function <img alt="$dN/dL$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/bb7f89046aaec2638cc892ac2d6b7b12.svg?394f58780d&invert_in_darkmode" align=middle width="49.96266pt" height="24.56553pt"/>.  Note that <img alt="$\ell$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/d30a65b936d8007addc9c789d5a7ae49.svg?1cf828d251&invert_in_darkmode" align=middle width="6.8238225pt" height="22.74591pt"/> and <img alt="$b$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/4bdc8d9bcfb35e1c9bfb51fc69687dfc.svg?3995720df4&invert_in_darkmode" align=middle width="7.0284885pt" height="22.74591pt"/> are Galactic longitude and latitude, respectively, while <img alt="$s$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?cf818cc893&invert_in_darkmode" align=middle width="7.6767405pt" height="14.10255pt"/> is the distance from the Earth.  The expected number of counts in a given spatial bin (labeled by <img alt="$i,j$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/4fe48dde86ac2d37419f0b35d57ac460.svg?c87608b475&invert_in_darkmode" align=middle width="20.612625pt" height="21.60213pt"/>) and flux bin (labelled by <img alt="$k$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/63bb9849783d01d91403bc9a5fea12a2.svg?6ca70f7740&invert_in_darkmode" align=middle width="9.041505pt" height="22.74591pt"/>) is given by the integral
 
 <p align="center"><img alt="$$&#10;N_{i,j,k} = \omega_{i,j,k} \int_{\Delta \Omega_{i,j}} d\ell d b \rho(s,\ell,b) s^2 \int_{4 \pi s^2 S_k^\text{min}}^{4 \pi s^2 S_k^\text{max}} {dN \over dL} dL \,,&#10;$$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/0b66f12996fe020e588077671462ab65.svg?9b6ad4bf19&invert_in_darkmode" align=middle width="384.76845pt" height="47.505645pt"/></p> 
 
@@ -33,7 +35,7 @@ for <img alt="$L$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/ddcb48330
 
 We discuss <img alt="$\rho$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/6dec54c48a0438a5fcde6053bdb9d712.svg?539e299e8&invert_in_darkmode" align=middle width="8.46714pt" height="14.10255pt"/> now for the disk and Bulge.  We will use the normalization that <img alt="$\int d^3x \rho = N$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/91f9537316cdc8858af8eeb325936c77.svg?14ea8a958e&invert_in_darkmode" align=middle width="84.237945pt" height="26.70657pt"/>.
 
-### Bulge Sources 
+### Bulge sources 
 
 We characterize the Bulge PS population by
 
@@ -44,7 +46,7 @@ where <img alt="$r$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/89f2e0d
 <p align="center"><img alt="$$&#10;C = {(3 - \alpha) N_\text{bulge} \over 4 \pi r_\text{cut}^{3 - \alpha} } \,.&#10;$$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/9e79c22983590f5b42a2672ec8cf10a1.svg?e4f528e4cd&invert_in_darkmode" align=middle width="142.32603pt" height="40.08807pt"/></p>
 
 
-### Disk Sources
+### Disk sources
 
 The disk is modeled by the distribution 
 
@@ -55,7 +57,7 @@ and we find that in this case
 <p align="center"><img alt="$$&#10;C = {N_\text{disk} \over 4 \pi z_0 \sigma^{n+2} \Gamma(n+2)} \,.&#10;$$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/a5bba1689089f869eba4d9fda47f21e7.svg?a14ae9f465&invert_in_darkmode" align=middle width="175.99395pt" height="37.68171pt"/></p>
 
 
-### Code Implementation
+### Code implementation
 
 Here, we describe in more detail how we implement the computations of the expected number of PS counts in the file `get_counts_inline.pyx`.
 
@@ -160,7 +162,7 @@ python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 
 Here, we present some of the main results from the analyses performed with this code package.  We will use three different efficiency functions.
 
-	1.  A longitude independent efficiency function, supplied directly in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).  We will label this as `long-indep`
+	1.  A longitude independent efficiency function, supplied directly in [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf).  We will label this as `long-indep`
 	2. A longitude-corrected efficiency function, corrected using data in [1305.4385](https://arxiv.org/abs/1305.4385).  We will label this as (`2PC-corrected`)
 	3. A longitude-corrected efficiency function, corrected by rescaling the longitude-independent efficiency function by the actual data values within the pixels.  We will label this as (`data-corrected`)
 
@@ -181,7 +183,7 @@ Priors used:
 - <img alt="$z_0$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/d1a81d9dc6dd30e43ba27c5490a34a32.svg?a666b0ad35&invert_in_darkmode" align=middle width="14.14413pt" height="14.10255pt"/>: [0.01, 2.0]
 - <img alt="$\beta$" src="https://rawgit.com/bsafdi/GCE-2FIG/master/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?60788f9786&invert_in_darkmode" align=middle width="10.1277pt" height="22.74591pt"/>: [1.1,3.0]
 
-Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
+Floating parameters as in Table 2 of [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf):
 
 <!--### Minuit
 

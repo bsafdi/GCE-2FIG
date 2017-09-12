@@ -1,19 +1,25 @@
 # GCE-2FIG
-This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  The main purpose of the code is to test the results presented in 1705.00009.
+This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
-## Compiling and Running
+## Compiling and running
 
-This code package is written in `python` and `cython`.  To compile the `cython`, go into the `python/` subfolder and execute the file `make.sh`.  Note that you must have `cython` installed.  Examples of how to run the code are presented in the `examples/` subfolder.
+This code package is written in `python` and `cython`. To compile the `cython`, go into the `likelihood/` subfolder and execute the file `make.sh`.  Note that you must have `cython` installed.  Examples of how to run the code are presented in the `examples/` subfolder.
+
+## The data
+
+The following data are used in the code:
+
+- *Number of sources:* The number of detected pulsar candidates binned spatially in a cartesian grid between $20^^\circ \leq \ell, b \leq 20^\circ$.
 
 ## The likelihood Function
 
-The `GCE-2FIG` code package uses the likelihood function presented in 1705.00009.  The likelihood is implemented in the file `likelihood.pyx` in the `python/` subfolder.  The sky is spatially binned in a cartesian grid, and the data consists of the number of pulsar candidates detected in each bin.  The model parameters characterize the disk and Bulge point source populations, and as we scan over the model parameters we calculated the expected number of detected sources in each bin, utilizing the _Fermi_-provided efficiency function for detecting sources at a given flux and spatial position.  The likelihood is then given by the product over all pixels of the Poisson probabilities to observe the data counts given the predicted model counts.
+The `GCE-2FIG` code package uses the likelihood function presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).  The likelihood is implemented in the file `likelihood.pyx` in the `likelihood/` subfolder.  The sky is spatially binned in a cartesian grid, and the data consists of the number of pulsar candidates detected in each bin.  The model parameters characterize the disk and Bulge point source populations, and as we scan over the model parameters we calculated the expected number of detected sources in each bin, utilizing the _Fermi_-provided efficiency function for detecting sources at a given flux and spatial position.  The likelihood is then given by the product over all pixels of the Poisson probabilities to observe the data counts given the predicted model counts.
 
-As an option, we also incorporate the prior distribution in 1705.00009.
+As an option, we also incorporate the prior distribution in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
-## The Expected Number PS Counts
+## The expected number of PS counts
 
-Here, we describe how we calculate the expected number of PS counts, given the model parameters.  These computations are implemented in the file `get_counts_inline.pyx` in the `python/` subfolder.  First, we describe the computation for a general PS population, with density function $\rho(s,\ell,b)$, where $(s,\ell,b)$ are spatial coordinates with origin at the Earth, and luminosity function $dN/dL$.  Note that $\ell$ and $b$ are Galactic longitude and latitude, respectively, while $s$ is the distance from the Earth.  The expected number of counts in a given spatial bin (labeled by $i,j$) and flux bin (labelled by $k$) is given by the integral
+Here, we describe how we calculate the expected number of PS counts, given the model parameters.  These computations are implemented in the file `get_counts_inline.pyx` in the `likelihood/` subfolder.  First, we describe the computation for a general PS population, with density function $\rho(s,\ell,b)$, where $(s,\ell,b)$ are spatial coordinates with origin at the Earth, and luminosity function $dN/dL$.  Note that $\ell$ and $b$ are Galactic longitude and latitude, respectively, while $s$ is the distance from the Earth.  The expected number of counts in a given spatial bin (labeled by $i,j$) and flux bin (labelled by $k$) is given by the integral
 
 $$
 N_{i,j,k} = \omega_{i,j,k} \int_{\Delta \Omega_{i,j}} d\ell d b \rho(s,\ell,b) s^2 \int_{4 \pi s^2 S_k^\text{min}}^{4 \pi s^2 S_k^\text{max}} {dN \over dL} dL \,,
@@ -39,7 +45,7 @@ $$
 
 We discuss $\rho$ now for the disk and Bulge.  We will use the normalization that $\int d^3x \rho = N$.
 
-### Bulge Sources 
+### Bulge sources 
 
 We characterize the Bulge PS population by
 
@@ -54,7 +60,7 @@ C = {(3 - \alpha) N_\text{bulge} \over 4 \pi r_\text{cut}^{3 - \alpha} } \,.
 $$
 
 
-### Disk Sources
+### Disk sources
 
 The disk is modeled by the distribution 
 
@@ -69,7 +75,7 @@ C = {N_\text{disk} \over 4 \pi z_0 \sigma^{n+2} \Gamma(n+2)} \,.
 $$
 
 
-### Code Implementation
+### Code implementation
 
 Here, we describe in more detail how we implement the computations of the expected number of PS counts in the file `get_counts_inline.pyx`.
 
@@ -174,9 +180,9 @@ python -m readme2tex --rerender --bustcache --output README.md docs/README.md
 
 Here, we present some of the main results from the analyses performed with this code package.  We will use three different efficiency functions.
 
-	1.  A longitude independent efficiency function, supplied directly in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).  We will label this as `long-indep`
-	2. A longitude-corrected efficiency function, corrected using data in [1305.4385](https://arxiv.org/abs/1305.4385).  We will label this as (`2PC-corrected`)
-	3. A longitude-corrected efficiency function, corrected by rescaling the longitude-independent efficiency function by the actual data values within the pixels.  We will label this as (`data-corrected`)
+    1.  A longitude independent efficiency function, supplied directly in [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf).  We will label this as `long-indep`
+    2. A longitude-corrected efficiency function, corrected using data in [1305.4385](https://arxiv.org/abs/1305.4385).  We will label this as (`2PC-corrected`)
+    3. A longitude-corrected efficiency function, corrected by rescaling the longitude-independent efficiency function by the actual data values within the pixels.  We will label this as (`data-corrected`)
 
 The reason we use three different efficiency functions is that this allows us to understand the systematic uncertainty associated with the fact that we likely do not have the correct efficiency.
 
@@ -195,7 +201,7 @@ Priors used:
 - $z_0$: [0.01, 2.0]
 - $\beta$: [1.1,3.0]
 
-Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
+Floating parameters as in Table 2 of [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf):
 
 <!--### Minuit
 
