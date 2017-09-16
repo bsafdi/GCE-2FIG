@@ -85,11 +85,14 @@ class run_scan():
         self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') \
                       + np.load(self.data_dir + '/PSR_data_3fgl.npy')
 
-        omega_jk = np.load('../data/omega_jk.npy')
-        self.omega_ijk = np.zeros((12, 12, 8))
-        for i in range(12):
-            self.omega_ijk[i,:,:] = omega_jk
-        
+        # # Old efficiency
+        # omega_jk = np.load('../data/omega_jk.npy')
+        # self.omega_ijk = np.zeros((12, 12, 8))
+        # for i in range(12):
+        #     self.omega_ijk[i,:,:] = omega_jk
+
+        self.omega_ijk = np.load('../data/omega_ijk_int.npy')
+
     def setup_fixed_params(self):
         """ Set up values and arrays for parameters to be held fixed
         """
