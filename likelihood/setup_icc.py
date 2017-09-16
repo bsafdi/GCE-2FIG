@@ -6,9 +6,7 @@ import numpy
 
 # Set an extra C compiler argument based on using either Intel or gcc compilers
 
-
-
-cc_compiler_arg = "-march=native"
+cc_compiler_arg = "-axCORE-AVX2,AVX,SSE4.2"
 
 extensions = [
     Extension("*", ["*.pyx"],
