@@ -81,11 +81,12 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     cdef double pmid = 174.
     cdef double psig = 63.
 
-    if use_prior:  
+    if use_prior:
+        # By default we have no mask in the prior, so hard coded to 0
         Nmodeltot += pc.Nbulge_total(Nbulge,alpha,beta_bulge,rcut,Lmin,
-                                     Lmax_bulge,Ns,Nang_prior,theta_mask)
+                                     Lmax_bulge,Ns,Nang_prior,0.)
         Nmodeltot += pc.Ndisk_total(Ndisk,n,sigma,z0,beta_disk,Lmin,Lmax_disk,
-                                    Ns,Nang_prior,smax_disk,theta_mask)
+                                    Ns,Nang_prior,smax_disk,0.)
         
         # Add the prior contribution to the log likelihood
         ll -= pow(Nmodeltot - pmid, 2.) / (2. * pow(psig, 2.))
