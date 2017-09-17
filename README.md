@@ -19,7 +19,7 @@ The following notebooks are used in the analysis:
 
 Here, we present some of the main results from the analyses performed with this code package.  We will use three different efficiency functions.
 
-    1. A longitude independent efficiency function, supplied directly in [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf).  We will label this as `long-indep`
+    1. A longitude independent efficiency function, supplied directly in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).  We will label this as `long-indep`
     2. A longitude-corrected efficiency function, corrected using data in [1305.4385](https://arxiv.org/abs/1305.4385).  We will label this as (`2PC-corrected`)
     3. A longitude-corrected efficiency function, corrected by rescaling the longitude-independent efficiency function by the actual data values within the pixels.  We will label this as (`data-corrected`)
 
@@ -40,7 +40,7 @@ Priors used:
 - $z_0$: [0.01, 2.0]
 - $\beta$: [1.1,3.0]
 
-Floating parameters as in Table 2 of [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf)](https://arxiv.org/pdf/[1705.00009](https://arxiv.org/pdf/1705.00009.pdf).pdf):
+Floating parameters as in Table 2 of [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
 
 
