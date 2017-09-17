@@ -40,7 +40,7 @@ Priors used:
 - $z_0$: [0.01, 2.0]
 - $\beta$: [1.1,3.0]
 
-Floating parameters as in Table 2 of [[1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
+Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf):
 
 
 
