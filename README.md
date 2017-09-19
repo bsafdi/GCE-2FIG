@@ -15,7 +15,7 @@ These are used to obtain the Monte Carlo chains, which are included in the repos
 
 Three scans are performed, floating:
 
-- ND, z0 and beta (`run_nd_z0_beta.py`)
+- ND, z0 and beta (`run_nd_z0_beta_prior.py`)
 - ND, NB, z0 and beta (`run_nd_nb_z0_beta_prior.py`)
 - ND, NB, z0, beta and alpha (`run_nd_nb_z0_beta_alpha_prior.py`).
 
