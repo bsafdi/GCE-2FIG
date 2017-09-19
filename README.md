@@ -1,7 +1,18 @@
 # GCE-2FIG
-This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
+This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  
+The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
-All of the code is contained in the `likelihood` directory and example notebooks are contained in `notebooks/`.
+All of the code is contained in the `likelihood` directory and analysis notebooks are contained in `notebooks/`.
+
+## Authors
+
+-  Richard Bartels; richard.t.bartels at gmail dot com
+-  Dan Hooper; dhooper at fnal dot gov
+-  Tim Linden; linden.70 at osu dot edu
+-  Siddharth Mishra-Sharma; smsharma at princeton dot edu
+-  Nicholas Rodd; nrodd at mit dot edu
+-  Benjamin Safdi; bsafdi at umich dot edu
+-  Tracy Slatyer; tslatyer at mit dot edu
 
 ## Compiling and running
 
