@@ -217,6 +217,15 @@ class run_scan():
                                      outputfiles_basename=chains_dir)
         return a.get_best_fit()['log_likelihood']
 
+    def get_bestfit_params(self, chains_dir):
+        """ Calcualte the best-fit LL from the Multinest chains
+        """
+
+        a = pymultinest.Analyzer(n_params=len(self.floated_params),
+                                     outputfiles_basename=chains_dir)
+        return a.get_best_fit()['parameters']
+
+
     def get_max_log_likelihood(self, chains_dir):
         """ Calcualte the max LL from the Multinest chains
         """
