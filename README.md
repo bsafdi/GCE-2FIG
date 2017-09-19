@@ -15,9 +15,9 @@ These are used to obtain the Monte Carlo chains, which are included in the repos
 
 Three scans are performed, floating:
 
-- N_D, z_0 and beta (`run_nd_z0_beta.py`)
-- N_D, N_B, z_0 and beta (`run_nd_nb_z0_beta_prior.py`)
-- N_D, N_B, z_0, beta and alpha (`run_nd_nb_z0_beta_alpha_prior.py`).
+- ND, z0 and beta (`run_nd_z0_beta.py`)
+- ND, NB, z0 and beta (`run_nd_nb_z0_beta_prior.py`)
+- ND, NB, z0, beta and alpha (`run_nd_nb_z0_beta_alpha_prior.py`).
 
 The likelihoods of the runs including a bulge population are compared with one without it to test the preference for a bulge population of pulsars. 
 This is analyzed in the notebook `Full_Scan.ipynb` as described below.
