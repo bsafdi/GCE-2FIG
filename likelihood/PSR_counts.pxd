@@ -6,8 +6,6 @@
 # simultaneously - this way the code optimizes all functions at once and allows
 # functions to be called as pure C
 #
-# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
-#
 ###############################################################################
 
 cpdef double Nbulge_ijk(int, int, int, double, double, double, double, double, 

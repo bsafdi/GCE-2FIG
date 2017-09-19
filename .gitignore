@@ -111,3 +111,6 @@ ENV/
 slurm-*.out
 .nfs*
 *.batch
+
+# overlap
+*.swp
