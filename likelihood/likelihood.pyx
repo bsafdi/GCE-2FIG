@@ -44,6 +44,8 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
     z0 : exponential cutoff of disk height [kpc]
     Lmax_disk : max luminosity of the disk [erg/s]
     Lmax_bulge : max luminosity of the bulge [erg/s]
+    beta_disk : index for luminosity function of disk
+    beta_bulge : index for luminosity function of bulge
     Nang : number of angular steps per bin for the likelihood integral
     smax_disk : maximum distance to integrate through the disk from Earth [kpc]
     theta_mask : angle from the GC to be masked

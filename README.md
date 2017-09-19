@@ -13,11 +13,11 @@ This code package is written in `python` and `cython`. To compile the `cython`, 
 
 The best fit parameters taken from Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf) are given as:
 
-![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/likelihood/data/Table_Fermi.png "Fermi best fit parameters")
+![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/notebooks/plots/Table_Fermi.png "Fermi best fit parameters")
 
 Our runs indicate instead the following best fit parameters:
 
-![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/likelihood/data/Table_Us.png "Our best fit parameters")
+![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/notebooks/plots/Table_Us.png "Our best fit parameters")
 
 In particular our returned TS values, whilst still in favor of a bulge population, are more modest. Further we favor different values for both z0 and beta. The derivation of these parameters is shown in the notebooks outlined below.
 
