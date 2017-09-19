@@ -17,8 +17,10 @@ The following notebooks are used in the analysis:
 
 ## Results
 
+The best fit parameters taken from Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf) are given as:
+
 ![alt text](https://github.com/bsafdi/GCE-2FIG/notebooks/Table_Fermi.png "Fermi best fit parameters")
 
-![alt text](https://github.com/bsafdi/GCE-2FIG/notebooks/Table_Fermi.png "Our best fit parameters")
+Our runs indicate instead the following best fit parameters:
 
-Floating parameters as in Table 2 of [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
+![alt text](https://github.com/bsafdi/GCE-2FIG/notebooks/Table_Fermi.png "Our best fit parameters")
