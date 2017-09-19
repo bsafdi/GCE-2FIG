@@ -85,12 +85,6 @@ class run_scan():
         self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') \
                       + np.load(self.data_dir + '/PSR_data_3fgl.npy')
 
-        # # Old efficiency
-        # omega_jk = np.load('../data/omega_jk.npy')
-        # self.omega_ijk = np.zeros((12, 12, 8))
-        # for i in range(12):
-        #     self.omega_ijk[i,:,:] = omega_jk
-
         self.omega_ijk = np.load('../data/omega_ijk_int.npy')
 
     def setup_fixed_params(self):
@@ -196,7 +190,7 @@ class run_scan():
                       range=[1 for _ in range(len(self.floated_params))],
                       plot_datapoints=False, verbose=False)
 
-    def get_lge(self, chains_dir):
+    def get_global_lge(self, chains_dir):
         """ Calculate the log evidence from the Multinest chains
         """
         a = pymultinest.Analyzer(n_params=len(self.floated_params),
@@ -208,6 +202,15 @@ class run_scan():
         lge_err = s['nested sampling global log-evidence error']
 
         return lge, lge_err
+
+    def get_bestfit_params(self, chains_dir):
+        """ Calcualte the best-fit params from the Multinest chains
+        """
+
+        a = pymultinest.Analyzer(n_params=len(self.floated_params),
+                                     outputfiles_basename=chains_dir)
+        return a.get_best_fit()['parameters']
+
 
     def get_bestfit_lge(self, chains_dir):
         """ Calcualte the best-fit LL from the Multinest chains
