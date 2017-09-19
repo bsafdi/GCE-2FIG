@@ -5,8 +5,6 @@
 # Evaluate the likelihood as defined in 1705.00009, using our custom PSR count
 # functions in PSR_counts.pyx 
 #
-# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
-#
 ###############################################################################
 
 

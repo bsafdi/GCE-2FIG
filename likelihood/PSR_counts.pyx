@@ -10,8 +10,6 @@
 #
 # Data is binned from top left (l,b)=(+20,+20) to bottom right (-20,-20)
 #
-# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
-#
 ###############################################################################
 
 

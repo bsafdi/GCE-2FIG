@@ -4,8 +4,6 @@
 #
 # Perform scan to obtain best-fit disk and bulge PS population parameters
 #
-# Written: Siddharth Mishra-Sharma, Nick Rodd, and Ben Safdi 15 August 2017
-# 
 ###############################################################################
 
 
@@ -16,13 +14,12 @@ from iminuit import Minuit
 import corner
 
 # Import custom functions
-sys.path.append("../likelihood/")
 import likelihood
 from minuit_functions import call_ll
 
 class run_scan():
     def __init__(self, fixed_params, fixed_param_vals, floated_params, 
-                 floated_param_priors, data_dir = '../data/', Lmin = 1.e31, 
+                 floated_param_priors, data_dir = './data/', Lmin = 1.e31, 
                  Ns=200, Nang=1, smax_disk=40., theta_mask=2.,
                  share_betas=True, use_prior=False, Nang_prior=40): 
         """ Initialize scan class
@@ -82,16 +79,10 @@ class run_scan():
     def load_data(self):
         """ Load the binned efficiency and data files
         """
-        self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') \
-                      + np.load(self.data_dir + '/PSR_data_3fgl.npy')
+        self.PSR_data = np.load(self.data_dir + 'PSR_data.npy') \
+                      + np.load(self.data_dir + 'PSR_data_3fgl.npy')
 
-        # # Old efficiency
-        # omega_jk = np.load('../data/omega_jk.npy')
-        # self.omega_ijk = np.zeros((12, 12, 8))
-        # for i in range(12):
-        #     self.omega_ijk[i,:,:] = omega_jk
-
-        self.omega_ijk = np.load('../data/omega_ijk_int.npy')
+        self.omega_ijk = np.load(self.data_dir + 'omega_ijk_int.npy')
 
     def setup_fixed_params(self):
         """ Set up values and arrays for parameters to be held fixed
