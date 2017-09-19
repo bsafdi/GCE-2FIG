@@ -23,4 +23,4 @@ The best fit parameters taken from Table 2 of [1705.00009](https://arxiv.org/pdf
 
 Our runs indicate instead the following best fit parameters:
 
-![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/notebooks/Table_Fermi.png "Our best fit parameters")
+![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/notebooks/Table_Us.png "Our best fit parameters")
