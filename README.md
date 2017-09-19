@@ -26,5 +26,5 @@ The following notebooks are used in the analysis:
 1. `Efficiency.ipynb`: Constructing of the pulsar detection efficiency for binned data in several ways.
 2. `Sources.ipynb`: Constructing the data used in the analysis. The binning scheme is described and data is constructed from a combination of 2FIG candidates and 3FGL sources.
 3. `Models and Likelihoods.ipynb`: Deriving the modeled number of disk and bulge sources in each bin. Calculating the likelihood for a given set of disk and bulge model parameters.
-4. `Full Scans and Results.ipynb`: Performing the full scan over model parameters and analyzing the results, as shown
+4. `Full Scan.ipynb`: Performing the full scan over model parameters and analyzing the results, as shown
 above.
