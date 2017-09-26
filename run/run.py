@@ -24,7 +24,7 @@ class run_scan():
     def __init__(self, fixed_params, fixed_param_vals, floated_params, 
                  floated_param_priors, data_dir = '../data/', Lmin = 1.e31, 
                  Ns=200, Nang=1, smax_disk=40., theta_mask=2.,
-                 share_betas=True, use_prior=False, Nang_prior=40): 
+                 share_betas=True, use_prior=False, Nang_prior=40, efficiency_file = "efficiency_long.npy"): 
         """ Initialize scan class
 
             :param fixed_params: Array of parameters to be held fixed
@@ -42,6 +42,7 @@ class run_scan():
             :param share_betas: Whether to float a single beta for disk and bulge
             :param use_prior: Whether to use prior on total number of sources
             :param Nang_prior: Number of prior angular integrations steps
+            :param efficiency_file: Filename of efficiency file in the data_dir
         """
 
         # Append variables to self
@@ -50,6 +51,7 @@ class run_scan():
         self.floated_params = np.array(floated_params)
         self.floated_param_priors = np.array(floated_param_priors)
         self.data_dir = data_dir
+        self.efficiency_file = efficiency_file
 
         self.Lmin = Lmin
         self.Ns = Ns
@@ -85,7 +87,8 @@ class run_scan():
         self.PSR_data = np.load(self.data_dir + '/PSR_data.npy') \
                       + np.load(self.data_dir + '/PSR_data_3fgl.npy')
 
-        self.omega_ijk = np.load('../data/omega_ijk_int.npy')
+        # self.omega_ijk = np.load('../data/omega_ijk_int.npy')
+        self.omega_ijk = np.load(self.data_dir + self.efficiency_file)
 
     def setup_fixed_params(self):
         """ Set up values and arrays for parameters to be held fixed
