@@ -76,7 +76,7 @@ cpdef double ll(double[:, :, ::1] PSR_data, double[:, :, ::1] omega_ijk,
                                         beta_bulge,rcut, Lmin,Lmax_bulge,Ns,
                                         Nang,theta_mask)
 
-                ll += Nobs*log(Nmodel) - Nmodel 
+                ll += Nobs*log(Nmodel) + Nmodel 
              
     # Add the prior contribution if specified
     cdef double Nmodeltot = 0.
