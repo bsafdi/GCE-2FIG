@@ -24,7 +24,7 @@ class run_scan():
     def __init__(self, fixed_params, fixed_param_vals, floated_params, 
                  floated_param_priors, data_dir = '../data/', Lmin = 1.e31, 
                  Ns=200, Nang=1, smax_disk=40., theta_mask=2.,
-                 share_betas=True, use_prior=False, Nang_prior=40, efficiency_file = "efficiency_long.npy"): 
+                 share_betas=True, use_prior=False, Nang_prior=40, efficiency_file = "omega_ijk_int.npy"): 
         """ Initialize scan class
 
             :param fixed_params: Array of parameters to be held fixed
