@@ -187,11 +187,20 @@ class run_scan():
         chain_file = chains_dir + 'post_equal_weights.dat'
         self.samples = np.array(np.loadtxt(chain_file)[:, :-1])
 
-        corner.corner(self.samples, labels=labels, smooth=1.5,
-                      smooth1d=1, quantiles=[0.16, 0.5, 0.84], show_titles=True,
-                      title_fmt='.2f', title_args={'fontsize': 14},
-                      range=[1 for _ in range(len(self.floated_params))],
-                      plot_datapoints=False, verbose=False)
+        levels =  1.0 - np.exp(-0.5 *np.array([1.0,2.0,3.0])**2)
+
+        sams_log = np.zeros(np.shape(self.samples))
+        sams_log[::,0] = self.samples[::,0] #np.log10(sams[::,0])
+        sams_log[::,1] = self.samples[::,1] #np.log10(sams[::,1])
+        sams_log[::,2:] = self.samples[::,2:]
+        corner.corner(sams_log,bins=40,smooth=True,labels=labels,quantiles=[0.16, 0.5, 0.84],show_titles=True,
+                      range=[1 for _ in range(len(self.floated_params))],color='firebrick',levels=levels)
+
+        # corner.corner(self.samples, labels=labels, smooth=1.5,
+        #               smooth1d=1, quantiles=[0.16, 0.5, 0.84], show_titles=True,
+        #               title_fmt='.2f', title_args={'fontsize': 14},
+        #               range=[1 for _ in range(len(self.floated_params))],
+        #               plot_datapoints=False, verbose=False)
 
     def get_global_lge(self, chains_dir):
         """ Calculate the log evidence from the Multinest chains
