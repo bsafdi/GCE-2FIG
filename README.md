@@ -53,3 +53,5 @@ Our runs indicate instead the following best fit parameters:
 ![alt text](https://github.com/bsafdi/GCE-2FIG/blob/master/notebooks/plots/Table_Us.png "Our best fit parameters")
 
 In particular our returned TS values, whilst still in favor of a bulge population, are more modest. Further we favor different values for both z0 and beta. The derivation of these parameters is shown in the notebooks outlined below.
+
+**NB:** the floated alpha results are still converging, explaining the lower TS this will be updated soon.
