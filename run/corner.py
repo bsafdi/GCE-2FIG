@@ -297,8 +297,8 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                     qm_exp = to_precision(q_m,3).split('e+')[1]
                     qm_abscissa = float(to_precision(q_m,3).split('e+')[0])/(float(10**int(q50_exp))/float(10**int(qm_exp)))
                     title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
-                    qp_abscissa = round(qp_abscissa,2)
-                    qm_abscissa = round(qm_abscissa,2)
+                    qp_abscissa = "%.2f" % round(qp_abscissa,2)
+                    qm_abscissa = "%.2f" % round(qm_abscissa,2)
                     title = title.format((q50_abscissa), (qm_abscissa), (qp_abscissa)) + '$\\times 10^{'+ q50_exp+'}$'
 
 
