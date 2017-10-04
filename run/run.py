@@ -199,7 +199,7 @@ class run_scan():
 
         corner.corner(sams_log,bins=40,smooth=True,labels=labels,quantiles=[0.16, 0.5, 0.84],show_titles=True,
                       range=param_range,color='firebrick',levels=levels,
-                      use_math_text=True,truths=truths)
+                      use_math_text=True,truths=truths, truth_color='forestgreen')
 
     def get_global_lge(self, chains_dir):
         """ Calculate the log evidence from the Multinest chains

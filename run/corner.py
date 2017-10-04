@@ -21,9 +21,10 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
            smooth=None, smooth1d=None,
            labels=None, label_kwargs=None,
            show_titles=False, title_fmt=".2f", title_kwargs=None,
-           truths=None, truth_color="forestgreen",
+           truths=None, truth_color="#4682b4",
            scale_hist=False, quantiles=None, verbose=False, fig=None,
            max_n_ticks=5, top_ticks=False, use_math_text=False, reverse=False,
+           ticklabels_powerlimits=(-3,3),
            hist_kwargs=None, **hist2d_kwargs):
     """
     Make a *sick* corner plot showing the projections of a data set in a
@@ -233,6 +234,7 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
     if smooth1d is None:
         hist_kwargs["histtype"] = hist_kwargs.get("histtype", "step")
 
+    # Initialize ScalarFormatter object for tick labels
     fmtr = ScalarFormatter(useMathText=use_math_text)
     fmtr.set_powerlimits((-2,3))
 
@@ -285,21 +287,25 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                 q_m, q_p = q_50-q_16, q_84-q_50
 
                 # Format the quantile display.
-                fmt = "{{0:{0}}}".format(title_fmt).format
-                title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
-                title = title.format(fmt(q_50), fmt(q_m), fmt(q_p))
-
-                if q_50 > 500:
+                # If median too large or small, convert labels to scientific notation
+                if (q_50 > 10**ticklabels_powerlimits[1]) or (q_50 < 10**ticklabels_powerlimits[0]):
                     q50_exp = to_precision(q_50,3).split('e+')[1]
                     q50_abscissa = to_precision(q_50,3).split('e+')[0]
                     qp_exp = to_precision(q_p,3).split('e+')[1]
-                    qp_abscissa = float(to_precision(q_p,3).split('e+')[0])/(float(10**int(q50_exp))/float(10**int(qp_exp)))
+                    qp_abscissa = float(to_precision(q_p,3).split('e+')[0])\
+                            /(float(10**int(q50_exp))/float(10**int(qp_exp)))
                     qm_exp = to_precision(q_m,3).split('e+')[1]
-                    qm_abscissa = float(to_precision(q_m,3).split('e+')[0])/(float(10**int(q50_exp))/float(10**int(qm_exp)))
-                    title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
+                    qm_abscissa = float(to_precision(q_m,3).split('e+')[0])\
+                            /(float(10**int(q50_exp))/float(10**int(qm_exp)))
+                    # Add leading zeros if necessary
                     qp_abscissa = "%.2f" % round(qp_abscissa,2)
                     qm_abscissa = "%.2f" % round(qm_abscissa,2)
+                    title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
                     title = title.format((q50_abscissa), (qm_abscissa), (qp_abscissa)) + '$\\times 10^{'+ q50_exp+'}$'
+                else:
+                    fmt = "{{0:{0}}}".format(title_fmt).format
+                    title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
+                    title = title.format(fmt(q_50), fmt(q_m), fmt(q_p))
 
 
                 # Add in the column name if it's given.
@@ -732,4 +738,3 @@ def to_precision(x,p):
         out.append(m)
 
     return "".join(out)
-
