@@ -181,7 +181,7 @@ class run_scan():
         self.m.migrad()
         self.max_LL = - self.m.fval
 
-    def plot_corner(self, chains_dir, labels):
+    def plot_corner(self, chains_dir, labels, truths=None, param_range=None):
         """ Make a corner plot
         """
         chain_file = chains_dir + 'post_equal_weights.dat'
@@ -193,8 +193,13 @@ class run_scan():
         sams_log[::,0] = self.samples[::,0]
         sams_log[::,1] = self.samples[::,1] 
         sams_log[::,2:] = self.samples[::,2:]
+
+        if param_range is None:
+            param_range = [1 for _ in range(len(self.floated_params))]
+
         corner.corner(sams_log,bins=40,smooth=True,labels=labels,quantiles=[0.16, 0.5, 0.84],show_titles=True,
-                      range=[1 for _ in range(len(self.floated_params))],color='firebrick',levels=levels)
+                      range=param_range,color='firebrick',levels=levels,
+                      use_math_text=True,truths=truths)
 
     def get_global_lge(self, chains_dir):
         """ Calculate the log evidence from the Multinest chains

@@ -21,7 +21,7 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
            smooth=None, smooth1d=None,
            labels=None, label_kwargs=None,
            show_titles=False, title_fmt=".2f", title_kwargs=None,
-           truths=None, truth_color="#4682b4",
+           truths=None, truth_color="forestgreen",
            scale_hist=False, quantiles=None, verbose=False, fig=None,
            max_n_ticks=5, top_ticks=False, use_math_text=False, reverse=False,
            hist_kwargs=None, **hist2d_kwargs):
@@ -233,6 +233,9 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
     if smooth1d is None:
         hist_kwargs["histtype"] = hist_kwargs.get("histtype", "step")
 
+    fmtr = ScalarFormatter(useMathText=use_math_text)
+    fmtr.set_powerlimits((-2,3))
+
     for i, x in enumerate(xs):
         # Deal with masked arrays.
         if hasattr(x, "compressed"):
@@ -286,6 +289,19 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                 title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
                 title = title.format(fmt(q_50), fmt(q_m), fmt(q_p))
 
+                if q_50 > 500:
+                    q50_exp = to_precision(q_50,3).split('e+')[1]
+                    q50_abscissa = to_precision(q_50,3).split('e+')[0]
+                    qp_exp = to_precision(q_p,3).split('e+')[1]
+                    qp_abscissa = float(to_precision(q_p,3).split('e+')[0])/(float(10**int(q50_exp))/float(10**int(qp_exp)))
+                    qm_exp = to_precision(q_m,3).split('e+')[1]
+                    qm_abscissa = float(to_precision(q_m,3).split('e+')[0])/(float(10**int(q50_exp))/float(10**int(qm_exp)))
+                    title = r"${{{0}}}_{{-{1}}}^{{+{2}}}$"
+                    qp_abscissa = round(qp_abscissa,2)
+                    qm_abscissa = round(qm_abscissa,2)
+                    title = title.format((q50_abscissa), (qm_abscissa), (qp_abscissa)) + '$\\times 10^{'+ q50_exp+'}$'
+
+
                 # Add in the column name if it's given.
                 if labels is not None:
                     title = "{0} = {1}".format(labels[i], title)
@@ -300,6 +316,7 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                     ax.set_title(title, **title_kwargs)
 
         # Set up the axes.
+        
         ax.set_xlim(range[i])
         if scale_hist:
             maxn = np.max(n)
@@ -331,8 +348,8 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                     ax.set_xlabel(labels[i], **label_kwargs)
 
             # use MathText for axes ticks
-            ax.xaxis.set_major_formatter(
-                ScalarFormatter(useMathText=use_math_text))
+            ax.xaxis.set_major_formatter(fmtr)
+            ax.xaxis.offsetText.set_visible(True)
 
         for j, y in enumerate(xs):
             if np.shape(xs)[0] == 1:
@@ -389,8 +406,8 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                     #     ax.xaxis.set_label_coords(0.5, -0.3)
 
                 # use MathText for axes ticks
-                ax.xaxis.set_major_formatter(
-                    ScalarFormatter(useMathText=use_math_text))
+                ax.xaxis.set_major_formatter(fmtr)
+                ax.xaxis.offsetText.set_visible(True)
 
             if j > 0:
                 ax.set_yticklabels([])
@@ -407,9 +424,11 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
                         # ax.yaxis.set_label_coords(-0.3, 0.5)
 
                 # use MathText for axes ticks
-                ax.yaxis.set_major_formatter(
-                    ScalarFormatter(useMathText=use_math_text))
+                ax.yaxis.set_major_formatter(fmtr)
 
+                ax.yaxis.offsetText.set_visible(True)
+                ax.get_yaxis().get_offset_text().set_y(-0.2)
+                ax.get_yaxis().get_offset_text().set_x(-0.45)
     return fig
 
 
@@ -650,3 +669,67 @@ def hist2d(x, y, bins=20, range=None, weights=None, levels=None, smooth=None,
 
     ax.set_xlim(range[0])
     ax.set_ylim(range[1])
+
+
+import math
+
+def to_precision(x,p):
+    """
+    returns a string representation of x formatted with a precision of p
+
+    Based on the webkit javascript implementation taken from here:
+    https://code.google.com/p/webkit-mirror/source/browse/JavaScriptCore/kjs/number_object.cpp
+    """
+
+    x = float(x)
+
+    if x == 0.:
+        return "0." + "0"*(p-1)
+
+    out = []
+
+    if x < 0:
+        out.append("-")
+        x = -x
+
+    e = int(math.log10(x))
+    tens = math.pow(10, e - p + 1)
+    n = math.floor(x/tens)
+
+    if n < math.pow(10, p - 1):
+        e = e -1
+        tens = math.pow(10, e - p+1)
+        n = math.floor(x / tens)
+
+    if abs((n + 1.) * tens - x) <= abs(n * tens -x):
+        n = n + 1
+
+    if n >= math.pow(10,p):
+        n = n / 10.
+        e = e + 1
+
+    m = "%.*g" % (p, n)
+
+    if e < -2 or e >= p:
+        out.append(m[0])
+        if p > 1:
+            out.append(".")
+            out.extend(m[1:p])
+        out.append('e')
+        if e > 0:
+            out.append("+")
+        out.append(str(e))
+    elif e == (p -1):
+        out.append(m)
+    elif e >= 0:
+        out.append(m[:e+1])
+        if e+1 < len(m):
+            out.append(".")
+            out.extend(m[e+1:])
+    else:
+        out.append("0.")
+        out.extend(["0"]*-(e+1))
+        out.append(m)
+
+    return "".join(out)
+
