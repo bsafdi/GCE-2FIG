@@ -24,7 +24,7 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
            truths=None, truth_color="#4682b4",
            scale_hist=False, quantiles=None, verbose=False, fig=None,
            max_n_ticks=5, top_ticks=False, use_math_text=False, reverse=False,
-           ticklabels_powerlimits=(-3,3),
+           ticklabels_powerlimits=(-3,4),
            hist_kwargs=None, **hist2d_kwargs):
     """
     Make a *sick* corner plot showing the projections of a data set in a
@@ -288,10 +288,11 @@ def corner(xs, bins=20, range=None, weights=None, color="k",
 
                 # Format the quantile display.
                 # If median too large or small, convert labels to scientific notation
-                if (q_50 > 10**ticklabels_powerlimits[1]) or (q_50 < 10**ticklabels_powerlimits[0]):
+                if ((q_50 > 10**ticklabels_powerlimits[1]) or (q_50 < 10**ticklabels_powerlimits[0])):
                     q50_exp = to_precision(q_50,3).split('e+')[1]
                     q50_abscissa = to_precision(q_50,3).split('e+')[0]
                     qp_exp = to_precision(q_p,3).split('e+')[1]
+
                     qp_abscissa = float(to_precision(q_p,3).split('e+')[0])\
                             /(float(10**int(q50_exp))/float(10**int(qp_exp)))
                     qm_exp = to_precision(q_m,3).split('e+')[1]

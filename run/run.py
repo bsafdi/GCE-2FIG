@@ -75,6 +75,7 @@ class run_scan():
 
             self.all_params[self.all_params == 'beta_disk'] = 'beta'
             self.floated_params[self.floated_params == 'beta_disk'] = 'beta'
+            self.fixed_params[self.fixed_params == 'beta_disk'] = 'beta'
 
         # Load the data, set up fixed parameters and priors
         self.load_data()
@@ -131,7 +132,8 @@ class run_scan():
         for float_idx, float_item in enumerate(self.param_all_pos_ary):
             theta_ll[float_item] = theta[float_idx]
 
-        if self.share_betas and ('beta' in self.floated_params):
+        # if self.share_betas and ('beta' in self.floated_params):
+        if self.share_betas:
             theta_ll = np.append(theta_ll, theta_ll[-1])  
 
         ll_val =  likelihood.ll(self.PSR_data, self.omega_ijk, *theta_ll, 
