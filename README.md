@@ -41,6 +41,7 @@ The following notebooks are used in the analysis:
 2. `Sources.ipynb`: Constructing the data used in the analysis. The binning scheme is described and data is constructed from a combination of 2FIG candidates and 3FGL sources.
 3. `Models_and_Likelihoods.ipynb`: Deriving the modeled number of disk and bulge sources in each bin. Calculating the likelihood for a given set of disk and bulge model parameters.
 4. `Full_Scan.ipynb`: Analyzing the results of the full parameter scans above, extracting best-fit parameters and TS in preference of a bulge population.
+5. `A_Resolved_Fraction.ipynb`: Calculating the fraction of the GCE that should be resolved for various luminosity functions, including the one calculated in the original 2FIG paper.
 
 ## Results
 
