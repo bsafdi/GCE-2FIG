@@ -1,6 +1,8 @@
 # GCE-2FIG
-This code uses 2FIG sources to constrain spatial distributions of pulsar-like PS populations.  
-The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
+
+[![arXiv](https://img.shields.io/badge/arXiv-1707.05326%20-green.svg)](https://arxiv.org/abs/1710.10266)
+
+This code implements the analysis described in [1710.10266](https://arxiv.org/pdf/1710.10266.pdf) and uses 2FIG sources to constrain the spatial distributions of pulsar-like PS populations. The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
 All of the code is contained in the `likelihood` directory and analysis notebooks are contained in `notebooks/`.
 
