@@ -1,6 +1,6 @@
 # GCE-2FIG
 
-[![arXiv](https://img.shields.io/badge/arXiv-1707.05326%20-green.svg)](https://arxiv.org/abs/1710.10266)
+[![arXiv](https://img.shields.io/badge/arXiv-1710.10266%20-green.svg)](https://arxiv.org/abs/1710.10266)
 
 This code implements the analysis described in [1710.10266](https://arxiv.org/pdf/1710.10266.pdf) and uses 2FIG sources to constrain the spatial distributions of pulsar-like PS populations. The main purpose of the code is to test the results presented in [1705.00009](https://arxiv.org/pdf/1705.00009.pdf).
 
